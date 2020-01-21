@@ -50,7 +50,7 @@
 	}
 
 	#nprogress .peg {
-		box-shadow: 0 0 10px #18BC9C, 0 0 5px #18BC9C !important;
+		box-shadow: 0 0 20px #18BC9C, 0 0 5px #18BC9C !important;
 	}
 
 	#nprogress .spinner-icon {
@@ -70,7 +70,7 @@
 	color: var(--color) !important;
 	overflow: auto;
 	white-space: pre-wrap;
-	border-radius: 10px;
+	border-radius: 20px;
 	margin: 0;
 	padding: 0.2rem;
   }
@@ -88,7 +88,7 @@
   }
   select {
 	background-color: var(--body-bg);
-	border-radius: 10px;
+	border-radius: 20px;
 	border: var(--border);
 	width: 100%;
 	padding: 0.28rem 0.1rem;
@@ -100,7 +100,7 @@
   }
   select option {
 	background-color: var(--body-bg);
-	border-radius: 10px;
+	border-radius: 20px;
   }
   select option:hover{
 	background-color: var(--body-bg);
@@ -110,7 +110,7 @@
 	color: var(--color) !important;
 	overflow: auto;
 	white-space: pre;
-	border-radius: 10px;
+	border-radius: 20px;
 	margin: 0;
 	padding: 0.5rem;
   }
@@ -124,7 +124,7 @@
 	stroke: #18BC9C !important;
   }
   .cc-color-override-2027711132 .cc-btn {
-	border-radius: 10px;
+	border-radius: 20px;
   }
   .CodeMirror, .CodeMirror-scroll {
 	min-height: 200px !important;
@@ -136,7 +136,7 @@
 	border: var(--border) !important;
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
-	padding: 10px;
+	padding: 20px;
 	font: inherit;
 	z-index: 1;
 	color: var(--color) !important;
@@ -151,10 +151,10 @@
 	background-color: none;
   }
   .ql-container {
-	border-radius: 10px;
+	border-radius: 20px;
   }
   .ql-toolbar {
-	border-radius: 10px;
+	border-radius: 20px;
   }
   .post_content img {
 	max-width: 100%;
@@ -206,7 +206,7 @@
 	max-height: 100%;
 	background-color: var(--background);
 	align-items: center;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
   }
@@ -245,7 +245,7 @@
 	margin-left: auto;
 	background-color: var(--background);
 	align-items: center;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
   }
@@ -264,7 +264,7 @@
   }
   content direct .conversation .chat .not-mine-message .user-msg {
 	background-color: var(--body-bg);
-	border-radius: 10px;
+	border-radius: 20px;
 	line-height: 1.4;
 	padding: 0.2rem 0.4rem;
 	margin-left: 0.5rem;
@@ -285,7 +285,7 @@
   }
   content direct .conversation .chat .mine-message .user-msg {
 	background-color: var(--body-bg);
-	border-radius: 10px;
+	border-radius: 20px;
 	line-height: 1.4;
 	padding: 0.2rem 0.4rem;
 	margin-right: 0.5rem;
@@ -302,7 +302,7 @@
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
 	background-color: #18BC9C;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.2rem 0.5rem 0.2rem 0.5rem;
@@ -314,7 +314,7 @@
 	margin-left: auto;
 	background-color: var(--background);
 	align-items: center;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	padding: 2rem;
@@ -329,7 +329,7 @@
   }
   .notification {
 	width: auto;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.6rem;
@@ -360,7 +360,7 @@
   /* Handle */
   ::-webkit-scrollbar-thumb {
 	background: #888;
-	border-radius: 10px;
+	border-radius: 20px;
   }
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
@@ -369,6 +369,7 @@
   .newapp-navbar {
 	background-color: var(--navbar);
 	height: 30px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
 	margin: 0;
 	padding: 0.4rem 0.5rem;
 	font-size: 0.9375rem;
@@ -473,9 +474,9 @@
 	position: absolute;
 	background-color: var(--navbar);
 	min-width: 10rem;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
 	padding: 0.6rem 0.5rem;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: var(--navbar-color);
 	z-index: 5;
 	margin-inline-start: -8.9rem;
@@ -487,7 +488,7 @@
 	margin-top: 0.2rem;
 	margin-bottom: 0.2rem;
 	padding: 0.3rem;
-	border-radius: 10px;
+	border-radius: 20px;
 	margin-left: 0;
 	margin-right: 0;
   }
@@ -502,7 +503,7 @@
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
 	background-color: #18BC9C;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.2rem 0.5rem 0.2rem 0.5rem;
@@ -525,7 +526,7 @@
 	vertical-align: -webkit-baseline-middle;
 	border: none;
 	background-color: var(--body-bg) !important;
-	border-radius: 10px;
+	border-radius: 20px;
 	padding: 0.4rem 0.4rem 0.4rem 0.4rem;
 	color: var(--navbar-color);
 	width: calc(100% - 0.8rem);
@@ -616,7 +617,7 @@
   /* Handle */
   wrapper#wrapper-left::-webkit-scrollbar-thumb {
 	background: white;
-	border-radius: 10px;
+	border-radius: 20px;
   }
   /* Handle on hover */
   wrapper#wrapper-left::-webkit-scrollbar-thumb:hover {
@@ -654,7 +655,7 @@
   }
   content .article .post {
 	background-color: var(--background);
-	border-radius: 10px;
+	border-radius: 20px;
 	border: var(--border);
 	margin-bottom: 0.5rem;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -665,7 +666,7 @@
   }
   content .article .reply {
 	background-color: var(--background);
-	border-radius: 10px;
+	border-radius: 20px;
 	border: var(--border);
 	padding: 0.5rem;
 	margin-bottom: 0.2rem;
@@ -675,7 +676,7 @@
   content .article .post .user-actions .share_post {
 	background-color: var(--code);
 	width: auto;
-	border-radius: 10px;
+	border-radius: 20px;
 	position: absolute;
 	left: 4.3rem;
 	margin-top: 0.3rem;
@@ -687,7 +688,7 @@
   content .article .post .user-actions .share_post .list .item{
 	cursor: pointer;
 	padding: 0.5rem;
-	border-radius: 10px;
+	border-radius: 20px;
   }
   content .article .post .user-actions .share_post .list .item:hover {
 	background-color: var(--body-bg);
@@ -705,7 +706,7 @@
   content .article .reply .info .reply-actions button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: red;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
@@ -715,7 +716,7 @@
   content .article .post .post-reply .form-thread button.reply-button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: #18BC9C;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
@@ -864,7 +865,7 @@
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--background);
-	border-radius: 10px;
+	border-radius: 20px;
   }
 
   content .sidebar .widget .widget-post,
@@ -878,7 +879,7 @@
   wrapper .sidebar .widget .widget-list .widget-item button.widget-button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: #18BC9C;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
@@ -893,7 +894,7 @@
 	cursor: pointer;
 	border: 2px solid rgb(104, 104, 104);
 	background-color: #18BC9C;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.1rem 0.5rem 0.1rem 0.5rem;
@@ -941,7 +942,7 @@
 	background-color: var(--background);
 	padding: 0.5rem;
 	align-items: center;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 5%;
@@ -964,7 +965,7 @@
 	height: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	margin-top: 0.5rem;
@@ -982,7 +983,7 @@
 	margin-bottom: -5px;
   }
   content .article-card {
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.6rem;
@@ -1051,7 +1052,7 @@
   content .article-card .article-footbar .article-misc button.article-save {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.1rem 0.6rem 0.1rem 0.6rem;
@@ -1072,7 +1073,7 @@
   wrapper .sidebar .widget {
 	background-color: var(--background);
 	align-items: center;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 5%;
@@ -1094,7 +1095,7 @@
   content .sidebar .widget#widget-register .register a button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.6rem 1.2rem 0.6rem 1.2rem;
@@ -1141,11 +1142,11 @@
   }
   content .sidebar .widget .widget-list .widget-item#posts-show:hover .multilevel#posts,
   wrapper .sidebar .widget .widget-list .widget-item#posts-show:hover .multilevel#posts{
-	max-height: 210px;
+	max-height: 220px;
   }
   content .sidebar .widget .widget-list .widget-item#podcasts-show:hover .multilevel#podcasts,
   wrapper .sidebar .widget .widget-list .widget-item#podcasts-show:hover .multilevel#podcasts{
-	max-height: 210px;
+	max-height: 220px;
   }
   content .sidebar .widget .widget-list .widget-item .text,
   wrapper .sidebar .widget .widget-list .widget-item .text {
@@ -1173,7 +1174,7 @@
   wrapper .sidebar .widget-posts {
 	background-color: transparent;
 	align-items: center;
-	border-radius: 10px;
+	border-radius: 20px;
 	margin-bottom: 5%;
 	padding: 0;
   }
@@ -1185,7 +1186,7 @@
 	display: flex;
 	color: var(--color);
 	background-color: var(--background);
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.5rem;
@@ -1213,20 +1214,20 @@
 	width: -webkit-fill-available;
   }
   content profile.profile-page {
-	border-radius: 10px;
+	border-radius: 20px;
 	margin-bottom: 0.2rem;
   }
   content profile .profile-cover {
 	max-height: 500px;
 	display: block;
-	border-radius: 10px;
+	border-radius: 20px;
 	overflow: hidden;
 	width: 100%;
   }
   content profile .profile-cover img {
 	border: var(--border);
 	width: 100%;
-	border-radius: 10px;
+	border-radius: 20px;
   }
   content profile .profile-main .sidebar-info {
 	max-width: 300px;
@@ -1249,7 +1250,7 @@
 	
   }
   content profile .profile-main .sidebar-main .statistics {
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.6rem;
@@ -1260,7 +1261,7 @@
 	padding: 0.5rem;
 	background-color: var(--body-bg);
 	margin: 0.4rem auto;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: var(--color);
   }
   content profile .profile-main {
@@ -1290,7 +1291,7 @@
 	width: 70%;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem 0 0.5rem 0;
@@ -1300,14 +1301,14 @@
 	width: 70%;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem 0 0.5rem 0;
   }
   content profile .profile-main .sidebar-info .widgets .profile-presentation {
 	border: var(--border);
-	border-radius: 10px;
+	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
 	text-align: left;
@@ -1340,7 +1341,7 @@
   }
   content profile .profile-main .sidebar-info .widgets .interesed-tags {
 	border: var(--border);
-	border-radius: 10px;
+	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
 	text-align: left;
@@ -1359,7 +1360,7 @@
   }
   content profile .profile-main .sidebar-info .widgets .social {
 	border: var(--border);
-	border-radius: 10px;
+	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
 	text-align: left;
@@ -1401,7 +1402,7 @@
   }
   content profile .profile-main .sidebar-right .widgets .user-follows {
 	border: var(--border);
-	border-radius: 10px;
+	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
 	text-align: left;
@@ -1434,7 +1435,7 @@
   }
   content profile .profile-main .sidebar-info .widgets .settings-menu {
 	border: var(--border);
-	border-radius: 10px;
+	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
 	text-align: center;
@@ -1464,7 +1465,7 @@
 	padding: 0.4rem 0rem 0.4rem 0rem;
 	background: var(--background);
 	font-size: 0.8rem;
-	border-radius: 10px;
+	border-radius: 20px;
 	color: var(--color);
 	cursor: pointer;
   }
@@ -1481,7 +1482,7 @@
   content profile .profile-main .sidebar-main .edit-misc {
 	display: flex;
 	border: var(--border);
-	border-radius: 10px;
+	border-radius: 20px;
 	width: 90%;
 	background-color: var(--background);
 	text-align: center;
@@ -1603,11 +1604,11 @@
   new_post :-ms-input-placeholder {  
 	color: var(--placeholder); 
   }
-  new_post .form-thread {
+  new_post .newpost-form {
 	background: var(--background);
 	border: var(--border);
 	display: block;
-	border-radius: 10px;
+	border-radius: 20px;
 	padding: 1rem;
 	color: var(--color);
   }
@@ -1615,7 +1616,7 @@
 	background: var(--background);
 	border: var(--border);
 	display: block;
-	border-radius: 10px;
+	border-radius: 20px;
 	padding: 2rem;
 	margin-bottom: 1rem;
 	color: var(--color);
@@ -1633,7 +1634,7 @@
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.4rem 1rem 0.4rem 1rem;
@@ -1647,7 +1648,7 @@
 	background-color: transparent;
 	padding: 0rem 0.5rem 0rem 0.5rem;
 	height: 1.75rem;
-	border-radius: 2px;
+	border-radius: 20px;
 	margin-left: 0.3rem;
 	cursor: pointer;
   }
@@ -1687,7 +1688,7 @@
 	top: 50%;
 	left: 50%;
 	top: 30%;
-	border-radius: 10px;
+	border-radius: 20px;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	padding: 1em;
@@ -1732,7 +1733,7 @@
   modal .modal .modal-footer button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
-	border-radius: 10px;
+	border-radius: 20px;
 	padding: 0.25rem 0.5rem 0.25rem 0.5rem;
 	color: white;
 	font-weight: 600;
@@ -1752,7 +1753,7 @@
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	background-color: #1cc7a6;
 	color: white;
-	border-radius: 10px;
+	border-radius: 20px;
 	margin: 5px;
 	margin-bottom: 0.5rem;
 	padding: 0.5rem 0rem;
@@ -1763,7 +1764,7 @@
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	background-color: #ff7d89;
 	color: white;
-	border-radius: 10px;
+	border-radius: 20px;
 	margin: 5px;
 	margin-bottom: 0.5rem;
 	padding: 0.5rem 0rem;
@@ -1784,7 +1785,7 @@
   input[type=text] {
 	border: none;
 	background-color: var(--body-bg) !important;
-	border-radius: 10px;
+	border-radius: 20px;
 	padding: 0.4rem 0rem 0.4rem 0.4rem;
 	color: var(--color);
 	width: calc(100% - 0.4rem);
@@ -1793,7 +1794,7 @@
   input[type=password] {
 	border: none;
 	background-color: var(--body-bg) !important;
-	border-radius: 10px;
+	border-radius: 20px;
 	padding: 0.4rem 0rem 0.4rem 0.4rem;
 	color: var(--color) !important;
 	width: calc(100% - 0.4rem);
@@ -1825,14 +1826,14 @@
   }
   @keyframes size {
 	0% {
-	  padding: 10px 12px 8px;
+	  padding: 20px 12px 8px;
 	}
 	50% {
 	  padding: 14px 16px 12px;
 	  margin-top: -4px;
 	}
 	100% {
-	  padding: 10px 12px 8px;
+	  padding: 20px 12px 8px;
 	}
   }
   navigation {

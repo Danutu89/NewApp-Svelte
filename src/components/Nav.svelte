@@ -74,6 +74,10 @@ function OpenModalLogin(){
       </div>
 	   <div style="margin-inline-start: auto;display:flex;">
      {#if $session.auth == true}
+     <div class="navbar-item">
+          <a href="/newpost"><i class="na-plus-circle" style="color:var(--navbar-color);display:block;margin-top: 0.4rem;font-size:1.2rem;
+            margin-right:0.9rem;"></i></a>
+      </div>
      <div class="navbar-item" style="cursor: pointer;">
             <div class="newapp-dropdown" id="user-center">
                 <img src="https://newapp.nl{$session.avatar}" id="user-image" height="30px" width="30px" style="border-radius: 30px;" alt="">

@@ -64,9 +64,10 @@ function Follow_User(id){
 content .sidebar#sidebar-right{
     position: -webkit-sticky;
     position: sticky;
-    top: 3.2rem;
+    top: 3.5rem;
     align-self: flex-start;
-  }</style>
+  }
+</style>
     <div class="user-card" style="align-items: unset">
         <a rel="prefetch" href="/user/{author.name}"
             style="margin-bottom:0.2rem;display: flex">
