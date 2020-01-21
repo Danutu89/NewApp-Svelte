@@ -3,68 +3,57 @@
     export async function preload(page,session){
         let args = '';
         if (session.token){
-            args = '?t=' + session.token + '&tag=' + page.params.slug;
+            args = '?t=' + session.token + '&saved=true';
         }else{
-            args = '?tag=' + page.params.slug; 
+            this.redirect(302, '/');
         }
         const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
                 return response.data;
             });
         const json = await res;
-        return { tag: json };
+        return { saved: json };
     }
 </script>
 <script>
-import SideBarLeft from '../../components/SideBarLeft.svelte';
-import SideBarRight from '../../components/SideBarRight.svelte';
-import Posts from '../../components/Posts.svelte';
+import SideBarLeft from '../components/SideBarLeft.svelte';
+import SideBarRight from '../components/SideBarRight.svelte';
+import Posts from '../components/Posts.svelte';
 import { onMount, beforeUpdate  } from "svelte";
 import { stores } from '@sapper/app';
 const { session } = stores();
 
-export let tag;
+export let saved;
 let page = 1;
 let isLoadMore = true, CanLoad = false;
 let articles;
 let trending;
 let utilities;
 let user;
-trending = tag['trending'];
-articles = tag['posts'];
+trending = saved['trending'];
+articles = saved['posts'];
 if($session.auth){
-    user = tag['user'];
+    user = saved['user'];
 }
-utilities = tag['utilities'];
-
-let title = tag.info['name'][0].toUpperCase() + tag.info['name'].slice(1);
+utilities = saved['utilities'];
 
 onMount(async function(){
     document.addEventListener("scroll", onScroll);
 })
 
-beforeUpdate(()=>{
-    trending = tag['trending'];
-    articles = tag['posts'];
-    if($session.auth){
-        user = tag['user'];
-    }
-    utilities = tag['utilities'];
-    title = tag.info['name'][0].toUpperCase() + tag.info['name'].slice(1);
-
-})
-
 async function LoadMore(){
-    page++;
-    await axios.get('https://newapp.nl/api/home/'+ page +'?tag=' + page.params.slug, { progress: false }).then(function (response) {
-        articles = [...articles , ...response.data['posts']];
-        articles = articles;
-        if (response.data['hasnext']){
-            isLoadMore = true;
-        }
-        else{
-            isLoadMore = false;
-        }
-    });
+    if($session.auth){
+        page++;
+        await axios.get('https://newapp.nl/api/home/'+ page +'?t=' + $session.token + '&saved=true', { progress: false }).then(function (response) {
+            articles = [...articles , ...response.data['posts']];
+            articles = articles;
+            if (response.data['hasnext']){
+                isLoadMore = true;
+            }
+            else{
+                isLoadMore = false;
+            }
+        });
+    }
 }
 
 function onScroll(e) {
@@ -82,7 +71,7 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>Tag - {title}</title>
+<title>Saved Posts</title>
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

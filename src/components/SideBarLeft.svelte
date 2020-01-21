@@ -58,12 +58,14 @@ function Follow_Tag(tag_) {
         <div class="widget-item" id='posts-show'>
             <div class="text"><a href="/"><span class="section"><i class="na-pen-square"></i> Posts</span></a></div>
             <div class='multilevel' id='posts'>
+                {#if $session.auth}
                 <div class="widget-item">
-                    <div class="text"><a href="/saved"><span class="section"><span style='color:#18BC9C'>•</span> Saved Posts</span></a></div>
+                    <div class="text"><a href="/saved"><span class="section"><span style='color:#18BC9C'>•</span> Saved</span></a></div>
                 </div>
                 <div class="widget-item">
                     <div class="text"><a href="/"><span class="section"><span style='color:#18BC9C'>•</span> Feed</span></a></div>
                 </div>
+                {/if}
                 <div class="widget-item">
                         <div class="text"><a href="/all"><span class="section"><span style='color:#18BC9C'>•</span> All</span></a></div>
                 </div>

@@ -37,7 +37,7 @@ onMount(async function() {
 
 async function LoadMore(){
     page++;
-    await axios.get('https://newapp.nl/api/home/'+page, { progress: false }).then(function (response) {
+    await axios.get('https://newapp.nl/api/home/'+ page + args, { progress: false }).then(function (response) {
         articles = [...articles , ...response.data['posts']];
         articles = articles;
         if (response.data['hasnext']){
