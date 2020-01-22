@@ -26,8 +26,11 @@ function Follow_User(id){
 </script>
 
 <profile class="profile-page">
-    <div class="profile-cover" style="background-color: #14947b;border: var(--border);height:350px;">
-    </div>
+    {#if user.cover}
+    <div class="profile-cover" style="background-image: url({user.cover});background-position: center;background-size: cover;border: var(--border);height:450px;"></div>
+    {:else}
+    <div class="profile-cover" style="background-color: #14947b;border: var(--border);height:350px;"></div>
+    {/if}
     <div class="profile-main">
       <div class="sidebar-info">
         <div class="profile-image" >

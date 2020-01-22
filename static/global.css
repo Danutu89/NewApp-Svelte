@@ -12,7 +12,7 @@
 	--navbar-dropdown-hover: #ececec;
 	--wrapper-background: white;
   }
-  @media (prefers-color-scheme: dark){
+  @media (prefers-color-scheme: light){
 	:root {
 		--background: #171717;
 		--color: rgb(196, 196, 196);
@@ -28,7 +28,7 @@
 		--wrapper-background: #171717;
 	  }
   }
-  @media (prefers-color-scheme: light){
+  @media (prefers-color-scheme: dark){
 	:root {
 		--background: #ffffff;
 		--color: #212529;
@@ -971,6 +971,11 @@
 	font-weight: 600;
 	margin-top: 0.5rem;
   }
+  content .sidebar .profile-actions button.follow-user:disabled ,
+  wrapper .sidebar .profile-actions button.follow-user:disabled {
+	background-color: rgb(1, 137, 201);
+  }
+
   content .sidebar .user-info span.user-tag,
   wrapper .sidebar .user-info span.user-tag {
 	font-size: 0.7rem;

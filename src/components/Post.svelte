@@ -69,17 +69,13 @@ onMount(async function(){
 
 </script>
 
-<svelte:head>
-<title>{article.title}</title>
-</svelte:head>
-
 {#if article}
 <div class="article">
     <div class="post">
         {#if article.thumbnail}
         <div class="thumbnail">
-            <img loading="lazy" src="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg" alt="" style='width: 100%;border-top-left-radius: 5px;
-            border-top-right-radius: 5px;'>
+            <img loading="lazy" src="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg" alt="" style='width: 100%;border-top-left-radius: 20px;
+            border-top-right-radius: 20px;'>
         </div>
         {/if}
         <div class="content-post" style="padding:0.8rem;">
@@ -167,7 +163,7 @@ onMount(async function(){
         <div class="info" style="display: flex">
             <div  style="margin-inline-start: auto;display:flex;">
                 <div id="reply_img_{reply.author.id}" class="author" style="
-                    border-radius: 5px;
+                    border-radius: 20px;
                     padding: 0.5rem;
                     background-color: rgb(239, 240, 241);
                     display: flex;">

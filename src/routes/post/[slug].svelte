@@ -11,21 +11,35 @@
                 return response.data;
             });
         const json = await res;
+        json['link'] = page.params.slug;
         return { article: json };
     }
 </script>
 
 <script>
-import { onMount } from 'svelte';
 import Post from '../../components/Post.svelte';
 export let article;
 
-onMount(async function(){
-    if (article)
-        document.title = article.title;
-});
-
 </script>
+
+<svelte:head>
+<title>{article.title} - NewApp</title>
+<meta name="description" content="{article.description}...">
+<meta property="og:type" content="website">
+<meta property="og:url" content="/post/{article.link}">
+<meta property="og:site_name" content="{article.title}">
+<meta name="twitter:title" content="{article.title}">
+{#if article.thumbnail}
+<meta property="og:image" itemprop="image primaryImageOfPage" content="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg">
+<meta name="twitter:image:src" content="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg">
+{:else}
+<meta property="og:image" itemprop="image primaryImageOfPage" content="{article.author.avatar}">
+<meta name="twitter:image:src" content="{article.author.avatar}">
+{/if}
+<meta property="og:description" content="{article.description}...">
+<meta name="twitter:description" content="{article.description}...">
+<meta name="keywords" content="{article.keywords}newapp">
+</svelte:head>
 
 {#if article}
 <Post {article}/>

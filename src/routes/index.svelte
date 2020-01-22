@@ -66,7 +66,17 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>NewApp</title>
+<title>New App - Where Developers Learn, Share, & Code</title>
+<meta name="description" content="NewApp the newest community for developers to learn, share​ ​their programming ​knowledge, and build their careers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://newapp.nl/">
+<meta property="og:site_name" content="NewApp">
+<meta property="og:image" itemprop="image primaryImageOfPage" content="https://newapp.nl/static/logo.jpg">
+<meta property="og:description"
+content="The newest community for developers to learn, share​ ​their programming ​knowledge, and build their careers.">
+<meta name="twitter:title" content="NewApp">
+<meta name="twitter:description" content="The newest community for developers to learn, share​ ​their programming ​knowledge, and build their careers.">
+<meta name="twitter:image:src" content="https://newapp.nl/static/logo.jpg">
 </svelte:head>
 
 

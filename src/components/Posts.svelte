@@ -9,7 +9,7 @@ let save_button = [];
 
 function SavePost(id){
     if($session.auth){
-        axios.get('https://newapp.nl/api/save-post/' + id + '?t=' + $session.token).then(response=>{
+        axios.get('https://newapp.nl/api/save-post/' + id + '?t=' + $session.token, { progress: false }).then(response=>{
             if(response.data['operation'] == 'saved'){
                 save_button[id].innerHTML = 'Saved';
             }else if(response.data['operation'] == 'deleted'){
@@ -60,8 +60,8 @@ function SavePost(id){
         {#if article.thumbnail}
         <div class="article-thumbnail" style="max-height:300px;overflow: hidden;">
                         <img loading="lazy" alt=""
-                          src="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg" style="border-top-left-radius: 4px;
-                          border-top-right-radius: 4px;object-fit: cover;">
+                          src="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg" style="border-top-left-radius: 20px;
+                          border-top-right-radius: 20px;object-fit: cover;">
                 </div>
         {/if}
 		<div class="article-main">
