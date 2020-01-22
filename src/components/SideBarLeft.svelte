@@ -40,7 +40,7 @@ function Follow_Tag(tag_) {
 <div class="user-card">
     <a href="/user/{$session.name}" style="display: flex;">
     <div class="user-image" style="margin-bottom:0;">
-        <img class="profile_image" alt="" src="https://newapp.nl{$session.avatar}" height="50px" width="50px" title="profile image">
+        <img class="profile_image" alt="" src="{$session.avatar}" height="50px" width="50px" title="profile image">
     </div>
     <div class="user-info" style="margin-top: -0.2rem;">
         <span>{$session.real_name}</span>

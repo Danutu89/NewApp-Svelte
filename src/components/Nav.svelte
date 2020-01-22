@@ -7,7 +7,8 @@ import Cookie from 'cookie-universal';
 const cookies = Cookie();
 const { session, page } = stores();
 
-let modal, user = null, user_center = null, user_image = null;
+let modal, user = null, user_center = null, user_image = null, overflow = null;
+var menu_open = false;
 
 function logOut(){
   cookies.remove("token");
@@ -18,21 +19,28 @@ function onClickDocument(e){
   if($session.auth){
     if(e.target != user_image && e.target != user_center){
       user.style["display"] = "none";
+      overflow.classList.remove("show");
+      menu_open = false;
     }else if(e.target == user_image){
       if(user.style["display"] == "none"){
         user.style["display"] = "block";
+        overflow.classList.add("show");
+        menu_open = true;
       }else{
         user.style["display"] = "none";
+        overflow.classList.remove("show");
+        menu_open = false;
       }
     }
+  }
+  if (menu_open === true) {
+    return false;
   }
 }
 
 onMount(async function(){
   modal = document.getElementById("login-modal");
-  user = document.getElementById("user");
-  user_center = document.getElementById("user-center");
-  user_image = document.getElementById("user-image");
+  overflow = document.querySelector("overflow");
   document.addEventListener('click', onClickDocument, {
     capture: true
   });
@@ -75,13 +83,13 @@ function OpenModalLogin(){
 	   <div style="margin-inline-start: auto;display:flex;">
      {#if $session.auth == true}
      <div class="navbar-item">
-          <a href="/newpost"><i class="na-plus-circle" style="color:var(--navbar-color);display:block;margin-top: 0.4rem;font-size:1.2rem;
+          <a href="/newpost"><i class="na-plus-circle" style="color:var(--navbar-color);display:block;margin-top: calc((30px - 19px )/2);font-size:1.2rem;
             margin-right:0.9rem;"></i></a>
       </div>
      <div class="navbar-item" style="cursor: pointer;">
-            <div class="newapp-dropdown" id="user-center">
-                <img src="https://newapp.nl{$session.avatar}" id="user-image" height="30px" width="30px" style="border-radius: 30px;" alt="">
-              <div class="newapp-dropdown-content" id="user" style="display: none;">
+            <div bind:this={user_center} class="newapp-dropdown" id="user-center">
+                <img src="{$session.avatar}" bind:this={user_image} id="user-image" height="30px" width="30px" style="border-radius: 30px;margin-top: 1px;" alt="">
+              <div bind:this={user} class="newapp-dropdown-content" id="user" style="display: none;">
                 @{$session.name}
                 <hr>
                 <a href="/user/{$session.name}" style="color: var(--navbar-color);">

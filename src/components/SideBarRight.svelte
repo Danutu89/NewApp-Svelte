@@ -11,17 +11,15 @@ let follow_button;
 
 function Follow_User(id){
     if($session.auth){
-        if($session.id != id){
-            axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token)
-            .then(response => {
-                if (response.data['operation'] == 'unfollowed') {
-                    follow_button.innerHTML = 'Follow';
-                } else if (response.data['operation'] == 'followed') {
-                    follow_button.innerHTML = '&#x2713 Following';
-                }
+        axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token, { progress: false })
+        .then(response => {
+            if (response.data['operation'] == 'unfollowed') {
+                follow_button.innerHTML = 'Follow';
+            } else if (response.data['operation'] == 'followed') {
+                follow_button.innerHTML = '&#x2713 Following';
+            }
 
-            })
-        }
+        })
     }
 }
 
@@ -82,16 +80,21 @@ content .sidebar#sidebar-right{
             </div>
         </a>
             <div class="profile-actions">
-                {#if user}
-                {#if user.following}
-                <button bind:this={follow_button} on:click|preventDefault={() => Follow_User(author.id)} class="follow-user"
-                    id="follow-user-{author.id}">&#x2713 Following</button>
+                {#if $session.auth}                                         
+                    {#if author.id == $session.id}
+                    <a href="/user/{$session.name}"><button class="follow-user"
+                        id="follow-user-{author.id}">Profile</button></a>
+                    {:else}
+                        {#if user.following}
+                        <button bind:this={follow_button} on:click|preventDefault={() => Follow_User(author.id)} class="follow-user"
+                            id="follow-user-{author.id}">&#x2713 Following</button>
+                        {:else}
+                        <button bind:this={follow_button} on:click|preventDefault={() => Follow_User(author.id)} class="follow-user"
+                            id="follow-user-{author.id}">Follow</button>
+                        {/if}
+                    {/if}                   
                 {:else}
-                <button bind:this={follow_button} on:click|preventDefault={() => Follow_User(author.id)} class="follow-user"
-                    id="follow-user-{author.id}">Follow</button>
-                {/if}
-                {:else}
-                <button bind:this={follow_button} on:click|preventDefault={() => Follow_User(author.id)} class="follow-user"
+                <button disabled class="follow-user"
                     id="follow-user-{author.id}">Follow</button>
                 {/if}
             </div>

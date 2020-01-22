@@ -12,7 +12,7 @@
 	--navbar-dropdown-hover: #ececec;
 	--wrapper-background: white;
   }
-  @media (prefers-color-scheme: light){
+  @media (prefers-color-scheme: dark){
 	:root {
 		--background: #171717;
 		--color: rgb(196, 196, 196);
@@ -28,7 +28,7 @@
 		--wrapper-background: #171717;
 	  }
   }
-  @media (prefers-color-scheme: dark){
+  @media (prefers-color-scheme: light){
 	:root {
 		--background: #ffffff;
 		--color: #212529;
@@ -402,6 +402,7 @@
   }
   .navbar-item {
 	color: var(--navbar-color);
+	height: 30px;
   }
   .navbar-items {
 	max-width: 100%;
@@ -860,7 +861,7 @@
   content .sidebar .widget-posts .widget-post,
   wrapper .sidebar .widget-posts .widget-post {
 	padding: 0.5rem;
-	margin-bottom: 0.2rem;
+	margin-bottom: 0.5rem;
 	display: flex;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
@@ -1180,16 +1181,13 @@
   }
   content .sidebar .widget-posts .widget-header,
   wrapper .sidebar .widget-posts .widget-header {
-	padding: 0.5rem;
+	padding: 0rem 0.5rem 0.5rem 0.5rem;
 	width: calc(100% - 1rem);
 	font-size: 1rem;
 	display: flex;
 	color: var(--color);
-	background-color: var(--background);
 	border-radius: 20px;
-	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
-	border: 1px solid rgba(0, 0, 0, 0.125);
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.2rem;
   }
   content .sidebar .widget-posts .widget-header button.minimize-widget,
   wrapper .sidebar .widget-posts .widget-header button.minimize-widget {
@@ -1311,6 +1309,7 @@
 	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
+	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	text-align: left;
 	padding: 0.8rem;
 	margin: auto;
@@ -1344,6 +1343,7 @@
 	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
+	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	text-align: left;
 	padding: 0.8rem;
 	margin: auto;
@@ -1382,9 +1382,6 @@
 	margin-top: 0.4rem;
 	margin-bottom: 0.4rem;
   }
-  content profile .profile-main .sidebar-main .user-posts .article-card {
-	box-shadow: none;
-  }
   content profile .profile-main .sidebar-main .user-posts .article-card .article-main .article-info {
 	text-align: left;
   }
@@ -1405,12 +1402,10 @@
 	border-radius: 20px;
 	width: 70%;
 	background-color: var(--background);
+	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	text-align: left;
 	padding: 0.8rem;
 	margin: auto;
-  }
-  content profile .profile-main .sidebar-right .widgets .user-follows .users {
-	
   }
   content profile .profile-main .sidebar-right .widgets .users .user-followed {
 	display: flex;
@@ -1853,4 +1848,22 @@
 	navigation {
 	  display: flex;
 	}
+  }
+  overflow {
+    position: fixed;
+    background-color: rgba(1, 1, 1, 0.55);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+  overflow.show {
+	visibility: visible !important;
+	opacity: 1 !important;
+	pointer-events: auto;
   }
