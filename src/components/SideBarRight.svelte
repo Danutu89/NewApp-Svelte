@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import OpenJoin from '../modules/OpenJoin.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
 
@@ -20,6 +21,8 @@ function Follow_User(id){
             }
 
         })
+    }else{
+        OpenJoin();
     }
 }
 
@@ -94,8 +97,7 @@ content .sidebar#sidebar-right{
                         {/if}
                     {/if}                   
                 {:else}
-                <button disabled class="follow-user"
-                    id="follow-user-{author.id}">Follow</button>
+                <button class="follow-user" id="follow-user-{author.id}" on:click|preventDefault={() => Follow_User(author.id)}>Follow</button>
                 {/if}
             </div>
         

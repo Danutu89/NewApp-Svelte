@@ -5,12 +5,33 @@ import axios from 'axios';
 import { stores, goto } from '@sapper/app';
 const { session } = stores();
 
-let editor;
-let title;
-let tags;
+let editor, editor_s;
+let title, title_s;
+let tags, tags_s;
 let thumbnail;
 
 async function NewPost(){
+    if(editor.value().length < 2){
+        if(!editor_s){
+            editor_s = document.querySelectorAll("textarea")[1];
+        }
+        editor_s.setCustomValidity('Please fill out this field.');
+        editor_s.classList.add('error');
+        editor_s.reportValidity();
+        return;
+    }
+    if(!title){
+        title_s.setCustomValidity('Please fill out this field.');
+        title_s.classList.add('error');
+        title_s.reportValidity();
+        return;
+    }
+    if(!tags){
+        tags_s.setCustomValidity('Please fill out this field.');
+        tags_s.classList.add('error');
+        tags_s.reportValidity();
+        return;
+    }
     let markdown = marked(editor.value());
     let image = false;
     let formdata = new FormData();
@@ -36,6 +57,7 @@ async function NewPost(){
 }
 
 onMount(async function(){
+    editor_s = document.querySelectorAll("textarea")[1];
     let SimpleMDE = require('simplemde');
     editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
     thumbnail = document.getElementById('file-upload');
@@ -51,10 +73,10 @@ onMount(async function(){
     </div>
     <div class="newpost-form">
         <div class="header">
-            <input id="title" bind:value={title} name="title" placeholder="Title" required="true" style="background: transparent !important;
+            <input id="title" bind:this={title_s} bind:value={title} name="title" placeholder="Title" required="true" style="background: transparent !important;
                 font-size: 2rem;" type="text" value="">
             <div style="display: flex;">
-            <input id="tag" bind:value={tags} name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text" value="">
+            <input id="tag" bind:value={tags} bind:this={tags_s} name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text" value="">
             <label for="file-upload" class="file-upload">
                 <i class="na-image" style="vertical-align: sub;"></i>
             </label>

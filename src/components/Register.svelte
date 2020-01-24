@@ -3,7 +3,7 @@
     import axios from 'axios';
     import { onMount } from "svelte";
 
-    let username = '', realname = '', email = '', password = '', password_check = '', register, email_c, password_c;
+    let username = '', realname = '', email = '', password = '', password_check = '', register, email_c, password_c, realname_c;
     let user_check = false, password_check_c = false, email_check = false;
     let register_check = '';
     let l_modal;
@@ -69,14 +69,22 @@
 
     async function RegisterUser(){
         if (!user_check){
+            register.classList.add('error');
             register.reportValidity();
             return;
         }
+        if(!realname){
+            realname_c.classList.add('error');
+            realname_c.reportValidity();
+            return;
+        }
         if (!email_check){
+            email_c.classList.add('error');
             email_c.reportValidity();
             return;
         }
         if (!password_check_c){
+            password_c.classList.add('error');
             password_c.reportValidity();
             return;
         }
@@ -122,7 +130,7 @@ function handleKeydown(event) {
 </script>
 
 <modal id="register-modal" bind:this={r_modal}>
-    <div class="modal" on:keydown={handleKeydown}>
+    <div class="modal" on:keydown={handleKeydown} id="register-modal-inner">
         <span on:click={CloseModal} class="close-modal" style='font-size: 0.7rem;cursor:pointer;'>Close</span>
         <div class="modal-header">
         {#if register_check == ''}
@@ -142,7 +150,7 @@ function handleKeydown(event) {
         {#if register_check == ''}
             <div class="modal-content">
                 <input id="register_username" name="register_username" placeholder="Username/Email" required="true" type="text" bind:value={username} on:change={CheckUsername} bind:this={register}>
-                <input id="register_realname" name="register_realname" placeholder="Real Name" required="true" type="text" bind:value={realname}>
+                <input id="register_realname" name="register_realname" placeholder="Real Name" required="true" type="text" bind:this={realname_c} bind:value={realname}>
                 <input id="register_email" name="register_email" placeholder="Email" required="true" type="text" bind:value={email} on:change={CheckEmail} bind:this={email_c}>
                 <input id="register_password" name="register_password" placeholder="Password" required="true" type="password" bind:value={password} bind:this={password_c}>
                 <input id="register_confirm_password" name="register_confirm_password" placeholder="Confirm Password" required="true" type="password" bind:value={password_check} on:change={CheckPassword}>

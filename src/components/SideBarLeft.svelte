@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import OpenJoin from '../modules/OpenJoin.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
 
@@ -25,6 +26,8 @@ function Follow_Tag(tag_) {
                     utilities.tags = [...utilities.tags, tag_]
                 }
         })
+    }else{
+        OpenJoin();
     }
 }
 

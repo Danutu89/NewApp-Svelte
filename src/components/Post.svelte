@@ -4,6 +4,7 @@
 export let article;
 import SideBarRight from '../components/SideBarRight.svelte';
 import { onMount } from 'svelte';
+import OpenJoin from '../modules/OpenJoin.js';
 import axios from 'axios';
 import marked from 'marked';
 import { stores } from '@sapper/app';
@@ -11,30 +12,41 @@ const { session } = stores();
 
 let like_button;
 let like_counter;
-let editor;
-let md2json;
+let editor, editor_s;
 
 function Like_Post() {
-    axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
-        .then(response => {
-            like_button.classList.toggle('na-heart1');
-            like_button.classList.toggle('na-heart');
+    if($session.auth){
+        axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+            .then(response => {
+                like_button.classList.toggle('na-heart1');
+                like_button.classList.toggle('na-heart');
 
-            if (response.data['operation'] == 'unliked') {
-                var likes = parseInt(like_counter.innerHTML);
-                var total = likes - 1;
-                like_counter.innerHTML = total;
-            } else if (response.data['operation'] == 'liked') {
-                var likes = parseInt(like_counter.innerHTML);
-                var total = likes + 1;
-                like_counter.innerHTML = total;
-            }
+                if (response.data['operation'] == 'unliked') {
+                    var likes = parseInt(like_counter.innerHTML);
+                    var total = likes - 1;
+                    like_counter.innerHTML = total;
+                } else if (response.data['operation'] == 'liked') {
+                    var likes = parseInt(like_counter.innerHTML);
+                    var total = likes + 1;
+                    like_counter.innerHTML = total;
+                }
 
-        })
+            })
+    }else{
+        OpenJoin();
+    }
 }
 
 async function Reply(){
-
+    if(editor.value().length < 2){
+        if(!editor_s){
+            editor_s = document.querySelectorAll("textarea")[1];
+        }
+        editor_s.setCustomValidity('Please fill out this field.');
+        editor_s.classList.add('error');
+        editor_s.reportValidity();
+        return;
+    }
     let markdown = marked(editor.value());
     let reply;
     let json = await axios.post('https://newapp.nl/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
@@ -52,6 +64,7 @@ async function Reply(){
 
 
 onMount(async function(){
+    editor_s = document.querySelectorAll("textarea")[1];
     let SimpleMDE = require('simplemde');
     editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
 })
@@ -104,7 +117,7 @@ onMount(async function(){
                         {/if}
                         {:else}
                         <span style="cursor: pointer;margin-right:0.5rem;"><i id="heart"
-                                class="na-heart1" bind:this={like_button}></i>
+                                class="na-heart1" on:click|preventDefault={Like_Post} bind:this={like_button}></i>
                             Like</span>
                         {/if}
                         <span id="share" style="cursor: pointer;"><i class="na-share"></i> Share</span>

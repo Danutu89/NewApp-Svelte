@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import OpenJoin from '../modules/OpenJoin.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
 
@@ -16,6 +17,8 @@ function SavePost(id){
                 save_button[id].innerHTML = 'Save';
             }
         })
+    }else{
+        OpenJoin();
     }
 
 }

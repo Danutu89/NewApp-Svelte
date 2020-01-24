@@ -60,7 +60,7 @@ async function Login(){
 
   const res = await axios.get('https://newapp.nl/api/login',{
     auth: {
-      username: username,
+      username: String(username).toLowerCase(),
       password: password
     }
   }).then(function (response){
@@ -123,7 +123,7 @@ function handleKeydown(event) {
 
 </script>
 <modal id="login-modal" bind:this={l_modal}>
-    <div class="modal" on:keydown={handleKeydown}>
+    <div class="modal" on:keydown={handleKeydown} id="login-modal-inner">
         <span on:click={CloseModalLogin} class="close-modal" style='font-size: 0.7rem;cursor:pointer;'>Close</span>
         <div class="modal-header">
             <img style="vertical-align: middle;" src="https://newapp.nl/static/logo.svg" width="70"

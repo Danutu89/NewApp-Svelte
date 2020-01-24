@@ -12,7 +12,7 @@
 	--navbar-dropdown-hover: #ececec;
 	--wrapper-background: white;
   }
-  @media (prefers-color-scheme: light){
+  @media (prefers-color-scheme: dark){
 	:root {
 		--background: #171717;
 		--color: rgb(196, 196, 196);
@@ -28,7 +28,7 @@
 		--wrapper-background: #171717;
 	  }
   }
-  @media (prefers-color-scheme: dark){
+  @media (prefers-color-scheme: light){
 	:root {
 		--background: #ffffff;
 		--color: #212529;
@@ -1588,6 +1588,12 @@
 	modal>.modal {
 	  width: 90% !important;
 	}
+	join .join {
+	  width: 90% !important;
+	}
+	join .join p {
+		font-size: 1.5rem !important;
+	}
   }
   new_post ::-webkit-input-placeholder {
 	color: var(--placeholder);
@@ -1666,12 +1672,12 @@
   }
   modal {
 	position: fixed;
-	background-color: rgba(1, 1, 1, 0.25);
+	background-color: rgba(1, 1, 1, 0.55);
 	top: 0;
 	bottom: 0;
 	right: 0;
 	left: 0;
-	z-index: 20;
+	z-index: 5;
 	visibility: hidden;
 	opacity: 0;
 	pointer-events: none;
@@ -1871,4 +1877,58 @@
 	visibility: visible !important;
 	opacity: 1 !important;
 	pointer-events: auto;
+  }
+
+  join {
+	position: fixed;
+	background-color: rgba(1, 1, 1, 0.55);
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	z-index: 5;
+	visibility: hidden;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.3s;
+  }
+  join .join {
+	width: 500px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	top: 40%;
+	border-radius: 20px;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	padding: 1em;
+	background: var(--background);
+	text-align: center;
+  }
+  join .join p {
+	font-weight: 400;
+    font-size: 2rem;
+	margin: 0;
+	color: var(--color);
+  }
+  join .join .buttons {
+	display: flex;
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
+  }
+  join .join .buttons button {
+	cursor: pointer;
+	width: 100%;
+	height: 2rem;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	background-color: rgb(0, 157, 230);
+	border-radius: 20px;
+	color: white;
+	font-weight: 600;
+	margin-top: 0.5rem;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+  }
+  join .join svg g path{
+	  fill: var(--color);
   }

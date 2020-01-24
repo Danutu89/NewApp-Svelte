@@ -2,6 +2,7 @@
 import Posts from './Posts.svelte';
 import { stores } from '@sapper/app';
 import axios from 'axios';
+import OpenJoin from '../modules/OpenJoin.js';
 const { session } = stores();
 export let user;
 
@@ -20,6 +21,8 @@ function Follow_User(id){
 
             })
         }
+    }else{
+      OpenJoin();
     }
 }
 
