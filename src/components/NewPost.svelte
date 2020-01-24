@@ -1,42 +1,44 @@
 <script>
 import { onMount } from 'svelte';
-import imageHandler from '../modules/ImageHandler.js';
+import marked from 'marked';
+import axios from 'axios';
+import { stores, goto } from '@sapper/app';
+const { session } = stores();
 
-let editor_sett, editor;
+let editor;
+let title;
+let tags;
+let thumbnail;
+
+async function NewPost(){
+    let markdown = marked(editor.value());
+    let image = false;
+    let formdata = new FormData();
+    try {
+        formdata.append('image', thumbnail.files[0], thumbnail.files[0].name);
+        image = true;
+    } catch (error) {
+        image = false;
+    }
+    let pyaload = {content: markdown, title: title, tags: tags, token: $session.token, image: image}
+    formdata.append('data', JSON.stringify(pyaload));
+
+    let json = await axios.post('https://newapp.nl/api/newpost', formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) =>{
+        return response.data;
+    })
+    let data = await json;
+    if (data['operation'] == 'success'){
+        editor.value("");
+        goto(data['link']);
+    }else if (data['operation'] == 'error'){
+        console.log(data['error']);
+    }
+}
 
 onMount(async function(){
-    var toolbarOptions = [
-      ['bold', 'italic', 'underline'],
-      ['blockquote', 'code-block'],
-      ['link', 'image'],
-      [{
-          'header': [1, 2, 3, 4, 5, 6, false]
-      }],
-      [{
-          'color': []
-      }, {
-          'background': []
-      }],
-      [{
-          'font': []
-      }],
-      [{
-          'align': []
-      }],
-      ['emoji'],
-    ];
-    let quill = require('quill');
-    editor_sett = new quill(editor, {
-            modules: {
-                toolbar: {
-                  container: toolbarOptions,
-                  handlers: {
-                      image: imageHandler
-                  }
-                }
-            },
-            theme: 'snow',
-        });
+    let SimpleMDE = require('simplemde');
+    editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
+    thumbnail = document.getElementById('file-upload');
 })
 </script>
 
@@ -49,22 +51,22 @@ onMount(async function(){
     </div>
     <div class="newpost-form">
         <div class="header">
-            <input id="title" name="title" placeholder="Title" required="true" style="background: transparent !important;
+            <input id="title" bind:value={title} name="title" placeholder="Title" required="true" style="background: transparent !important;
                 font-size: 2rem;" type="text" value="">
             <div style="display: flex;">
-            <input id="tag" name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text" value="">
+            <input id="tag" bind:value={tags} name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text" value="">
             <label for="file-upload" class="file-upload">
-                <i class="na-image" style="    vertical-align: sub;"></i>
+                <i class="na-image" style="vertical-align: sub;"></i>
             </label>
             <input type="file" id="file-upload" name="thumbnail" style="display: none">
         </div>
         </div>
         <br>
         <div class="body">
-            <div id="editor" bind:this={editor}></div>
+            <textarea id="editor"></textarea>
         </div>
         <div class="footer">
-            <button type="submit" class="newpost">Post</button>
+            <button on:click={NewPost} class="newpost">Post</button>
         </div>
     </div>
 </new_post>

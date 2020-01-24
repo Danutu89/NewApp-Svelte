@@ -5,13 +5,14 @@ export let article;
 import SideBarRight from '../components/SideBarRight.svelte';
 import { onMount } from 'svelte';
 import axios from 'axios';
-import imageHandler from '../modules/ImageHandler.js'
+import marked from 'marked';
 import { stores } from '@sapper/app';
 const { session } = stores();
 
 let like_button;
 let like_counter;
-let editor,editor_sett;
+let editor;
+let md2json;
 
 function Like_Post() {
     axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
@@ -32,40 +33,29 @@ function Like_Post() {
         })
 }
 
+async function Reply(){
+
+    let markdown = marked(editor.value());
+    let reply;
+    let json = await axios.post('https://newapp.nl/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
+        return response.data;
+    })
+    let data = await json;
+    if (data['operation'] == 'success'){
+        reply = {'text': markdown,author: {'id': $session.id, 'name': $session.name, 'avatar': $session.avatar, 'status': 'Online', 'reply_id': data['id']}};
+        article.replies = [...article.replies,reply];
+        editor.value("");
+    }else if (data['operation'] == 'error'){
+        console.log(data['error']);
+    }
+}
+
+
 onMount(async function(){
-    var toolbarOptions = [
-      ['bold', 'italic', 'underline'],
-      ['blockquote', 'code-block'],
-      ['link', 'image'],
-      [{
-          'header': [1, 2, 3, 4, 5, 6, false]
-      }],
-      [{
-          'color': []
-      }, {
-          'background': []
-      }],
-      [{
-          'font': []
-      }],
-      [{
-          'align': []
-      }],
-      ['emoji'],
-    ];
-    let quill = require('quill');
-    editor_sett = new quill(editor, {
-            modules: {
-                toolbar: {
-                  container: toolbarOptions,
-                  handlers: {
-                      image: imageHandler
-                  }
-                }
-            },
-            theme: 'snow',
-        });
+    let SimpleMDE = require('simplemde');
+    editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
 })
+
 
 </script>
 
@@ -133,13 +123,10 @@ onMount(async function(){
                     </div>
                     {#if article.closed == false}
                     <div class="post-reply" style="margin-top:3%;">
-                        <form class="form-thread" id="reply" role="form" method="post"
-                            action="">
-                            <div class="editor" bind:this={editor} id="editor" style="margin-bottom:1%;" minlength="0"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
-                            <div style="display:flex;">
-                            <button class="reply-button" type="submit" style="margin-inline-start:auto;">Post Reply</button>
-                            </div>
-                        </form>
+                        <textarea class="editor" id="editor" style="margin-bottom:1%;" minlength="0"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                        <div style="display:flex;">
+                        <button class="reply-button" on:click={Reply} style="margin-inline-start:auto;">Post Reply</button>
+                        </div>
                     </div>
                     {:else}
                     <div class="card" style="padding: 0.5rem;

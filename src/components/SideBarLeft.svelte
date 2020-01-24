@@ -14,11 +14,11 @@ function Follow_Tag(tag_) {
             tag_button[tag_] = x;
             if (response.data['operation'] == 'followed') {
                 x.innerHTML = 'Unfollow';
-                utilities.tags.splice( utilities.tags.indexOf(tag_), 1 );
+                utilities.tags = utilities.tags.splice( utilities.tags.indexOf(tag_), 1 );
                 user.flw_tags = [...user.flw_tags,tag_];
             } else if (response.data['operation']  == 'unfollowed') {
                 x.innerHTML = 'Follow';
-                user.flw_tags.splice( user.flw_tags.indexOf(tag_), 1 );
+                user.flw_tags = user.flw_tags.splice( user.flw_tags.indexOf(tag_), 1 );
                 utilities.tags = [...utilities.tags, tag_]
             }
         })

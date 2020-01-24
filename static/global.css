@@ -134,12 +134,11 @@
   }
   .CodeMirror {
 	border: var(--border) !important;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
 	padding: 20px;
 	font: inherit;
 	z-index: 1;
 	color: var(--color) !important;
+	border-radius: 20px !important;
 	background-color: var(--editor) !important;
   }
   .ql-container.ql-snow {
@@ -714,18 +713,19 @@
 	margin-block-start: 0.5rem;
 	cursor: pointer;
   }
-  content .article .post .post-reply .form-thread button.reply-button {
+  content .article .post .post-reply div button.reply-button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: #18BC9C;
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
+	margin-top: 0.5rem;
   }
-  content .article .post .post-reply .form-thread button.reply-button:hover {
+  content .article .post .post-reply div button.reply-button:hover {
 	background-color: #1cc7a6;
   }
-  content .article .post .post-reply .form-thread button.reply-button:active {
+  content .article .post .post-reply div button.reply-button:active {
 	background-color: #14947b;
   }
   content .article .post .post-author {
