@@ -174,7 +174,7 @@ onMount(async function(){
     <p style="margin-top: 1rem; font-size:initial;color:var(--color);">Not the answer you're looking for? Browse other questions tagged
         {#each article.tags as tag}<a href="/tag/{tag}"
             style="font-size:13px;margin-left:3px;"><tag>{tag}</tag> </a>{/each}
-        or <a href="/newpost" style="color:#18BC9C;"> ask your own question</a>.</p>
+        {#if $session.auth}or <a href="/newpost" rel="prefetch" style="color:#18BC9C;"> ask your own question</a>{/if}.</p>
 </div>
 {/if}
 

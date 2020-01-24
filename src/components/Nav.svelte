@@ -83,7 +83,7 @@ function OpenModalLogin(){
 	   <div style="margin-inline-start: auto;display:flex;">
      {#if $session.auth == true}
      <div class="navbar-item">
-          <a href="/newpost"><i class="na-plus-circle" style="color:var(--navbar-color);display:block;margin-top: calc((30px - 19px )/2);font-size:1.2rem;
+          <a href="/newpost" rel="prefetch"><i class="na-plus-circle" style="color:var(--navbar-color);display:block;margin-top: calc((30px - 19px )/2);font-size:1.2rem;
             margin-right:0.9rem;"></i></a>
       </div>
      <div class="navbar-item" style="cursor: pointer;">
