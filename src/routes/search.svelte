@@ -3,6 +3,9 @@
     export async function preload(page, session){
         let search = page.query.q;
         let args = '?search=' + search;
+        if (session.auth){
+            args+= '&t='+session.token;
+        }
         const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
                 return response.data;
             });

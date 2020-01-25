@@ -37,6 +37,17 @@ function onClickDocument(e){
         menu_open = false;
       }
     }
+    if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target) && !menu_open){
+      if(notifications_center_c.style['display'] == 'block'){
+        notifications_center_c.style['display'] = 'none';
+        overflow.classList.remove("show");
+      }
+    }else if(!notifications_center_c.contains(e.target) && !menu_open){
+      if(notifications_center_c.style['display'] == 'block'){
+        notifications_center_c.style['display'] = 'none';
+        overflow.classList.remove("show");
+      }
+    }
   }else{
     if(!l_modal_in.contains(e.target)){
       l_modal.style["visibility"] = "hidden";
@@ -135,9 +146,9 @@ async function OpenNotifications(){
       </div>
 	   <div style="margin-inline-start: auto;display:flex;">
      {#if $session.auth == true}
-     <div on:click={OpenNotifications} class="navbar-item">
+     <div on:click={OpenNotifications} bind:this={notifications_c} class="navbar-item">
        <div class="newapp-dropdown" id="notification-center" style="cursor: pointer;">
-         <i bind:this={notifications_c} class="na-bell" style="display:block;margin-top: 0.35rem;font-size:1.2rem;
+         <i class="na-bell" style="display:block;margin-top: 0.35rem;font-size:1.2rem;
           margin-right: 0.8rem;"></i>
           {#if notifications}
          {#if notifications.count > 0 }
