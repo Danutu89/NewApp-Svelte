@@ -71,7 +71,7 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>Saved Posts</title>
+<title>Discuss</title>
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>
