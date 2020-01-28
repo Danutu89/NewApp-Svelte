@@ -3,7 +3,7 @@
     export async function preload(page,session){
         let args = '';
         if (session.token){
-            args = '?t=' + session.token + '&mode=saved';
+            args = '?t=' + session.token + '&mode=tutorials';
         }else{
             this.redirect(302, '/');
         }
@@ -43,7 +43,7 @@ onMount(async function(){
 async function LoadMore(){
     if($session.auth){
         page++;
-        await axios.get('https://newapp.nl/api/home/'+ page +'?t=' + $session.token + '&mode=saved', { progress: false }).then(function (response) {
+        await axios.get('https://newapp.nl/api/home/'+ page +'?t=' + $session.token + '&mode=tutorials', { progress: false }).then(function (response) {
             articles = [...articles , ...response.data['posts']];
             articles = articles;
             if (response.data['hasnext']){

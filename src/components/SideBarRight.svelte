@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import OpenJoin from '../modules/OpenJoin.js';
+import OpenRegister from '../modules/OpenRegister.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
 
@@ -28,6 +29,19 @@ function Follow_User(id){
 
 </script>
 <div class="sidebar" id="sidebar-right">
+{#if $session.auth == false}
+<div class="widget" id="widget-register">
+        <div class="logo">
+                <img style="vertical-align: middle;margin-left: -1px;" src="https://newapp.nl/static/logo.svg" width="80" alt="">
+        </div>
+        <div class="moto">
+            JOIN US
+        </div>
+        <div class="register">
+            <button on:click={OpenRegister}>REGISTER</button>
+        </div>
+    </div>
+{/if}
 {#if page == "index"}
     <div class="widget-posts" id="widget-trending-posts">
         <div class="widget-header">

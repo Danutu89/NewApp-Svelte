@@ -13,20 +13,20 @@ let l_modal, r_modal, j_modal,l_modal_in, r_modal_in, j_modal_in, user = null, u
 var menu_open = false;
 let notifications,notifications_c,notifications_center_c;
 
-function logOut(){
+function LogOut(){
   cookies.remove("token");
   location.reload();
 }
 
 function onClickDocument(e){
   if($session.auth){
-    if(e.target != user_image && e.target != user_center){
+    if(!user_image.contains(e.target) && !user_center.contains(e.target)){
       if(user.style["display"] == "block"){
         user.style["display"] = "none";
         overflow.classList.remove("show");
         menu_open = false;
       }
-    }else if(e.target == user_image){
+    }else if(user_image.contains(e.target)){
       if(user.style["display"] == "none"){
         user.style["display"] = "block";
         overflow.classList.add("show");
@@ -46,6 +46,14 @@ function onClickDocument(e){
       if(notifications_center_c.style['display'] == 'block'){
         notifications_center_c.style['display'] = 'none';
         overflow.classList.remove("show");
+      }else{
+        if(notifications_center_c.style['display'] == 'block'){
+          notifications_center_c.style['display'] = 'none';
+          overflow.classList.remove("show");
+        }else{
+          overflow.classList.add("show");
+          notifications_center_c.style['display'] = 'block';
+        }
       }
     }
   }else{
@@ -82,7 +90,7 @@ onMount(async function(){
     capture: true
   });
 
-  let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token).then((response)=>{
+  let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token, { pregress: false }).then((response)=>{
     return response.data;
   })
   notifications = await not;
@@ -117,18 +125,10 @@ function handleKeydown(event) {
   }
 }
 
-async function OpenNotifications(){
-  if(notifications_center_c.style['display'] == 'block'){
-    notifications_center_c.style['display'] = 'none';
-    overflow.classList.remove("show");
-  }else{
-    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token).then((response)=>{
-      return response.data;
-    })
-    notifications = await not;  
-    overflow.classList.add("show");
-    notifications_center_c.style['display'] = 'block';
-  }
+function CloseMenu(){
+  user.style["display"] = "none";
+  overflow.classList.remove("show");
+  menu_open = false;
 }
 
 </script>
@@ -146,7 +146,7 @@ async function OpenNotifications(){
       </div>
 	   <div style="margin-inline-start: auto;display:flex;">
      {#if $session.auth == true}
-     <div on:click={OpenNotifications} bind:this={notifications_c} class="navbar-item">
+     <div bind:this={notifications_c} class="navbar-item">
        <div class="newapp-dropdown" id="notification-center" style="cursor: pointer;">
          <i class="na-bell" style="display:block;margin-top: 0.35rem;font-size:1.2rem;
           margin-right: 0.8rem;"></i>
@@ -197,17 +197,17 @@ async function OpenNotifications(){
                 @{$session.name}
                 <hr>
                 <a href="/user/{$session.name}" style="color: var(--navbar-color);">
-                <div class="dropdown-item">
+                <div class="dropdown-item" on:click={CloseMenu}>
                   <i class="na-user"></i> Profile
                 </div>
                 </a>
-                <a href="/user/{$session.name}/settings" style="color: var(--navbar-color);">
-                <div class="dropdown-item">
+                <a href="/user/settings" style="color: var(--navbar-color);">
+                <div class="dropdown-item" on:click={CloseMenu}>
                   <i class="na-user-cog"></i> Settings
                 </div>
                 </a>
                 <span style="color: var(--navbar-color);">
-                <div class="dropdown-item" on:click={logOut}>
+                <div class="dropdown-item" on:click={()=>{CloseMenu(),LogOut()}}>
                   <i class="na-sign-out-alt"></i> Logout
                 </div>
                 </span>

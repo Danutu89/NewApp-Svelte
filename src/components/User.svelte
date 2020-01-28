@@ -47,7 +47,7 @@ function Follow_User(id){
         <div class="profile-actions">
           {#if $session.auth}
           {#if $session.id == user.id}
-          <a href="/user/{user.name}/settings"><button class="follow-user" id="settings-user-{user.id}">Settings</button></a>
+          <a href="/user/settings"><button class="follow-user" id="settings-user-{user.id}">Settings</button></a>
           {:else}
           <button class="follow-user" bind:this={follow_button} on:click={()=>Follow_User(user.id)} id="follow-user-{user.id}">{#if user.info['following']}&#x2713 Following{:else}Follow{/if}</button>
           {/if}

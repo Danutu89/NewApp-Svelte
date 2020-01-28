@@ -1098,7 +1098,7 @@
 	margin-bottom: 1.5rem;
 	color: var(--color)
   }
-  content .sidebar .widget#widget-register .register a button {
+  content .sidebar .widget#widget-register .register button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: rgb(0, 157, 230);
 	border-radius: 20px;

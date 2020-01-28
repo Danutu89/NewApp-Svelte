@@ -74,7 +74,7 @@ function Follow_Tag(tag_) {
                 </div>
                 {/if}
                 <div class="widget-item">
-                        <div class="text"><a href="/all"><span class="section"><span style='color:#18BC9C'>•</span> All</span></a></div>
+                        <div class="text"><a href="/recent"><span class="section"><span style='color:#18BC9C'>•</span> Recent</span></a></div>
                 </div>
                 <div class="widget-item">
                         <div class="text"><a href="/questions"><span class="section"><span style='color:#18BC9C'>•</span> Questions</span></a></div>
