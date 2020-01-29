@@ -42,7 +42,9 @@ jobs:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
-      - run: ssh ${SSH_HOST}@${SSH_DOMAIN} ./deploy.sh
+      - run:
+          name: 'Deploy on server'        
+          command: ssh ${SSH_HOST}@${SSH_DOMAIN} /opt/NewApp-Svelte/${CIRCLE_BRANCH}/deploy.sh
 
 workflows:
   version: 2
