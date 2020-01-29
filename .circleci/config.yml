@@ -44,7 +44,7 @@ jobs:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
-      - run: ssh ${SSH_HOST}@${SSH_DOMAIN} "cd newappv2 && git pull && sudo kill -9 $(lsof -t -i:3000) && npm run build && nohup npm run start"
+      - run: ssh ${SSH_HOST}@${SSH_DOMAIN} "cd /home/newapp/newappv2 && git pull && sudo kill -9 $(lsof -t -i:3000) && npm run build && nohup npm run start"
 
 workflows:
   version: 2
