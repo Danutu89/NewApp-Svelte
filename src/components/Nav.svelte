@@ -90,10 +90,12 @@ onMount(async function(){
     capture: true
   });
 
-  let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token, { pregress: false }).then((response)=>{
-    return response.data;
-  })
-  notifications = await not;
+  if($session.auth){
+    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token, { pregress: false }).then((response)=>{
+      return response.data;
+    })
+    notifications = await not;
+  }
 
   return () => {
     document.removeEventListener('click', onClickDocument, {
