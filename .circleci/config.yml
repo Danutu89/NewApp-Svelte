@@ -43,4 +43,4 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            sshpass -p "{Pass}" __sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:NewappV2/
+            sshpass -p "{Pass}" __sapper__/export/* scp -r ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/NewappV2/
