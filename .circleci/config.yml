@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            scp dist/* ${SSH_HOST}@${SSH_DOMAIN}:NewappV2/
+            sshpass -p "{Pass}" dist/* ${SSH_HOST}@${SSH_DOMAIN}:NewappV2/
 
 workflows:
   version: 2
