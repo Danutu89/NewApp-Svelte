@@ -49,7 +49,7 @@ jobs:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
-      - run: scp -o StrictHostKeyChecking=no -r __sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/newappv2/
+      - run: scp -o StrictHostKeyChecking=no -r /__sapper__/export/. ${SSH_HOST}@${SSH_DOMAIN}:home/newapp/newappv2/
 
 workflows:
   version: 2
