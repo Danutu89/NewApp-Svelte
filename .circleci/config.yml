@@ -37,12 +37,12 @@ jobs:
 
       # run tests!
       - run: yarn test
-      
+
       - run:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
-      - run: ssh -t ${SSH_HOST}@${SSH_DOMAIN} deploy.sh
+      - run: ssh ${SSH_HOST}@${SSH_DOMAIN} deploy.sh
 
 workflows:
   version: 2
