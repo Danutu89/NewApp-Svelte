@@ -26,7 +26,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       
-      - run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb sshpass
+      - run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
       - run: yarn install
 
@@ -40,8 +40,25 @@ jobs:
 
       - run: yarn export
 
+  deploy:
+    working_directory: ~/repo
+    machine:
+      enabled: true
+    steps:
       - run:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
-      - run: sshpass -p ${PASS} scp -o StrictHostKeyChecking=no -r ~/repo/__sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/NewappV2/
+      - run: scp -o StrictHostKeyChecking=no -r __sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/NewappV2/
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
