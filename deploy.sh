@@ -4,5 +4,5 @@ git pull origin master
 sudo kill -9 $(lsof -t -i:3000)
 npm install --save
 npm run build
-nohup ./start.sh >/dev/null 2>&1 &
+nohup npm run start &
 exit 0
