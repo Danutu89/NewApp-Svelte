@@ -44,7 +44,7 @@ jobs:
 
       - run:
           name: 'Deploy on server'        
-          command: ssh ${SSH_HOST}@${SSH_DOMAIN} /opt/NewApp-Svelte/${CIRCLE_BRANCH}/deploy.sh
+          command: ssh $SSH_HOST@$SSH_DOMAIN /home/circleci/repo/deploy.sh
 
 workflows:
   version: 2
