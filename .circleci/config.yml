@@ -51,7 +51,7 @@ jobs:
 
       - run: scp -o StrictHostKeyChecking=no -r __sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/NewappV2/
 
-workflows:ssssssssssssssssssssssssss
+workflows:
   version: 2
   build-and-deploy:
     jobs:
