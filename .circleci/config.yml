@@ -45,7 +45,6 @@ jobs:
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
       - run: ssh -t ${SSH_HOST}@${SSH_DOMAIN} 'cd /home/newapp/newappv2;git pull;sudo kill -9 $(lsof -t -i:3000);npm run build;nohup npm run starts'
-      - run: 
 
 workflows:
   version: 2
