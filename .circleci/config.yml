@@ -51,7 +51,7 @@ jobs:
 
       - run: ssh ${SSH_HOST}@${SSH_DOMAIN} "scp -o StrictHostKeyChecking=no -r "
 
-      - run: scp -o StrictHostKeyChecking=no -r ./__sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}://home/newapp/newappv2/
+      - run: scp -o "StrictHostKeyChecking=no" -r ./__sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}://home/newapp/newappv2/
 
 workflows:
   version: 2
