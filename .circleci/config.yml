@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST deploy.sh
+            ssh $SSH_HOST@$SSH_DOMAIN deploy.sh
 
 workflows:
   version: 2
