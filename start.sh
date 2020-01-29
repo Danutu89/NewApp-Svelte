@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-npm run start
+npm run start &
+exit 0
