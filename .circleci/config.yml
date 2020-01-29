@@ -43,15 +43,15 @@ jobs:
   deploy:
     working_directory: ~/repo
     machine:
-      enabled: true
+      enabled: trues
     steps:
       - run:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
-      - run: scp -o StrictHostKeyChecking=no -r __sapper__/export/* "${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/NewappV2/"
+      - run: scp -o StrictHostKeyChecking=no -r __sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/NewappV2/
 
-workflows:
+workflows:ssssssssssssssssssssssssss
   version: 2
   build-and-deploy:
     jobs:
