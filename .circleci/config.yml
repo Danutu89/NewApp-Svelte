@@ -40,27 +40,16 @@ jobs:
 
       - run: yarn export
 
-  deploy:
-    working_directory: ~/repo
-    machine:
-      enabled: true
-    steps:
       - run:
           name: 'Adding Host key to know_hosts file'
           command: ssh-keyscan -t rsa ${SSH_DOMAIN} >> ~/.ssh/known_hosts
 
       - run: ssh ${SSH_HOST}@${SSH_DOMAIN} "scp -o StrictHostKeyChecking=no -r "
 
-      - run: scp -o "StrictHostKeyChecking=no" -r ./__sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}://home/newapp/newappv2/
+      - run: scp -r ./__sapper__/export/* ${SSH_HOST}@${SSH_DOMAIN}:/home/newapp/newappv2/
 
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
