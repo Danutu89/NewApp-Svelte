@@ -43,7 +43,7 @@ jobs:
   deploy:
     working_directory: ~/repo
     machine:
-      enabled: trues
+      enabled: true
     steps:
       - run:
           name: 'Adding Host key to know_hosts file'
