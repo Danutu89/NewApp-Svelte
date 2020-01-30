@@ -71,7 +71,7 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>Questions</title>
+<title>New App - Where Developers Learn, Share, & Code</title>
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>
