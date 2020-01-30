@@ -6,10 +6,10 @@
 <br>
 <p align="center">
   <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/python-v3.7-blue.svg" alt="python version">
+    <img src="https://img.shields.io/badge/svelte-v3.16-orange.svg" alt="svelte version">
   </a>
   <a href="#">
-    <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="rails version">
+    <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="build pass">
   </a>
 </p>
 
