@@ -89,7 +89,7 @@ onMount(async function(){
                         <img style="border-radius:50px;margin-right: 5px;" height="40px" width="40px"
                             src="{article.author.avatar}" alt="{article.author.name}">
                         <div class="author-info">
-                            <a href="/user/{article.author.name}"><span class="author-name">{article.author.real_name}</span></a>
+                            <a href="/user/{article.author.id}"><span class="author-name">{article.author.real_name}</span></a>
                             <div class="post-tags">
                                 {#each article.tags as tag}
                                 <a href="/tag/{tag}" style="font-size:13px;">
@@ -172,7 +172,7 @@ onMount(async function(){
                     <div id="reply_name_{reply.author.id}" style="margin-top:-0.1rem;">
     
                         <a id="reply_name" style="color: #333;font-size: 1rem;"
-                            href="/user/{reply.author.name}">@{reply.author.name}</a>
+                            href="/user/{reply.author.id}">@{reply.author.name}</a>
                         <p style="font-size: 60%;opacity: 0.6;margin-bottom: 0;margin-top: 0;">
                             { reply.author.status }
                         </p>

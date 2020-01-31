@@ -84,7 +84,7 @@ content .sidebar#sidebar-right{
   }
 </style>
     <div class="user-card" style="align-items: unset">
-        <a rel="prefetch" href="/user/{author.name}"
+        <a rel="prefetch" href="/user/{author.id}"
             style="margin-bottom:0.2rem;display: flex">
         <div class="user-image">
             <img class="profile_image" src="{author.avatar}" height="50px" width="50px" title="profile image" alt="{author.name}">
@@ -99,7 +99,7 @@ content .sidebar#sidebar-right{
             <div class="profile-actions">
                 {#if $session.auth}                                         
                     {#if author.id == $session.id}
-                    <a href="/user/{$session.name}"><button class="follow-user"
+                    <a href="/user/{$session.id}"><button class="follow-user"
                         id="follow-user-{author.id}">Profile</button></a>
                     {:else}
                         {#if user.following}
