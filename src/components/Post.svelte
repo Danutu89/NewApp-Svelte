@@ -89,7 +89,7 @@ onMount(async function(){
                         <img style="border-radius:50px;margin-right: 5px;" height="40px" width="40px"
                             src="{article.author.avatar}" alt="{article.author.name}">
                         <div class="author-info">
-                            <a href="/user/{article.author.id}"><span class="author-name">{article.author.real_name}</span></a>
+                            <a href="/user/{article.author.name}"><span class="author-name">{article.author.real_name}</span></a>
                             <div class="post-tags">
                                 {#each article.tags as tag}
                                 <a href="/tag/{tag}" style="font-size:13px;">

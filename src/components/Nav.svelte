@@ -198,7 +198,7 @@ function CloseMenu(){
               <div bind:this={user} class="newapp-dropdown-content" id="user" style="display: none;">
                 @{$session.name}
                 <hr>
-                <a href="/user/{$session.id}" style="color: var(--navbar-color);">
+                <a href="/user/{$session.name}" style="color: var(--navbar-color);">
                 <div class="dropdown-item" on:click={CloseMenu}>
                   <i class="na-user"></i> Profile
                 </div>
