@@ -75,7 +75,7 @@ function SavePost(id){
                     <div class="article-title"><a rel="prefetch" href="/post/{article.link}"><h1 style="font-size: 1.5rem;
                         font-weight: 400;
                         margin: 0;">{article.title}</h1></a></div>
-                    <a rel="prefetch" href="/user/{article.author.name}"><div class="article-author">Author: {article.author.name}</div></a>
+                    <a rel="prefetch" href="/user/{article.author.id}"><div class="article-author">Author: {article.author.name}</div></a>
                     <div class="article-tags">
                         <span>Tags: </span>
                         {#each article.tags as tag}

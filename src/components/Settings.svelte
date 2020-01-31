@@ -51,7 +51,7 @@ function SwitchPanel(panel){
           Email:
           <input id="email" name="email" placeholder="Email" type="text" value="{user.email}">
           Real Name:
-          <input id="realname" name="realname" placeholder="Real Name" type="text" value="{user.teal_name}">
+          <input id="realname" name="realname" placeholder="Real Name" type="text" value="{user.real_name}">
           Bio:
           <input id="bio" name="bio" placeholder="Bio" type="text" value="{user.bio}">
           Profession:
