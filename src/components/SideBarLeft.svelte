@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { onMount } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
@@ -7,6 +8,15 @@ const { session } = stores();
 export let user;
 export let utilities;
 let tag_button = [];
+let isMobile;
+let sidebar;
+let overflow;
+
+let touchstartX = 0;
+let touchstartY = 0;
+let touchendX = 0;
+let touchendY = 0;
+var wrapper_opened = true;
 
 function Follow_Tag(tag_) {
     if ($session.auth){
@@ -31,10 +41,63 @@ function Follow_Tag(tag_) {
     }
 }
 
+function onScreenChange(){
+    isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
+    if (isMobile === true){
+        sidebar.classList.add('wrapper-left');
+        sidebar.classList.remove('sidebar');
+    }else{
+        sidebar.classList.remove('wrapper-left');
+        sidebar.classList.add('sidebar');
+    }
+}
+
+onMount(async function(){
+    overflow = document.querySelector("overflow");
+    isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
+    window.addEventListener('resize', onScreenChange);
+    if (isMobile === true){
+        sidebar.classList.add('wrapper-left');
+        sidebar.classList.remove('sidebar');
+    }else{
+        sidebar.classList.remove('wrapper-left');
+        sidebar.classList.add('sidebar');
+    }
+    document.addEventListener('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+    touchstartY = event.changedTouches[0].screenY;
+    }, false);
+
+    document.addEventListener('touchend', function(event) {
+        touchendX = event.changedTouches[0].screenX;
+        touchendY = event.changedTouches[0].screenY;
+        handleGesture(event);
+    }, false); 
+})
+
+function handleGesture(event) {
+    //Right Swipe
+    if (touchendX - 50 < touchstartX && touchendY - touchstartY < 20 && touchstartY - touchendY < 20 && touchendX != touchstartX) {
+      if (!wrapper_opened){
+        sidebar.classList.remove('toggled');
+        overflow.classList.remove("show");
+        wrapper_opened = true;
+      }
+    }
+    //Left Swipe
+    if (touchendX - 50 > touchstartX && touchstartY - touchendY < 20 && touchendY - touchstartY < 20 && touchendX != touchstartX) {
+      if (wrapper_opened){
+        sidebar.classList.add('toggled');
+        overflow.classList.add("show");
+        wrapper_opened = false;
+      }
+    }
+    console.log(event.target);
+}
 
 </script>
 
-<div class="sidebar" id="sidebar-left">
+<div class="sidebar" id="sidebar-left" bind:this={sidebar}>
 <div class="widget" id="pwa">
     <div class="widget-list">
         <div class="widget-item" style="display: flex;">
