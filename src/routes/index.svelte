@@ -1,5 +1,5 @@
 <script>
-import { onMount } from "svelte";
+import { onMount, onDestroy } from "svelte";
 import SideBarLeft from '../components/SideBarLeft.svelte';
 import SideBarRight from '../components/SideBarRight.svelte';
 import Posts from '../components/Posts.svelte';
@@ -15,6 +15,7 @@ let page_articles = [];
 let page = 1;
 let isLoadMore = true, CanLoad = false;
 let args = "";
+let document_;
 
 if ($session.auth){
     args = "?t="+$session.token;
@@ -32,8 +33,14 @@ onMount(async function() {
         user = home['user'];
     }
     utilities = home['utilities'];
+    document_ = document;
     document.addEventListener("scroll", onScroll);
 });
+
+onDestroy(function(){
+    if(document_)
+        document_.removeEventListener("scroll", onScroll);
+})
 
 async function LoadMore(){
     page++;

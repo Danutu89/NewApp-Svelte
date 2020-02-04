@@ -18,7 +18,7 @@
 import SideBarLeft from '../components/SideBarLeft.svelte';
 import SideBarRight from '../components/SideBarRight.svelte';
 import Posts from '../components/Posts.svelte';
-import { onMount, beforeUpdate  } from "svelte";
+import { onMount, beforeUpdate, onDestroy  } from "svelte";
 import { stores } from '@sapper/app';
 const { session } = stores();
 
@@ -29,6 +29,7 @@ let articles;
 let trending;
 let utilities;
 let user;
+let document_;
 trending = search['trending'];
 articles = search['posts'];
 if($session.auth){
@@ -37,6 +38,7 @@ if($session.auth){
 utilities = search['utilities'];
 
 onMount(async function(){
+    document_ = document;
     document.addEventListener("scroll", onScroll);
 })
 
@@ -48,6 +50,11 @@ beforeUpdate(()=>{
     }
     utilities = search['utilities'];
 
+})
+
+onDestroy(function(){
+    if(document_)
+        document_.removeEventListener("scroll", onScroll);
 })
 
 async function LoadMore(){

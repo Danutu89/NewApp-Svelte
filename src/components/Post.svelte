@@ -191,4 +191,4 @@ onMount(async function(){
 </div>
 {/if}
 
-<SideBarRight author={article.author} user={article.user} page={"post"}/>
+<SideBarRight author={article.author} user={article.user} article={article} page={"post"}/>

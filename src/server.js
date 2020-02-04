@@ -20,6 +20,7 @@ polka() // You can also use Express
 				req.id = decoded.id;
 				req.token = cookies.get('token');
 				req.real_name = decoded.realname;
+				req.permissions = decoded.permissions;
 				req.auth = true;
 			}else{
 				req.name = '';
@@ -27,6 +28,7 @@ polka() // You can also use Express
 				req.id = null,
 				req.token = '';
 				req.real_name = '';
+				req.permissions = {};
 				req.auth = false;
 			}
 			next();
@@ -38,6 +40,7 @@ polka() // You can also use Express
 				avatar: req.avatar,
 				token: req.token,
 				real_name: req.real_name,
+				permissions: req.permissions,
 				auth: req.auth
 
 			})

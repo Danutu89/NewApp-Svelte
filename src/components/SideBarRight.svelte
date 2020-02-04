@@ -2,29 +2,52 @@
 import axios from 'axios';
 import OpenJoin from '../modules/OpenJoin.js';
 import OpenRegister from '../modules/OpenRegister.js';
-import { stores } from '@sapper/app';
+import { stores, goto } from '@sapper/app';
 const { session } = stores();
 
 export let trending;
 export let page;
 export let author;
 export let user;
+export let article;
 let follow_button;
 
 function Follow_User(id){
-    if($session.auth){
-        axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token, { progress: false })
-        .then(response => {
-            if (response.data['operation'] == 'unfollowed') {
-                follow_button.innerHTML = 'Follow';
-            } else if (response.data['operation'] == 'followed') {
-                follow_button.innerHTML = '&#x2713 Following';
-            }
-
-        })
-    }else{
+    if($session.auth == false){
         OpenJoin();
+        return;
     }
+    axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token, { progress: false }).then((response) => {
+        if (response.status != 200){
+            //alert
+            return;
+        }
+        if (response.data['operation'] == 'unfollowed') {
+            follow_button.innerHTML = 'Follow';
+        } else if (response.data['operation'] == 'followed') {
+            follow_button.innerHTML = '&#x2713 Following';
+        }
+
+    })
+}
+
+function Delete_Post(id){
+    if($session.auth == false){
+        OpenJoin();
+        return;
+    }
+    axios.get('https://newapp.nl/api/post/delete/' + id + '?t=' + $session.token).then((response)=>{
+        if (response.status != 200){
+            //alert
+            return;
+        }
+        if (response.data['operation'] == 'success'){
+            goto('/');
+        } else if (response.data['operation'] == 'failed'){
+            //alert
+            return;
+        }
+    });
 }
 
 </script>
@@ -83,6 +106,35 @@ content .sidebar#sidebar-right{
     align-self: flex-start;
   }
 </style>
+    {#if $session.auth && $session.permissions.edit_post_permission }
+        <div class="widget">
+        <div class="widget-header">
+            <div class="widget-title">Post Actions</div>
+        </div>
+        <div class="widget-list">
+            {#if $session.permissions.close_post_permission }
+            {#if article.closed == false }
+            <div class="widget-item" style="display: flex;justify-content: space-between;">
+                <div class="text">Close Post</div>
+                <button class="widget-button">Close</button>
+            </div>
+            {/if }
+            {/if }
+            {#if $session.permissions.delete_post_permission }
+            <div class="widget-item" style="display: flex;justify-content: space-between;">
+                <div class="text">Delete Post</div>
+                <button on:click={()=>{Delete_Post(article.id)}} class="widget-button">Delete</button>
+            </div>
+            {/if } 
+            {#if $session.permissions.edit_post_permission || $session.id == article.author.id }
+            <div class="widget-item" style="display: flex;justify-content: space-between;">
+                    <div class="text" style="display:flex;white-space: nowrap;">Edit Post</div>
+                    <div style="margin: 0;width:0;display:contents"><button class="widget-button">Edit</button></div>
+                </div>
+            {/if }
+        </div>
+    </div>
+    {/if}
     <div class="user-card" style="align-items: unset">
         <a rel="prefetch" href="/user/{author.name}"
             style="margin-bottom:0.2rem;display: flex">

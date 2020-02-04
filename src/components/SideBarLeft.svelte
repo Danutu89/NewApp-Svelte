@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import { onMount } from 'svelte';
+import { onMount, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
@@ -17,6 +17,9 @@ let touchstartY = 0;
 let touchendX = 0;
 let touchendY = 0;
 var wrapper_opened = true;
+
+let document_;
+let window_;
 
 function Follow_Tag(tag_) {
     if ($session.auth){
@@ -56,6 +59,7 @@ onMount(async function(){
     overflow = document.querySelector("overflow");
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
     window.addEventListener('resize', onScreenChange);
+    window_ = window;
     if (isMobile === true){
         sidebar.classList.add('wrapper-left');
         sidebar.classList.remove('sidebar');
@@ -73,6 +77,22 @@ onMount(async function(){
         touchendY = event.changedTouches[0].screenY;
         handleGesture(event);
     }, false); 
+    document_ = document;
+})
+
+onDestroy(function(){
+    if(document_ && window_){
+        document_.removeEventListener('touchend', function(event) {
+        touchendX = event.changedTouches[0].screenX;
+        touchendY = event.changedTouches[0].screenY;
+        handleGesture(event);
+        }, false);
+        document_.removeEventListener('touchstart', function(event) {
+        touchstartX = event.changedTouches[0].screenX;
+        touchstartY = event.changedTouches[0].screenY;
+        }, false);
+        window_.removeEventListener('resize', onScreenChange);
+    }
 })
 
 function handleGesture(event) {
@@ -92,7 +112,7 @@ function handleGesture(event) {
         wrapper_opened = false;
       }
     }
-    console.log(event.target);
+
 }
 
 </script>
