@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios';
 import { stores, goto } from '@sapper/app';
-const session = stores();
+const {session} = stores();
 
 export let user;
 
