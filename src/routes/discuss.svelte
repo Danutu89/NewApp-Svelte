@@ -16,7 +16,7 @@
 import SideBarLeft from '../components/SideBarLeft.svelte';
 import SideBarRight from '../components/SideBarRight.svelte';
 import Posts from '../components/Posts.svelte';
-import { onMount, beforeUpdate  } from "svelte";
+import { onMount, beforeUpdate, onDestroy } from "svelte";
 import { stores } from '@sapper/app';
 const { session } = stores();
 
