@@ -48,19 +48,23 @@ onDestroy(function(){
 })
 
 async function LoadMore(){
-    if($session.auth){
-        page++;
-        await axios.get('https://newapp.nl/api/home/'+ page +'?t=' + $session.token + '&mode=questions', { progress: false }).then(function (response) {
-            articles = [...articles , ...response.data['posts']];
-            articles = articles;
-            if (response.data['hasnext']){
-                isLoadMore = true;
-            }
-            else{
-                isLoadMore = false;
-            }
-        });
+    let args = '';
+    if (session.token){
+        args = '?t=' + session.token + '&mode=questions';
+    }else{
+        args = '?mode=questions';
     }
+    page++;
+    await axios.get('https://newapp.nl/api/home/'+ page +args, { progress: false }).then(function (response) {
+        articles = [...articles , ...response.data['posts']];
+        articles = articles;
+        if (response.data['hasnext']){
+            isLoadMore = true;
+        }
+        else{
+            isLoadMore = false;
+        }
+    });
 }
 
 function onScroll(e) {
