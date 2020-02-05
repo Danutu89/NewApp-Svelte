@@ -27,6 +27,7 @@ let articles;
 let trending;
 let utilities;
 let user;
+let document_;
 trending = saved['trending'];
 articles = saved['posts'];
 if($session.auth){
