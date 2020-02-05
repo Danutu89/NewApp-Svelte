@@ -4,6 +4,8 @@
         let args = '';
         if (session.token){
             args = '?t=' + session.token + '&mode=recent';
+        }else{
+            args = '?mode=recent';
         }
         const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
                 return response.data;
