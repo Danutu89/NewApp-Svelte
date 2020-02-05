@@ -1,9 +1,9 @@
 {
-	"background_color": "#ffffff",
-	"theme_color": "#333333",
-	"name": "TODO",
-	"short_name": "TODO",
-	"display": "minimal-ui",
+	"background_color": "#000000",
+	"theme_color": "#18BC9C",
+	"name": "NewApp",
+	"short_name": "NewApp",
+	"display": "standalone",
 	"start_url": "/",
 	"icons": [
 		{

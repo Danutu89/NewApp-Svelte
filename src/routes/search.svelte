@@ -87,7 +87,7 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>Search - {search}</title>
+<title>Search - {search.utilities['search']}</title>
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

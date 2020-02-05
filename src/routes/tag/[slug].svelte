@@ -82,7 +82,7 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>Tag - {title}</title>
+<title>NewApp - {title}</title>
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

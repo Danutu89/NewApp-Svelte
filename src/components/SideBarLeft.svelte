@@ -56,6 +56,7 @@ function onScreenChange(){
 }
 
 onMount(async function(){
+    sidebar = document.getElementById('sidebar-left');
     overflow = document.querySelector("overflow");
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
     window.addEventListener('resize', onScreenChange);
@@ -92,6 +93,8 @@ onDestroy(function(){
         touchstartY = event.changedTouches[0].screenY;
         }, false);
         window_.removeEventListener('resize', onScreenChange);
+        overflow.classList.remove("show");
+        sidebar.classList.remove('toggled');
     }
 })
 
@@ -117,7 +120,7 @@ function handleGesture(event) {
 
 </script>
 
-<div class="sidebar" id="sidebar-left" bind:this={sidebar}>
+<div class="sidebar" id="sidebar-left">
 <div class="widget" id="pwa">
     <div class="widget-list">
         <div class="widget-item" style="display: flex;">

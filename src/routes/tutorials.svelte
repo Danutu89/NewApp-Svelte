@@ -4,8 +4,6 @@
         let args = '';
         if (session.token){
             args = '?t=' + session.token + '&mode=tutorials';
-        }else{
-            this.redirect(302, '/');
         }
         const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
                 return response.data;
