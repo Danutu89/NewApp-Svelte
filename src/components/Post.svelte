@@ -99,7 +99,7 @@ onMount(async function(){
                             </div>
                         </div>
                     </div>
-                    <div class="post_content">
+                    <div class="post_content" style="margin-top: 1.5rem;">
                         {@html article.text}
                     </div>
                     <br>

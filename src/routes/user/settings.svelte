@@ -21,4 +21,8 @@
     export let user;
 </script>
 
+<svelte:head>
+<title>Settings - NewApp</title>
+</svelte:head>
+
 <Settings user={user} />

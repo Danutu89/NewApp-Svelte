@@ -2,12 +2,17 @@
 import axios from 'axios';
 import { onMount } from 'svelte';
 import { stores, goto } from '@sapper/app';
+import jwt from 'jsonwebtoken';
+import Cookie from 'cookie-universal';
+const cookies = Cookie();
 const {session} = stores();
 
 export let user;
 
+let decoded=false;
+
 let editInfo, editMisc;
-let s_real_name=user.name,
+let s_real_name=user.real_name,
     s_email=user.email,
     s_bio=user.bio,
     s_profession=user.bio,
@@ -60,19 +65,42 @@ async function SaveSettings(){
     github: s_g, 
     website: s_w, 
     genre: s_genre, 
-    theme_mode: 
-    s_theme_mode, 
+    theme_mode: s_theme_mode, 
     theme: s_theme,
     avatarimg: c_avatarimg,
     coverimg: c_coverimg
   }
-  formdata.append('data', JSON.stringify(pyaload));
+  formdata.append('data', JSON.stringify(payload));
 
   const resp = await axios.post('https://newapp.nl/api/user/settings?t='+token, formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response)=>{
     return response;
   })
 
   if (resp.status != 200){
+    //alert
+    return;
+  }
+
+  try {
+    decoded = jwt.verify(resp.data['token'], "mRo48tU4ebP6jIshqaoNf2HAnesrCGHm");
+  } catch (error) {
+    decoded = false;
+  }
+
+  if (decoded != false){
+    cookies.set("token", resp.data['token'],{maxAge:60 * 60 * 24 * 30, path: '/'});
+    session.set({
+				name: decoded.name,
+				id: decoded.id,
+				avatar: decoded.avatar,
+				token: resp.data['token'],
+				real_name: decoded.real_name,
+				permissions: decoded.permissions,
+				theme: decoded.theme,
+				theme_mode: decoded.theme_mode,
+				auth: true
+			})
+  }else{
     //alert
     return;
   }
@@ -106,7 +134,7 @@ onMount(async function(){
         </div>
       </div>
       <div class="profile-actions">
-          <button type="submit" class="save-settings">Save</button>
+          <button type="submit" class="save-settings" on:click={SaveSettings}>Save</button>
       </div>
       <div class="widgets">
         <div class="settings-menu">
@@ -143,7 +171,7 @@ onMount(async function(){
         <div class="col-2"  style="text-align:left;">
           Gender:
           <br>
-          <select id="genre" name="genre"><option selected="" value="Male">Male</option><option value="Female">Female</option></select>
+          <select id="genre" bind:value={s_genre} name="genre"><option value="Male">Male</option><option value="Female">Female</option></select>
           <br>
           Avatar:
           <br>
