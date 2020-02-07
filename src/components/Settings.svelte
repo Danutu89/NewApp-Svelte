@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { onMount } from 'svelte';
 import { stores, goto } from '@sapper/app';
 const {session} = stores();
 
