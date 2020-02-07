@@ -7,8 +7,18 @@ const {session} = stores();
 export let user;
 
 let editInfo, editMisc;
-let s_real_name,s_email,s_bio,s_profession,s_i,s_f,s_t,s_g,s_w;
-let s_genre,s_theme_mode,s_theme;
+let s_real_name=user.name,
+    s_email=user.email,
+    s_bio=user.bio,
+    s_profession=user.bio,
+    s_i=user.instagram,
+    s_f=user.facebook,
+    s_t=user.twitter,
+    s_g=user.github,
+    s_w=user.website;
+let s_genre=user.genre,
+    s_theme_mode=user.theme_mode,
+    s_theme=user.theme;
 let s_avatarimg, s_coverimg;
 let c_coverimg,c_avatarimg;
 
@@ -120,15 +130,15 @@ onMount(async function(){
           Profession:
           <input id="profession" name="profession" placeholder="Profession" type="text" bind:value={s_profession} value="{user.profession}">
           Instagram:
-          <input id="instagram" name="instagram" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Instagram" type="text" bind:value={s_i} value="{user.instagram}">
+          <input id="instagram" name="instagram" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Instagram" type="text" bind:value={s_i}>
           Facebook:
-          <input id="facebook" name="facebook" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Facebook" type="text" bind:value={s_f} value="{user.facebook}">
+          <input id="facebook" name="facebook" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Facebook" type="text" bind:value={s_f}>
           Twitter:
-          <input id="twitter" name="twitter" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Twitter" type="text" bind:value={s_t} value="{user.twitter}">
+          <input id="twitter" name="twitter" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Twitter" type="text" bind:value={s_t}>
           Github:
-          <input id="github" name="github" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Github" type="text" bind:value={s_g} value="{user.github}">
+          <input id="github" name="github" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Github" type="text" bind:value={s_g}>
           Website:
-          <input id="website" name="website" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Website" type="text" bind:value={s_w} value="{user.website}">
+          <input id="website" name="website" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Website" type="text" bind:value={s_w}>
         </div>
         <div class="col-2"  style="text-align:left;">
           Gender:
