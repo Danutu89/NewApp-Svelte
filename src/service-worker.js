@@ -123,7 +123,7 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('push', function(e) {
-	data = JSON.parse(e.data.text());
+	let data = JSON.parse(e.data.text());
 	var options = {
 	  body: 'This notification was generated from a push!',
 	  icon: 'icons/android-chrome-192x192.png',
@@ -141,7 +141,7 @@ self.addEventListener('push', function(e) {
 });
 
 self.addEventListener('notificationclick', function(event) {
-	data = JSON.parse(e.data.text());
+	let data = JSON.parse(e.data.text());
 	event.notification.close();
 	event.waitUntil(
 	  clients.openWindow(data.link + "?notification_id=" + data.id)
