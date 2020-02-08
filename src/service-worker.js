@@ -132,7 +132,8 @@ self.addEventListener('push', function(e) {
 	  data: {
 		dateOfArrival: Date.now(),
 		primaryKey: '2',
-		link: data['link']
+		link: data['link'],
+		id: data['id']
 	  }
 	};
 	e.waitUntil(
@@ -141,10 +142,9 @@ self.addEventListener('push', function(e) {
 });
 
 self.addEventListener('notificationclick', function(event) {
-	let data = JSON.parse(event.data.text());
 	event.notification.close();
 	event.waitUntil(
-	  clients.openWindow(data.link + "?notification_id=" + data.id)
+	  clients.openWindow(event.notification.data.link + "?notification_id=" + event.notification.data.id)
 	);
 })
 
