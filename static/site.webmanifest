@@ -1,7 +1,6 @@
 {
     "name": "NewApp",
-	"short_name": "NewApp",
-	"start_url": "/",
+    "short_name": "NewApp",
     "icons": [
         {
             "src": "icons/android-chrome-192x192.png",
