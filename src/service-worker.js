@@ -123,6 +123,7 @@ self.addEventListener('fetch', event => {
 });
 
 self.addEventListener('push', function(e) {
+	data = JSON.parse(e.data.text());
 	var options = {
 	  body: 'This notification was generated from a push!',
 	  icon: 'icons/android-chrome-192x192.png',
@@ -131,18 +132,19 @@ self.addEventListener('push', function(e) {
 	  data: {
 		dateOfArrival: Date.now(),
 		primaryKey: '2',
-		link: e.data['link']
+		link: data['link']
 	  }
 	};
 	e.waitUntil(
-	  self.registration.showNotification(e.data['text'], options)
+	  self.registration.showNotification(data['text'], options)
 	);
 });
 
 self.addEventListener('notificationclick', function(event) {
+	data = JSON.parse(e.data.text());
 	event.notification.close();
 	event.waitUntil(
-	  clients.openWindow(event.data.link + "?notification_id=" + event.data.id)
+	  clients.openWindow(data.link + "?notification_id=" + data.id)
 	);
 })
 
