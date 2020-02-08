@@ -126,7 +126,7 @@ self.addEventListener('push', function(e) {
 	var options = {
 	  body: 'This notification was generated from a push!',
 	  icon: 'icons/android-chrome-192x192.png',
-	  badge: 'favicon.png',
+	  badge: 'favicon.ico',
 	  tag: "request",
 	  vibrate: [100, 50, 100],
 	  data: {
