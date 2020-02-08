@@ -141,7 +141,7 @@ self.addEventListener('push', function(e) {
 });
 
 self.addEventListener('notificationclick', function(event) {
-	let data = JSON.parse(e.data.text());
+	let data = JSON.parse(event.data.text());
 	event.notification.close();
 	event.waitUntil(
 	  clients.openWindow(data.link + "?notification_id=" + data.id)
