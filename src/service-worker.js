@@ -127,6 +127,7 @@ self.addEventListener('push', function(e) {
 	  body: 'This notification was generated from a push!',
 	  icon: 'logo-192.png',
 	  badge: 'favicon.png',
+	  dir: 'rtl',
 	  vibrate: [100, 50, 100],
 	  data: {
 		dateOfArrival: Date.now(),
