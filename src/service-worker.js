@@ -127,17 +127,24 @@ self.addEventListener('push', function(e) {
 	  body: 'This notification was generated from a push!',
 	  icon: 'icons/android-chrome-192x192.png',
 	  badge: 'favicon.ico',
-	  tag: "request",
-	  vibrate: [100, 50, 100],
+	  vibrate: [100, 50, 100, 50, 100],
 	  data: {
 		dateOfArrival: Date.now(),
-		primaryKey: '2'
+		primaryKey: '2',
+		link: e.data['link']
 	  }
 	};
 	e.waitUntil(
-	  self.registration.showNotification(e.data.text(), options)
+	  self.registration.showNotification(e.data['text'], options)
 	);
 });
+
+self.addEventListener('notificationclick', function(event) {
+	event.notification.close();
+	event.waitUntil(
+	  clients.openWindow(event.data.link + "?notification_id=" + event.data.id)
+	);
+})
 
 self.addEventListener('pushsubscriptionchange', function(event) {
 	const applicationServerKey = urlB64ToUint8Array(
