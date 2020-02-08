@@ -125,7 +125,7 @@ self.addEventListener('fetch', event => {
 self.addEventListener('push', function(e) {
 	let data = JSON.parse(e.data.text());
 	var options = {
-	  body: 'This notification was generated from a push!',
+	  body: data['text'],
 	  icon: 'icons/android-chrome-192x192.png',
 	  badge: 'favicon.ico',
 	  vibrate: [100, 50, 100, 50, 100],
@@ -136,7 +136,7 @@ self.addEventListener('push', function(e) {
 	  }
 	};
 	e.waitUntil(
-	  self.registration.showNotification(data['text'], options)
+	  self.registration.showNotification("NewApp", options)
 	);
 });
 
