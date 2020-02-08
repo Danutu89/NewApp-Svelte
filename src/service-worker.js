@@ -33,7 +33,8 @@ const saveSubscription = async (subscription,data) => {
 };
 
 self.addEventListener('message', async event => {
-	if (Notification.permission === "granted"){
+	const subscription = await self.registration.pushManager.getSubscription();
+	if(!subscription){
 		try {
 			const applicationServerKey = urlB64ToUint8Array(
 			"BGfsb_G1tXj-jSN8h-9spz2znzfm1sib-Xx42FLmN8p7xQwv8C_ke_-77DFKkBiv843msSFlvQw0PDr2--mpJmw"
@@ -134,4 +135,16 @@ self.addEventListener('push', function(e) {
 	e.waitUntil(
 	  self.registration.showNotification(e.data.text(), options)
 	);
-  });
+});
+
+self.addEventListener('pushsubscriptionchange', function(event) {
+	const applicationServerKey = urlB64ToUint8Array(
+		"BGfsb_G1tXj-jSN8h-9spz2znzfm1sib-Xx42FLmN8p7xQwv8C_ke_-77DFKkBiv843msSFlvQw0PDr2--mpJmw"
+		);
+	const options = { applicationServerKey, userVisibleOnly: true };
+	event.waitUntil(
+		self.registration.pushManager.subscribe(options).then(function(subscription){
+			saveSubscription(subscription,event.data);
+		})
+	)
+});  

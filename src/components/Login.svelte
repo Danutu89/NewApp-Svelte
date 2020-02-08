@@ -109,9 +109,6 @@ async function Login(){
 
   if (decoded != false){
     cookies.set("token", check,{maxAge:60 * 60 * 24 * 30, path: '/'});
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.controller.postMessage(check);
-    }
     window.location.reload();
     CloseModalLogin();
   }

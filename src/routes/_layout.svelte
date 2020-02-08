@@ -13,6 +13,11 @@
 				if (Notification.permission !== status) {
 					Notification.permission = status;
 				}
+				if (Notification.permission === 'granted'){
+					if ('serviceWorker' in navigator) {
+						navigator.serviceWorker.controller.postMessage($session.token);
+					}
+				}
 				});
 			}
 		}
