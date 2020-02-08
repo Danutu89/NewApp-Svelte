@@ -1371,14 +1371,15 @@
   }
   content profile .profile-main .sidebar-info .widgets .social {
 	border: var(--border);
-	border-radius: 20px;
-	width: 70%;
-	background-color: var(--background);
-	text-align: left;
-	padding: 0.8rem;
-	margin: auto;
-	margin-bottom: 0.5rem;
-	color: var(--color);
+    border-radius: 20px;
+    width: 70%;
+    background-color: var(--background);
+    box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    padding: 0.8rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    color: var(--color)
   }
   content profile .profile-main .sidebar-info .widgets .social .header {
 	margin-bottom: 0.4rem;
@@ -1817,6 +1818,28 @@
   }
   input[type=password]:focus {
 	outline: none;
+  }
+  .input-group{
+	display: flex;
+  }
+  .input-group > div{
+	display: table-cell;
+  }
+  .input-group-icon{
+	background:#eee;
+	color: #777;
+	border: none;
+    border-radius: 20px 0px 0px 20px;
+    padding: 0.4rem;
+    margin-bottom: 4%;
+    font-size: 0.7rem;
+    border-right: #afafaf 1px solid;
+  }
+  .input-group-area{
+	width:100%;
+  }
+  .input-group input{
+	border-radius: 0px 20px 20px 0px;
   }
   content .article .post .user-actions-info {
 	font-size: 0.7rem;

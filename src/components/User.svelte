@@ -81,38 +81,38 @@ function Follow_User(id){
             </div>
           </div>
           {/if}
-          {#if user.facebook || user.instagram || user.twitter || user.github || user.website }
+          {#if user.social }
           <div class="social">
             <div class="header"><i class="na-users"></i> Social</div>
             <div class="links">
               {#if user.facebook }
               <div style="margin-bottom: 0.3rem">
-              <a style="text-decoration: none;"  href="{user.facebook}"><span
-                style="font-size: 12px;"><i class="na-facebook-square" style="font-size: 1rem;"></i> @{user.facebook_name}</span></a>
+              <a style="text-decoration: none;"  href="https://facebook.com/{user.facebook}"><span
+                style="font-size: 0.85rem;"><i class="na-facebook-square" style="font-size: 1rem;"></i> @{user.facebook}</span></a>
               </div>
               {/if}
               {#if user.instagram }
               <div style="margin-bottom: 0.3rem">
-              <a style="text-decoration: none;" href="{user.instagram}"><span
-                style="font-size: 12px;"><i class="na-instagram" style="font-size: 1rem;"></i> @{user.instagram_name}</span></a>
+              <a style="text-decoration: none;" href="https://instagram.com/{user.instagram}"><span
+                style="font-size: 0.85rem;"><i class="na-instagram" style="font-size: 1rem;"></i> @{user.instagram}</span></a>
               </div>
               {/if}
               {#if user.twitter }
               <div style="margin-bottom: 0.3rem">
-              <a style="text-decoration: none;" href="{user.twitter}"><span
-                style="font-size: 12px;"><i class="na-twitter" style="font-size: 1rem;"></i> @{user.twitter_name}</span></a>
+              <a style="text-decoration: none;" href="https://twitter.com/{user.twitter}"><span
+                style="font-size: 0.85rem;"><i class="na-twitter" style="font-size: 1rem;"></i> @{user.twitter}</span></a>
               </div>
               {/if}
               {#if user.github }
               <div style="margin-bottom: 0.3rem">
-              <a style="text-decoration: none;" href="{user.github}"><span
-                style="font-size: 12px;"><i class="na-github" style="font-size: 1rem;"></i> @{user.github_name}</span></a>
+              <a style="text-decoration: none;" href="https://github.com/{user.github}"><span
+                style="font-size: 0.85rem;"><i class="na-github" style="font-size: 1rem;"></i> @{user.github}</span></a>
               </div>
               {/if}
               {#if user.website }
               <div style="margin-bottom: 0.3rem">
                   <a style="text-decoration: none;" href="{user.website}"><span
-                    style="font-size: 12px;"><i class="na-globe" style="font-size: 1rem;"></i> {user.website}</span></a>
+                    style="font-size: 0.85rem;"><i class="na-globe" style="font-size: 1rem;"></i> {user.website}</span></a>
                     
               </div>
               {/if}

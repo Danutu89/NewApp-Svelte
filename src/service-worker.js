@@ -7,7 +7,47 @@ const ASSETS = `cache${timestamp}`;
 const to_cache = shell.concat(files);
 const cached = new Set(to_cache);
 
-self.addEventListener('install', event => {
+const urlB64ToUint8Array = base64String => {
+	const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+	const base64 = (base64String + padding)
+	  .replace(/\-/g, "+")
+	  .replace(/_/g, "/");
+	const rawData = atob(base64);
+	const outputArray = new Uint8Array(rawData.length);
+	for (let i = 0; i < rawData.length; ++i) {
+	  outputArray[i] = rawData.charCodeAt(i);
+	}
+	return outputArray;
+};
+
+const saveSubscription = async (subscription,data) => {
+	const SERVER_URL = "https://newapp.nl/api/save-subscription";
+	const response = await fetch(SERVER_URL, {
+	  method: "post",
+	  headers: {
+		"Content-Type": "application/json"
+	  },
+	  body: JSON.stringify({user:data, sub_info:subscription})
+	});
+	return response.json();
+};
+
+self.addEventListener('message', async event => {
+	if (Notification.permission === "granted"){
+		try {
+			const applicationServerKey = urlB64ToUint8Array(
+			"BGfsb_G1tXj-jSN8h-9spz2znzfm1sib-Xx42FLmN8p7xQwv8C_ke_-77DFKkBiv843msSFlvQw0PDr2--mpJmw"
+			);
+			const options = { applicationServerKey, userVisibleOnly: true };
+			const subscription = await self.registration.pushManager.subscribe(options);
+			const response = await saveSubscription(subscription,event.data);
+		} catch (err) {
+			console.log("Error", err);
+		}
+	}
+});
+
+self.addEventListener('install', async event => {
 	event.waitUntil(
 		caches
 			.open(ASSETS)
@@ -80,3 +120,18 @@ self.addEventListener('fetch', event => {
 			})
 	);
 });
+
+self.addEventListener('push', function(e) {
+	var options = {
+	  body: 'This notification was generated from a push!',
+	  icon: 'logo-192.png',
+	  vibrate: [100, 50, 100],
+	  data: {
+		dateOfArrival: Date.now(),
+		primaryKey: '2'
+	  }
+	};
+	e.waitUntil(
+	  self.registration.showNotification(e.data.text(), options)
+	);
+  });

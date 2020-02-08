@@ -7,6 +7,15 @@
 	
 	onMount(async function() {
 		loadProgressBar();
+		if($session.auth){
+			if (window.Notification && Notification.permission !== "granted") {
+				Notification.requestPermission(function (status) {
+				if (Notification.permission !== status) {
+					Notification.permission = status;
+				}
+				});
+			}
+		}
 	});
 </script>
 

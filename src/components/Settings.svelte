@@ -158,13 +158,25 @@ onMount(async function(){
           Profession:
           <input id="profession" name="profession" placeholder="Profession" type="text" bind:value={s_profession} value="{user.profession}">
           Instagram:
-          <input id="instagram" name="instagram" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Instagram" type="text" bind:value={s_i}>
+          <div class="input-group">
+            <div class="input-group-icon">https://instagram.com/</div>
+            <div class="input-group-area"><input id="instagram" name="instagram" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Instagram" type="text" bind:value={s_i}></div>
+          </div>
           Facebook:
-          <input id="facebook" name="facebook" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Facebook" type="text" bind:value={s_f}>
+          <div class="input-group">
+            <div class="input-group-icon">https://facebook.com/</div>
+            <div class="input-group-area"><input id="facebook" name="facebook" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Facebook" type="text" bind:value={s_f}></div>
+          </div>
           Twitter:
-          <input id="twitter" name="twitter" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Twitter" type="text" bind:value={s_t}>
+          <div class="input-group">
+            <div class="input-group-icon">https://twitter.com/</div>
+            <div class="input-group-area"><input id="twitter" name="twitter" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Twitter" type="text" bind:value={s_t}></div>
+          </div>
           Github:
-          <input id="github" name="github" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Github" type="text" bind:value={s_g}>
+          <div class="input-group">
+            <div class="input-group-icon">https://github.com/</div>
+            <div class="input-group-area"><input id="github" name="github" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Github" type="text" bind:value={s_g}></div>
+          </div>
           Website:
           <input id="website" name="website" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Website" type="text" bind:value={s_w}>
         </div>
