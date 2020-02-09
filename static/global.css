@@ -117,6 +117,28 @@
     margin: 0;
     padding: 1.5rem;
     display: block;
+    margin: 0rem -0.8rem;
+  }
+  .reply pre code {
+	background-color: var(--code) !important;
+    color: var(--code-color) !important;
+    overflow: auto;
+    white-space: pre;
+    border-radius: 0px;
+    margin: 0;
+    padding: 1.5rem;
+    display: block;
+    margin: 0rem -0.5rem;
+  }
+  .reply pre.ql-syntax {
+	background-color: var(--code) !important;
+    color: var(--code-color) !important;
+    overflow: auto;
+    white-space: pre;
+    border-radius: 0px;
+    margin: 0;
+    padding: 1.5rem;
+    display: block;
     margin: 0rem -0.5rem;
   }
   pre.ql-syntax {
@@ -128,7 +150,7 @@
     margin: 0;
     padding: 1.5rem;
     display: block;
-    margin: 0rem -0.5rem;
+    margin: 0rem -0.8rem;
   }
   .ql-snow.ql-toolbar button:hover, .ql-snow .ql-toolbar button:hover, .ql-snow.ql-toolbar button:focus, .ql-snow .ql-toolbar button:focus, .ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow .ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow .ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-item:hover, .ql-snow .ql-toolbar .ql-picker-item:hover, .ql-snow.ql-toolbar .ql-picker-item.ql-selected, .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
 	color: var(--theme-color) !important;
