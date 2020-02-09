@@ -149,6 +149,7 @@ self.addEventListener('notificationclick', function(event) {
 })
 
 self.addEventListener('pushsubscriptionchange', function(event) {
+	console.log(1);
 	const applicationServerKey = urlB64ToUint8Array(
 		"BGfsb_G1tXj-jSN8h-9spz2znzfm1sib-Xx42FLmN8p7xQwv8C_ke_-77DFKkBiv843msSFlvQw0PDr2--mpJmw"
 		);

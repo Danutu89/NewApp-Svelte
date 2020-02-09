@@ -18,17 +18,19 @@ function Like_Post() {
     if($session.auth){
         axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
             .then(response => {
-                like_button.classList.toggle('na-heart1');
-                like_button.classList.toggle('na-heart');
 
                 if (response.data['operation'] == 'unliked') {
                     var likes = parseInt(like_counter.innerHTML);
                     var total = likes - 1;
                     like_counter.innerHTML = total;
+                    like_button.classList.remove('na-heart');
+                    like_button.classList.add('na-heart1');
                 } else if (response.data['operation'] == 'liked') {
                     var likes = parseInt(like_counter.innerHTML);
                     var total = likes + 1;
                     like_counter.innerHTML = total;
+                    like_button.classList.add('na-heart');
+                    like_button.classList.remove('na-heart1');
                 }
 
             })
