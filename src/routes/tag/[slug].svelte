@@ -16,11 +16,13 @@
 </script>
 <script>
 import SideBarLeft from '../../components/SideBarLeft.svelte';
+import {wrapper} from '../../modules/Variables.js';
 import SideBarRight from '../../components/SideBarRight.svelte';
 import Posts from '../../components/Posts.svelte';
 import { onMount, beforeUpdate  } from "svelte";
 import { stores } from '@sapper/app';
 const { session } = stores();
+const wrapper_ = wrapper;
 
 export let tag;
 let page = 1;
@@ -29,6 +31,7 @@ let articles;
 let trending;
 let utilities;
 let user;
+let sidebar, overflow;
 trending = tag['trending'];
 articles = tag['posts'];
 if($session.auth){
@@ -39,7 +42,10 @@ utilities = tag['utilities'];
 let title = tag.info['name'][0].toUpperCase() + tag.info['name'].slice(1);
 
 onMount(async function(){
+    sidebar = document.getElementById("sidebar-left");
+    overflow = document.querySelector("overflow");
     document.addEventListener("scroll", onScroll);
+    wrapper_.setTrue(sidebar,overflow);
 })
 
 beforeUpdate(()=>{
@@ -50,7 +56,8 @@ beforeUpdate(()=>{
     }
     utilities = tag['utilities'];
     title = tag.info['name'][0].toUpperCase() + tag.info['name'].slice(1);
-
+    if(overflow && sidebar)
+    wrapper_.setTrue(sidebar,overflow);
 })
 
 async function LoadMore(){

@@ -1,9 +1,11 @@
 <script>
 import axios from 'axios';
+import { wrapper } from '../modules/Variables.js';
 import { onMount, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
+const wrapper_ = wrapper;
 
 export let user;
 export let utilities;
@@ -16,7 +18,6 @@ let touchstartX = 0;
 let touchstartY = 0;
 let touchendX = 0;
 let touchendY = 0;
-var wrapper_opened = true;
 
 let document_;
 let window_;
@@ -93,26 +94,21 @@ onDestroy(function(){
         touchstartY = event.changedTouches[0].screenY;
         }, false);
         window_.removeEventListener('resize', onScreenChange);
-        overflow.classList.remove("show");
-        sidebar.classList.remove('toggled');
+        wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"));
     }
 })
 
 function handleGesture(event) {
     //Right Swipe
-    if (touchendX - 50 < touchstartX && touchendY - touchstartY < 20 && touchstartY - touchendY < 20 && touchendX != touchstartX) {
-      if (!wrapper_opened){
-        sidebar.classList.remove('toggled');
-        overflow.classList.remove("show");
-        wrapper_opened = true;
+    if (touchendX - 10 < touchstartX && touchendY - touchstartY < 20 && touchstartY - touchendY < 20 && touchendX != touchstartX) {
+      if (!wrapper_.opened){
+        wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"));
       }
     }
     //Left Swipe
-    if (touchendX - 50 > touchstartX && touchstartY - touchendY < 20 && touchendY - touchstartY < 20 && touchendX != touchstartX) {
-      if (wrapper_opened){
-        sidebar.classList.add('toggled');
-        overflow.classList.add("show");
-        wrapper_opened = false;
+    if (touchendX - 10 > touchstartX && touchstartY - touchendY < 20 && touchendY - touchstartY < 20 && touchendX != touchstartX) {
+      if (wrapper_.opened){
+        wrapper_.setFalse(document.getElementById("sidebar-left"),document.querySelector("overflow"));
       }
     }
 

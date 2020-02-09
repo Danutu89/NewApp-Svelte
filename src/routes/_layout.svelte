@@ -29,18 +29,18 @@
 {#if $session.theme === 'Dark'}
 <style>
 :root{
-	--background: #171717;
-	--color: rgb(196, 196, 196);
-	--body-bg: #121212;
-	--border: 1px solid rgba(0, 0, 0, 0.125);
-	--editor: #2d2d2d;
-	--code: #212121;
-	--placeholder: rgba(255, 255, 255, 0.836);
-	--link: rgb(0, 157, 230);
-	--navbar: #171717;
-	--navbar-color: rgb(196, 196, 196);
-	--navbar-dropdown-hover: #1f1f1f;
-	--wrapper-background: #171717;
+	--background: #1e1e1e;
+    --color: rgb(255, 255, 255);
+    --body-bg: #121212;
+    --border: 1px solid rgba(47, 47, 47, 0.125);
+    --editor: #2d2d2d;
+    --code: #313131;
+    --placeholder: rgba(255, 255, 255, 0.836);
+    --link: rgb(0, 157, 230);
+    --navbar: #262626;
+    --navbar-color: rgb(196, 196, 196);
+    --navbar-dropdown-hover: #333333;
+    --wrapper-background: #171717;;
 }
 </style>
 {:else if $session.theme === 'Light'}
