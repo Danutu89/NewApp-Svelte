@@ -128,7 +128,7 @@ self.addEventListener('push', function(e) {
 		var options = {
 			body: data['text'],
 			icon: data['icon'],
-			badge: 'favicon.ico',
+			badge: 'icons/badge.png',
 			renotify: true,
   			tag: '1',
 			vibrate: [100, 50, 100, 50, 100],
@@ -143,7 +143,7 @@ self.addEventListener('push', function(e) {
 		var options = {
 			body: data['text'],
 			icon: 'icons/android-chrome-192x192.png',
-			badge: 'favicon.ico',
+			badge: 'icons/badge.png',
 			renotify: true,
   			tag: '1',
 			vibrate: [100, 50, 100, 50, 100],
