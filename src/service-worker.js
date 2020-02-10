@@ -129,6 +129,8 @@ self.addEventListener('push', function(e) {
 			body: data['text'],
 			icon: data['icon'],
 			badge: 'favicon.ico',
+			renotify: true,
+  			tag: '1',
 			vibrate: [100, 50, 100, 50, 100],
 			data: {
 			  dateOfArrival: Date.now(),
@@ -142,6 +144,8 @@ self.addEventListener('push', function(e) {
 			body: data['text'],
 			icon: 'icons/android-chrome-192x192.png',
 			badge: 'favicon.ico',
+			renotify: true,
+  			tag: '1',
 			vibrate: [100, 50, 100, 50, 100],
 			data: {
 			  dateOfArrival: Date.now(),
