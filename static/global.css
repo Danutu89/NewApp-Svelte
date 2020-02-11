@@ -856,6 +856,38 @@
 	  max-width: calc(100% - 640px);
 	}
   }
+  @media screen and (max-width: 1210px){
+	content .content-post .user-actions {
+		background: var(--editor);
+		padding: 0.5rem;
+		border-radius: 20px;
+		/* justify-content: space-between; */
+		display: flex;
+	}
+	content .content-post .user-actions span i{
+		font-size: 1.5rem;
+		display: block;
+	}
+	content .content-post .user-actions span span {
+		display: block;
+		width: auto;
+		margin-left: 0.3rem;
+	}
+	content .content-post .user-actions span {
+		font-size: 1rem;
+		cursor: pointer;
+		width: max-content;
+		width: -webkit-fill-available;
+		text-align: center;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	content .content-post .user-actions-info {
+		display: none;
+	}
+  }
   @media screen and (max-width: 1000px) {
 	content .articles {
 	  max-width: 100%;

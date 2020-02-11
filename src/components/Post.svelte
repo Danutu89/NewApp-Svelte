@@ -111,18 +111,21 @@ onMount(async function(){
                         {#if article.user['liked']}
                         <span style="cursor: pointer;margin-right:0.5rem;"><i id="heart"
                                 class="na-heart" bind:this={like_button} on:click|preventDefault={Like_Post}></i>
-                            Like</span>
+                            <span>Like</span></span>
                         {:else}
                         <span style="cursor: pointer;margin-right:0.5rem;"><i id="heart"
                                 class="na-heart1" bind:this={like_button} on:click|preventDefault={Like_Post}></i>
-                            Like</span>
+                            <span>Like</span></span>
                         {/if}
                         {:else}
                         <span style="cursor: pointer;margin-right:0.5rem;"><i id="heart"
                                 class="na-heart1" on:click|preventDefault={Like_Post} bind:this={like_button}></i>
-                            Like</span>
+                            <span>Like</span></span>
                         {/if}
-                        <span id="share" style="cursor: pointer;"><i class="na-share"></i> Share</span>
+                        <span style="cursor: pointer;margin-right:0.5rem;"><i id="comment"
+                                class="na-comment" on:click|preventDefault={Like_Post} bind:this={like_button}></i>
+                            <span>Comment</span></span>
+                        <span id="share" style="cursor: pointer;"><i class="na-share"></i> <span>Share</span></span>
                         <div id="share-options" class="share_post">
                             <div class="list">
                                 Share
