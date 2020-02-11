@@ -64,6 +64,10 @@ async function Reply(){
     }
 }
 
+function Comment(){
+    editor.codemirror.focus()
+}
+
 
 onMount(async function(){
     editor_s = document.querySelectorAll("textarea")[1];
@@ -123,7 +127,7 @@ onMount(async function(){
                             <span>Like</span></span>
                         {/if}
                         <span style="cursor: pointer;margin-right:0.5rem;"><i id="comment"
-                                class="na-comment" on:click|preventDefault={Like_Post} bind:this={like_button}></i>
+                                class="na-comment" on:click|preventDefault={Comment} bind:this={Comment}></i>
                             <span>Comment</span></span>
                         <span id="share" style="cursor: pointer;"><i class="na-share"></i> <span>Share</span></span>
                         <div id="share-options" class="share_post">
