@@ -113,12 +113,12 @@ onMount(async function(){
                     <div class="user-actions">
                         {#if $session.auth}
                         {#if article.user['liked']}
-                        <span style="cursor: pointer;margin-right:0.5rem;"><i id="heart"
-                                class="na-heart" bind:this={like_button} on:click|preventDefault={Like_Post}></i>
+                        <span style="cursor: pointer;margin-right:0.5rem;" on:click|preventDefault={Like_Post}><i id="heart"
+                                class="na-heart" bind:this={like_button}></i>
                             <span>Like</span></span>
                         {:else}
-                        <span style="cursor: pointer;margin-right:0.5rem;"><i id="heart"
-                                class="na-heart1" bind:this={like_button} on:click|preventDefault={Like_Post}></i>
+                        <span style="cursor: pointer;margin-right:0.5rem;" on:click|preventDefault={Like_Post}><i id="heart"
+                                class="na-heart1" bind:this={like_button}></i>
                             <span>Like</span></span>
                         {/if}
                         {:else}
@@ -126,8 +126,8 @@ onMount(async function(){
                                 class="na-heart1" on:click|preventDefault={Like_Post} bind:this={like_button}></i>
                             <span>Like</span></span>
                         {/if}
-                        <span style="cursor: pointer;margin-right:0.5rem;"><i id="comment"
-                                class="na-comment" on:click|preventDefault={Comment} bind:this={Comment}></i>
+                        <span style="cursor: pointer;margin-right:0.5rem;" on:click|preventDefault={Comment}><i id="comment"
+                                class="na-comment"></i>
                             <span>Comment</span></span>
                         <span id="share" style="cursor: pointer;"><i class="na-share"></i> <span>Share</span></span>
                         <div id="share-options" class="share_post">
