@@ -1909,7 +1909,7 @@
 	color: grey;
   }
   content .article .post .user-actions span i {
-	  display: table;
+	  display: inline-block
   }
   content .article .post .user-actions span i.heartscale {
 	-webkit-animation: heart-beat .5s alternate forwards;
