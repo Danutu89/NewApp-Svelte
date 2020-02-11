@@ -13,30 +13,64 @@ const { session } = stores();
 let like_button;
 let like_counter;
 let editor, editor_s;
+let isMobile;
 
 function Like_Post() {
-    if($session.auth){
-        axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
-            .then(response => {
-
-                if (response.data['operation'] == 'unliked') {
+    if($session.auth == false){
+        OpenJoin();
+    }
+    if(like_button.classList.contains("na-heart")){
+        var likes = parseInt(like_counter.innerHTML);
+        var total = likes - 1;
+        like_counter.innerHTML = total;
+        like_button.classList.remove('na-heart');
+        like_button.classList.add('na-heart1');
+        like_button.classList.remove('heartscale');
+    }else if(like_button.classList.contains("na-heart1")){
+        var likes = parseInt(like_counter.innerHTML);
+        var total = likes + 1;
+        like_counter.innerHTML = total;
+        like_button.classList.add('na-heart');
+        like_button.classList.remove('na-heart1');
+        like_button.classList.add('heartscale');
+    }
+    axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+        .then(response => {
+            if(response.status != 200){
+                if(like_button.classList.contains("na-heart1")){
                     var likes = parseInt(like_counter.innerHTML);
                     var total = likes - 1;
                     like_counter.innerHTML = total;
                     like_button.classList.remove('na-heart');
                     like_button.classList.add('na-heart1');
-                } else if (response.data['operation'] == 'liked') {
+                    like_button.classList.remove('heartscale');
+                }else if(like_button.classList.contains("na-heart")){
                     var likes = parseInt(like_counter.innerHTML);
                     var total = likes + 1;
                     like_counter.innerHTML = total;
                     like_button.classList.add('na-heart');
                     like_button.classList.remove('na-heart1');
+                    like_button.classList.add('heartscale');
                 }
-
-            })
-    }else{
-        OpenJoin();
-    }
+            }
+            if(response.data['operation'] == 'failed'){
+                if(like_button.classList.contains("na-heart1")){
+                    var likes = parseInt(like_counter.innerHTML);
+                    var total = likes - 1;
+                    like_counter.innerHTML = total;
+                    like_button.classList.remove('na-heart');
+                    like_button.classList.add('na-heart1');
+                    like_button.classList.remove('heartscale');
+                }else if(like_button.classList.contains("na-heart")){
+                    var likes = parseInt(like_counter.innerHTML);
+                    var total = likes + 1;
+                    like_counter.innerHTML = total;
+                    like_button.classList.add('na-heart');
+                    like_button.classList.remove('na-heart1');
+                    like_button.classList.add('heartscale');
+                }
+            }
+        })
 }
 
 async function Reply(){
@@ -65,11 +99,42 @@ async function Reply(){
 }
 
 function Comment(){
-    editor.codemirror.focus()
+    let reply = document.querySelector(".post-reply");
+    if(reply.style["display"] === "none"){
+        if(isMobile){
+            reply.style["display"] = "block";
+        }
+        editor.codemirror.focus()
+    }else{
+        if(isMobile){
+            reply.style["display"] = "none";
+        }
+    }
+    if(isMobile === false){
+        editor.codemirror.focus()
+    }
+    
 }
 
+function onScreenChange(){
+    isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
+    let reply = document.querySelector(".post-reply");
+    if (isMobile === true){
+        reply.style["display"] = "none";
+    }else{
+        reply.style["display"] = "block";
+    }
+}
 
 onMount(async function(){
+    isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
+    let reply = document.querySelector(".post-reply");
+    if (isMobile === true){
+        reply.style["display"] = "none";
+    }else{
+        reply.style["display"] = "block";
+    }
+    window.addEventListener('resize', onScreenChange);
     editor_s = document.querySelectorAll("textarea")[1];
     let SimpleMDE = require('simplemde');
     editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
