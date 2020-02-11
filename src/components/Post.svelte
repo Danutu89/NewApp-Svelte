@@ -116,25 +116,15 @@ function Comment(){
     
 }
 
-function onScreenChange(){
-    isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
-    let reply = document.querySelector(".post-reply");
-    if (isMobile === true){
-        reply.style["display"] = "none";
-    }else{
-        reply.style["display"] = "block";
-    }
-}
-
 onMount(async function(){
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
     let reply = document.querySelector(".post-reply");
     if (isMobile === true){
+        if(reply.style['display'] == 'none')
         reply.style["display"] = "none";
     }else{
         reply.style["display"] = "block";
     }
-    window.addEventListener('resize', onScreenChange);
     editor_s = document.querySelectorAll("textarea")[1];
     let SimpleMDE = require('simplemde');
     editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });

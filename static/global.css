@@ -865,7 +865,7 @@
 		display: flex;
 	}
 	content .content-post .user-actions span i{
-		font-size: 1.5rem;
+		font-size: 1.2rem;
 		display: block;
 	}
 	content .content-post .user-actions span span {
@@ -874,7 +874,7 @@
 		margin-left: 0.3rem;
 	}
 	content .content-post .user-actions span {
-		font-size: 1rem;
+		font-size: 0.8rem;
 		cursor: pointer;
 		width: max-content;
 		width: -webkit-fill-available;
