@@ -3,12 +3,12 @@
 
 export let article;
 import SideBarRight from '../components/SideBarRight.svelte';
-import { onMount } from 'svelte';
+import { onMount, beforeUpdate } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import axios from 'axios';
 import marked from 'marked';
 import { stores } from '@sapper/app';
-const { session } = stores();
+const { page, session } = stores();
 
 let like_button;
 let like_counter;
@@ -115,8 +115,37 @@ function Comment(){
     }
     
 }
+async function CheckNotification(id){
+    if($session.auth == false){
+        return;
+    }
+    let args = "?t="+$session.token+"&not_id="+id;
+    const not = await axios.get("https://newapp.nl/api/notifications/check"+args).then(response =>{
+        if(response.status != 200){
+            //alert
+            return;
+        }
+
+        if(response.data['operation'] != "success"){
+            //alert
+            return;
+        }
+
+        return;
+    })
+}
+
+beforeUpdate(async function(){
+    if($page.query.notification_id){
+        CheckNotification($page.query.notification_id);
+    }
+})
 
 onMount(async function(){
+    if($page.query.notification_id){
+        CheckNotification($page.query.notification_id);
+    }
+
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
     let reply = document.querySelector(".post-reply");
     if (isMobile === true){

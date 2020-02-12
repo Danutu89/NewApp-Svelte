@@ -26,14 +26,25 @@ let s_genre=user.genre,
     s_theme=user.theme;
 let s_avatarimg, s_coverimg;
 let c_coverimg,c_avatarimg;
+let isMobile;
 
 function SwitchPanel(panel){
     if (panel === 'misc'){
+      if(isMobile){
+        editInfo.style['display'] = 'none';
+        editMisc.style['display'] = 'block';
+      }else{
         editInfo.style['display'] = 'none';
         editMisc.style['display'] = 'flex';
+      }
     }else if(panel === 'main'){
+      if(isMobile){
+        editInfo.style['display'] = 'block';
+        editMisc.style['display'] = 'none';
+      }else{
         editInfo.style['display'] = 'flex';
         editMisc.style['display'] = 'none';
+      }
     }
 }
 
@@ -110,6 +121,7 @@ async function SaveSettings(){
 }
 
 onMount(async function(){
+  isMobile = window.matchMedia("only screen and (max-width: 800px)").matches;
   s_coverimg = document.getElementById('coverimg');
   s_avatarimg = document.getElementById('avatarimg');
 })

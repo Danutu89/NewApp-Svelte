@@ -1,7 +1,7 @@
 <script>
 import Login from './Login.svelte';
 import Register from './Register.svelte';
-import { onMount, onDestroy  } from 'svelte';
+import { onMount, beforeUpdate  } from 'svelte';
 import { stores, goto } from '@sapper/app';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
@@ -78,6 +78,8 @@ function onClickDocument(e){
   }
 }
 
+
+
 onMount(async function(){
   l_modal = document.getElementById("login-modal");
   r_modal = document.getElementById("register-modal");
@@ -153,37 +155,39 @@ function CloseMenu(){
          <i class="na-bell" style="display:block;margin-top: 0.35rem;font-size:1.2rem;
           margin-right: 0.8rem;"></i>
           {#if notifications}
-         {#if notifications.count > 0 }
+          {#if notifications.count > 0 }
           <span class="notifications-number">{notifications.count}</span>
           {/if}
           <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="min-width: 16rem;margin-inline-start:-15.4rem;margin-top: 0.9rem;">
           Notifications
           <hr>
-          {#if notifications.count > 0 }
-          {#each notifications.notify as notification}
-          {#if notification.checked == false }
-            <a href="{notification.link}?notification={notification.id}">
-              <div class="dropdown-item" style="display:flex;">
-                <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
-                <div style="display: block;margin-left: 0.4rem;line-height: 1.2;">
-                  <span style="color: var(--navbar-color);font-size:1rem;line-height: 1;"><span style="font-weight: 500;">{notification.title }</span></span>
-                  {#if notification.category != 'follow' || notification.category != 'unfollow' }
-                  <span style="color: var(--link)">{notification.body}</span>
-                  {/if}
-                  <span style="color: #828282;
-                  width: max-content;
-                  display: flex;
-                  margin-inline-start: auto;
-                  font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
-              </div>
-              </div>
-            </a>
-              
-              {/if}
-              {/each}
-              {:else}
-              No Notifications
-              {/if}
+          <div style="max-height: 40vw;overflow: auto">
+            {#if notifications.count > 0 }
+            {#each notifications.notify as notification}
+            {#if notification.checked == false }
+              <a href="{notification.link}">
+                <div class="dropdown-item" style="display:flex;">
+                  <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
+                  <div style="display: block;margin-left: 0.4rem;line-height: 1.2;">
+                    <span style="color: var(--navbar-color);font-size:1rem;line-height: 1;"><span style="font-weight: 500;">{notification.title }</span></span>
+                    {#if notification.category != 'follow' || notification.category != 'unfollow' }
+                    <span style="color: var(--link)">{notification.body}</span>
+                    {/if}
+                    <span style="color: #828282;
+                    width: max-content;
+                    display: flex;
+                    margin-inline-start: auto;
+                    font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
+                </div>
+                </div>
+              </a>
+                
+            {/if}
+            {/each}
+            {:else}
+            No Notifications
+            {/if}
+          </div>
           </div>
           {/if}
       </div>

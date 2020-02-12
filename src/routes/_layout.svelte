@@ -30,23 +30,26 @@
 <style>
 :root{
 	--background: #1e1e1e;
-    --color: rgb(255, 255, 255);
-    --body-bg: #121212;
-    --border: 1px solid rgba(47, 47, 47, 0.125);
-    --editor: #2d2d2d;
-    --code: #313131;
-    --placeholder: rgba(255, 255, 255, 0.836);
-    --link: rgb(0, 157, 230);
-    --navbar: #262626;
-    --navbar-color: rgb(196, 196, 196);
-    --navbar-dropdown-hover: #333333;
-    --wrapper-background: #171717;;
+	--color: rgb(255, 255, 255);
+	--body-bg: #121212;
+	--border: 1px solid rgba(47, 47, 47, 0.125);
+	--editor: #2d2d2d;
+	--code: #313131;
+	--placeholder: rgba(255, 255, 255, 0.836);
+	--link: rgb(0, 157, 230);
+	--navbar: #262626;
+	--navbar-color: rgb(196, 196, 196);
+	--navbar-dropdown-hover: #333333;
+	--wrapper-background: #171717;
+	--input-group-bg: #2d2d2d;
+	--input-group-color: #d2d2d2;
+	--input-group-border: #4c4c4c 1px solid;
 }
 </style>
 {:else if $session.theme === 'Light'}
 <style>
 :root{
-	--background: white;
+	--background: #ffffff;
 	--color: #212529;
 	--body-bg: #efefef;
 	--border: 1px solid #d6d6d6;
@@ -58,6 +61,9 @@
 	--navbar-color: #212529;
 	--navbar-dropdown-hover: #ececec;
 	--wrapper-background: white;
+	--input-group-bg: #d6d6d6;
+	--input-group-color: #444444;
+	--input-group-border: #b1b1b1 1px solid;
 }
 </style>
 {/if}
