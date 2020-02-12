@@ -18,6 +18,7 @@ let isMobile;
 function Like_Post() {
     if($session.auth == false){
         OpenJoin();
+        return;
     }
     if(like_button.classList.contains("na-heart")){
         var likes = parseInt(like_counter.innerHTML);
@@ -74,6 +75,10 @@ function Like_Post() {
 }
 
 async function Reply(){
+    if($session.auth == false){
+        OpenJoin();
+        return;
+    }
     if(editor.value().length < 2){
         if(!editor_s){
             editor_s = document.querySelectorAll("textarea")[1];
@@ -86,19 +91,30 @@ async function Reply(){
     let markdown = marked(editor.value());
     let reply;
     let json = await axios.post('https://newapp.nl/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
-        return response.data;
+        return response;
     })
     let data = await json;
-    if (data['operation'] == 'success'){
-        reply = {'text': markdown,author: {'id': $session.id, 'name': $session.name, 'avatar': $session.avatar, 'status': 'Online', 'reply_id': data['id']}};
-        article.replies = [...article.replies,reply];
-        editor.value("");
-    }else if (data['operation'] == 'error'){
-        console.log(data['error']);
+    if (data.status != 200){
+        //alert
+        return;
     }
+
+    if (data.data['operation'] != 'success'){
+        //alert
+        console.log(data.data['error']);
+        return;
+    }
+
+    reply = {'text': markdown,author: {'id': $session.id, 'name': $session.name, 'avatar': $session.avatar, 'status': 'Online', 'reply_id': data['id']}};
+    article.replies = [...article.replies,reply];
+    editor.value("");
 }
 
 function Comment(){
+    if($session.auth == false){
+        OpenJoin();
+        return;
+    }
     let reply = document.querySelector(".post-reply");
     if(reply.style["display"] === "none"){
         if(isMobile){

@@ -23,26 +23,32 @@ let document_;
 let window_;
 
 function Follow_Tag(tag_) {
-    if ($session.auth){
-        axios.get('https://newapp.nl/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
-            .then(function (response){
-                var x = tag_button[tag_];
-                tag_button[tag_] = x;
-                if (response.data['operation'] == 'followed') {
-                    x.innerHTML = 'Unfollow';
-                    utilities.tags.splice( utilities.tags.indexOf(tag_), 1 );
-                    utilities.tags = [...utilities.tags];
-                    user.flw_tags = [...user.flw_tags,tag_];
-                } else if (response.data['operation']  == 'unfollowed') {
-                    x.innerHTML = 'Follow';
-                    user.flw_tags.splice( user.flw_tags.indexOf(tag_), 1 );
-                    user.flw_tags = [...user.flw_tags];
-                    utilities.tags = [...utilities.tags, tag_]
-                }
-        })
-    }else{
+    if($session.auth == false){
         OpenJoin();
+        return;
     }
+    axios.get('https://newapp.nl/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
+        .then(function (response){
+            var x = tag_button[tag_];
+            tag_button[tag_] = x;
+
+            if (response.staus != 200){
+                //alert
+                return;
+            }
+
+            if (response.data['operation'] == 'followed') {
+                x.innerHTML = 'Unfollow';
+                utilities.tags.splice( utilities.tags.indexOf(tag_), 1 );
+                utilities.tags = [...utilities.tags];
+                user.flw_tags = [...user.flw_tags,tag_];
+            } else if (response.data['operation']  == 'unfollowed') {
+                x.innerHTML = 'Follow';
+                user.flw_tags.splice( user.flw_tags.indexOf(tag_), 1 );
+                user.flw_tags = [...user.flw_tags];
+                utilities.tags = [...utilities.tags, tag_]
+            }
+    })
 }
 
 function onScreenChange(){

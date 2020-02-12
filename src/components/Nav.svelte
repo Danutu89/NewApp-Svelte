@@ -14,8 +14,10 @@ var menu_open = false;
 let notifications,notifications_c,notifications_center_c;
 
 function LogOut(){
-  cookies.remove("token");
-  location.reload();
+  if($session.auth == true){
+      cookies.remove("token");
+      location.reload();
+  }
 }
 
 function onClickDocument(e){

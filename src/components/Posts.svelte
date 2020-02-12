@@ -9,18 +9,17 @@ export let user;
 let save_button = [];
 
 function SavePost(id){
-    if($session.auth){
-        axios.get('https://newapp.nl/api/save-post/' + id + '?t=' + $session.token, { progress: false }).then(response=>{
-            if(response.data['operation'] == 'saved'){
-                save_button[id].innerHTML = 'Saved';
-            }else if(response.data['operation'] == 'deleted'){
-                save_button[id].innerHTML = 'Save';
-            }
-        })
-    }else{
+    if ($session.auth == false){
         OpenJoin();
+        return;
     }
-
+    axios.get('https://newapp.nl/api/save-post/' + id + '?t=' + $session.token, { progress: false }).then(response=>{
+        if(response.data['operation'] == 'saved'){
+            save_button[id].innerHTML = 'Saved';
+        }else if(response.data['operation'] == 'deleted'){
+            save_button[id].innerHTML = 'Save';
+        }
+    })
 }
 
 </script>
