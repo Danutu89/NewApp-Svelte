@@ -54,3 +54,7 @@ onMount(async function(){
         </div>
     </div>
 </editpost>
+
+<svelte:head>
+    <title>Edit - {title_c}</title>
+</svelte:head>

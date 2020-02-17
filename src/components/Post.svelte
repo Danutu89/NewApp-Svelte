@@ -274,7 +274,6 @@ onMount(async function(){
                 <div id="reply_img_{reply.author.id}" class="author" style="
                     border-radius: 20px;
                     padding: 0.5rem;
-                    background-color: rgb(239, 240, 241);
                     display: flex;">
                     <img style="border-radius:20px;margin-right: 5px;" height="35px" width="35px"
                         src="{reply.author.avatar}" alt="{reply.author.name}">
