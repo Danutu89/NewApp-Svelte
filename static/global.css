@@ -739,7 +739,7 @@
   }
   content .article .reply .info div .author{
 	color: var(--color);
-	background-color: var(--body-bg) !important;
+	background-color: var(--code) !important;
   }
   content .article .reply .info div .author div a{
 	color: var(--color) !important;
