@@ -50,6 +50,10 @@ function Delete_Post(id){
     });
 }
 
+function Edit_Post(){
+    goto("/post/edit/"+article.link);
+}
+
 </script>
 <div class="sidebar" id="sidebar-right">
 {#if $session.auth == false}
@@ -129,7 +133,7 @@ content .sidebar#sidebar-right{
             {#if $session.permissions.edit_post_permission || $session.id == article.author.id }
             <div class="widget-item" style="display: flex;justify-content: space-between;">
                     <div class="text" style="display:flex;white-space: nowrap;">Edit Post</div>
-                    <div style="margin: 0;width:0;display:contents"><button class="widget-button">Edit</button></div>
+                    <button on:click={Edit_Post} class="widget-button">Edit</button>
                 </div>
             {/if }
         </div>
