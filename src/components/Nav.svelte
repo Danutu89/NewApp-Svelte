@@ -157,13 +157,13 @@ function CloseMenu(){
          <i class="na-bell" style="display:block;margin-top: 0.35rem;font-size:1.2rem;
           margin-right: 0.8rem;"></i>
           {#if notifications}
-          {#if notifications.count > 0 }
-          <span class="notifications-number">{notifications.count}</span>
+          {#if notifications.count_new > 0 }
+          <span class="notifications-number">{notifications.count_new}</span>
           {/if}
-          <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="min-width: 16rem;margin-inline-start:-15.4rem;margin-top: 0.9rem;">
+          <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="display: none;">
           Notifications
-          <hr>
-          <div style="max-height: 40vw;overflow: auto">
+          <hr style="margin:0.5rem -0.5rem 0rem -0.5rem;">
+          <div style="max-height: 40vw;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;">
             {#if notifications.count > 0 }
             {#each notifications.notify as notification}
             {#if notification.checked == false }
@@ -183,7 +183,23 @@ function CloseMenu(){
                 </div>
                 </div>
               </a>
-                
+            {:else}
+              <a href="{notification.link}">
+                <div class="dropdown-item" style="display:flex;background: #1b1b1b;">
+                  <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
+                  <div style="display: block;margin-left: 0.4rem;line-height: 1.2;">
+                    <span style="color: var(--navbar-color);font-size:1rem;line-height: 1;"><span style="font-weight: 500;">{notification.title }</span></span>
+                    {#if notification.category != 'follow' || notification.category != 'unfollow' }
+                    <span style="color: var(--link)">{notification.body}</span>
+                    {/if}
+                    <span style="color: #828282;
+                    width: max-content;
+                    display: flex;
+                    margin-inline-start: auto;
+                    font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
+                </div>
+                </div>
+              </a>
             {/if}
             {/each}
             {:else}

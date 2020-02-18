@@ -161,15 +161,6 @@
     display: block;
     margin: 0rem -0.8rem;
   }
-  .ql-snow.ql-toolbar button:hover, .ql-snow .ql-toolbar button:hover, .ql-snow.ql-toolbar button:focus, .ql-snow .ql-toolbar button:focus, .ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active, .ql-snow.ql-toolbar .ql-picker-label:hover, .ql-snow .ql-toolbar .ql-picker-label:hover, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow .ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-item:hover, .ql-snow .ql-toolbar .ql-picker-item:hover, .ql-snow.ql-toolbar .ql-picker-item.ql-selected, .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
-	color: var(--theme-color) !important;
-  }
-  .ql-snow.ql-toolbar button:hover .ql-fill {
-	fill: var(--theme-color) !important;
-  }
-  .ql-snow.ql-toolbar button:hover .ql-stroke, .ql-snow .ql-toolbar button:hover .ql-stroke, .ql-snow.ql-toolbar button:focus .ql-stroke, .ql-snow .ql-toolbar button:focus .ql-stroke, .ql-snow.ql-toolbar button.ql-active .ql-stroke, .ql-snow .ql-toolbar button.ql-active .ql-stroke, .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke, .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke, .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke, .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke, .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke, .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke, .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke, .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke, .ql-snow.ql-toolbar button:hover .ql-stroke-miter, .ql-snow .ql-toolbar button:hover .ql-stroke-miter, .ql-snow.ql-toolbar button:focus .ql-stroke-miter, .ql-snow .ql-toolbar button:focus .ql-stroke-miter, .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter, .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter, .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter, .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter, .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter, .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter, .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter, .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter, .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter, .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter{
-	stroke: var(--theme-color) !important;
-  }
   .cc-color-override-2027711132 .cc-btn {
 	border-radius: 20px;
   }
@@ -516,7 +507,26 @@
 	position: relative;
 	display: inline-block;
   }
-  .newapp-dropdown-content {
+  .newapp-dropdown-content#notifications {
+	display: none;
+    position: absolute;
+    background-color: var(--navbar);
+    min-width: 10rem;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
+    padding: 0.6rem 0.5rem;
+    border-radius: 20px;
+    color: var(--navbar-color);
+    z-index: 5;
+    margin-inline-start: -8.9rem;
+    min-width: 16rem;
+    margin-inline-start: -15.4rem;
+    margin-top: 0.9rem;
+    padding-bottom: 0;
+    overflow: auto;
+    border: 1px solid #3c3c3c;
+  }
+
+  .newapp-dropdown-content#user {
 	display: none;
 	position: absolute;
 	background-color: var(--navbar);
@@ -528,16 +538,30 @@
 	z-index: 5;
 	margin-inline-start: -8.9rem;
   }
+
+  .newapp-dropdown-content#notifications ::-webkit-scrollbar{
+	display: none;
+  }
+
   .newapp-dropdown-content#user {
 	margin-top: 0.2rem;
   }
-  .newapp-dropdown-content .dropdown-item {
+
+  .newapp-dropdown-content#user .dropdown-item {
 	margin-top: 0.2rem;
 	margin-bottom: 0.2rem;
 	padding: 0.3rem;
 	border-radius: 20px;
 	margin-left: 0;
 	margin-right: 0;
+  }
+
+  .newapp-dropdown-content#notifications .dropdown-item {
+	padding: 0.3rem;
+	margin-left: 0;
+	margin-right: 0;
+	border-bottom: 1px solid #6f6f6f44;
+	background-color: #272727;
   }
   hr {
 	border-style: solid;
@@ -582,7 +606,7 @@
 	outline: none;
   }
   .newapp-dropdown .dropdown-item:hover {
-	background-color: var(--navbar-dropdown-hover);
+	background-color: var(--navbar-dropdown-hover) !important;
   }
   content {
 	margin: auto;
@@ -1596,6 +1620,9 @@
   @media screen and (max-width: 1260px) {
 	.sidebar#sidebar-left {
 	  display:none;
+	}
+	::-webkit-scrollbar {
+		display: none;
 	}
   }
   @media screen and (max-width: 800px) {

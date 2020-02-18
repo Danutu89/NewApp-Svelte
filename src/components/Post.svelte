@@ -280,7 +280,7 @@ onMount(async function(){
                     <div id="reply_name_{reply.author.id}" style="margin-top:-0.1rem;">
     
                         <a id="reply_name" style="color: #333;font-size: 1rem;"
-                            href="/user/{reply.author.id}">@{reply.author.name}</a>
+                            href="/user/{reply.author.name}">@{reply.author.name}</a>
                         <p style="font-size: 60%;opacity: 0.6;margin-bottom: 0;margin-top: 0;">
                             { reply.author.status }
                         </p>
