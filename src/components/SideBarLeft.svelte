@@ -101,15 +101,21 @@ onDestroy(function(){
 function handleGesture(event) {
     //Right Swipe
     if (touchendX - 10 < touchstartX && touchendY - touchstartY < 20 && touchstartY - touchendY < 20 && touchendX != touchstartX) {
-      if (!wrapper_.opened){
-        wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"));
-      }
+        if (!wrapper_.opened){
+            wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"));
+        }
     }
     //Left Swipe
     if (touchendX - 10 > touchstartX && touchstartY - touchendY < 20 && touchendY - touchstartY < 20 && touchendX != touchstartX) {
-      if (wrapper_.opened){
-        wrapper_.setFalse(document.getElementById("sidebar-left"),document.querySelector("overflow"));
-      }
+        if (wrapper_.opened){
+            wrapper_.setFalse(document.getElementById("sidebar-left"),document.querySelector("overflow"));
+        }
+    }
+
+    if(touchendX == touchstartX && touchstartY == touchendY && !document.getElementById("sidebar-left").contains(event.target)){
+        if (!wrapper_.opened){
+            wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"));
+        }
     }
 
 }
