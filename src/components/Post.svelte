@@ -274,14 +274,13 @@ onMount(async function(){
                 <div id="reply_img_{reply.author.id}" class="author" style="
                     border-radius: 20px;
                     padding: 0.5rem;
-                    background-color: rgb(239, 240, 241);
                     display: flex;">
                     <img style="border-radius:20px;margin-right: 5px;" height="35px" width="35px"
                         src="{reply.author.avatar}" alt="{reply.author.name}">
                     <div id="reply_name_{reply.author.id}" style="margin-top:-0.1rem;">
     
                         <a id="reply_name" style="color: #333;font-size: 1rem;"
-                            href="/user/{reply.author.id}">@{reply.author.name}</a>
+                            href="/user/{reply.author.name}">@{reply.author.name}</a>
                         <p style="font-size: 60%;opacity: 0.6;margin-bottom: 0;margin-top: 0;">
                             { reply.author.status }
                         </p>

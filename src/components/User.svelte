@@ -37,7 +37,17 @@ function Follow_User(id){
     <div class="profile-main">
       <div class="sidebar-info">
         <div class="profile-image" >
-          <div><img loading="lazy" src="{user.avatar}" alt=""></div>
+          <div><div class="profile-photo" style="background-image: url({user.avatar});background-position: center center;
+            background-size: cover;
+            border: var(--border);
+            height: 200px;
+            width: 200px;
+            border-radius: 100px;
+            border: 3px solid var(--background);
+                left: 0;
+    right: 0;
+    margin: auto;">
+          </div></div>
 
           <div class="user-name" style="line-height: 1.7rem;">
             <h1 style="font-weight: 400;">{user.real_name}</h1>

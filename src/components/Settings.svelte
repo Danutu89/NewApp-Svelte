@@ -15,7 +15,7 @@ let editInfo, editMisc;
 let s_real_name=user.real_name,
     s_email=user.email,
     s_bio=user.bio,
-    s_profession=user.bio,
+    s_profession=user.profession,
     s_i=user.instagram,
     s_f=user.facebook,
     s_t=user.twitter,
@@ -69,7 +69,8 @@ async function SaveSettings(){
   let payload = {
     email: s_email, 
     real_name: s_real_name, 
-    bio: s_bio, profession: s_profession, 
+    bio: s_bio, 
+    profession: s_profession, 
     instagram: s_i, 
     facebook: s_f, 
     twitter: s_t, 
