@@ -1,7 +1,7 @@
 <script>
 import Login from './Login.svelte';
 import Register from './Register.svelte';
-import { onMount, beforeUpdate  } from 'svelte';
+import { onMount  } from 'svelte';
 import { stores, goto } from '@sapper/app';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
@@ -40,19 +40,17 @@ function onClickDocument(e){
         menu_open = false;
       }
     }
-    if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target) && !menu_open){
-      if(notifications_center_c.style['display'] == 'block'){
-        notifications_center_c.style['display'] = 'none';
-        overflow.classList.remove("show");
-      }
-    }else if(!notifications_center_c.contains(e.target) && !menu_open){
-      if(notifications_center_c.style['display'] == 'block'){
-        notifications_center_c.style['display'] = 'none';
-        overflow.classList.remove("show");
-      }else{
-        // if(isMobile == true){
-        //   goto("/notifications");
-        // }else{
+    if(isMobile == false){
+      if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target) && !menu_open){
+        if(notifications_center_c.style['display'] == 'block'){
+          notifications_center_c.style['display'] = 'none';
+          overflow.classList.remove("show");
+        }
+      }else if(!notifications_center_c.contains(e.target) && !menu_open){
+        if(notifications_center_c.style['display'] == 'block'){
+          notifications_center_c.style['display'] = 'none';
+          overflow.classList.remove("show");
+        }else{
           if(notifications_center_c.style['display'] == 'block'){
             notifications_center_c.style['display'] = 'none';
             overflow.classList.remove("show");
@@ -60,7 +58,11 @@ function onClickDocument(e){
             overflow.classList.add("show");
             notifications_center_c.style['display'] = 'block';
           }
-        //}
+        }
+      }
+    }else{
+      if(notifications_c.contains(e.target)){
+        goto("/notifications");
       }
     }
   }else{
@@ -100,19 +102,13 @@ onMount(async function(){
     capture: true
   });
 
+
   if($session.auth){
-    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token, { pregress: false }).then((response)=>{
+    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token+'&ex=false', { pregress: false }).then((response)=>{
       return response.data;
     })
     notifications = await not;
   }
-
-  return () => {
-    document.removeEventListener('click', onClickDocument, {
-      capture: true
-    });
-  }
-
 });
 
 function OpenModalLogin(){
@@ -167,7 +163,7 @@ function CloseMenu(){
           <span class="notifications-number">{notifications.count_new}</span>
           {/if}
           <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="display: none;">
-          Notifications
+          <a href="/notifications" style="color: var(--color);">Notifications</a>
           <hr style="margin:0.5rem -0.5rem 0rem -0.5rem;">
           <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;">
             {#if notifications.count > 0 }

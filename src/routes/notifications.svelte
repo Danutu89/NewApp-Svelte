@@ -3,7 +3,7 @@
     export async function preload(page,session){
         let args = '';
         if (session.token){
-            args = '?t=' + session.token;
+            args = '?t=' + session.token + '&ex=true';
         }else{
             this.redirect(302, '/');
         }
