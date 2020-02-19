@@ -1329,11 +1329,6 @@
 	overflow: hidden;
 	width: 100%;
   }
-  content profile .profile-cover img {
-	border: var(--border);
-	width: 100%;
-	border-radius: 20px;
-  }
   content profile .profile-main .sidebar-info {
 	max-width: 300px;
   }

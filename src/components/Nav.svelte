@@ -12,6 +12,7 @@ const { session, page } = stores();
 let l_modal, r_modal, j_modal,l_modal_in, r_modal_in, j_modal_in, user = null, user_center = null, user_image = null, overflow = null, search = "";
 var menu_open = false;
 let notifications,notifications_c,notifications_center_c;
+let isMobile;
 
 function LogOut(){
   cookies.remove("token");
@@ -47,13 +48,17 @@ function onClickDocument(e){
         notifications_center_c.style['display'] = 'none';
         overflow.classList.remove("show");
       }else{
-        if(notifications_center_c.style['display'] == 'block'){
-          notifications_center_c.style['display'] = 'none';
-          overflow.classList.remove("show");
-        }else{
-          overflow.classList.add("show");
-          notifications_center_c.style['display'] = 'block';
-        }
+        // if(isMobile == true){
+        //   goto("/notifications");
+        // }else{
+          if(notifications_center_c.style['display'] == 'block'){
+            notifications_center_c.style['display'] = 'none';
+            overflow.classList.remove("show");
+          }else{
+            overflow.classList.add("show");
+            notifications_center_c.style['display'] = 'block';
+          }
+        //}
       }
     }
   }else{
@@ -81,6 +86,7 @@ function onClickDocument(e){
 
 
 onMount(async function(){
+  isMobile = window.matchMedia("only screen and (max-width: 950px)").matches;
   l_modal = document.getElementById("login-modal");
   r_modal = document.getElementById("register-modal");
   j_modal = document.getElementById("join-modal");
@@ -161,7 +167,7 @@ function CloseMenu(){
           <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="display: none;">
           Notifications
           <hr style="margin:0.5rem -0.5rem 0rem -0.5rem;">
-          <div style="max-height: 40vw;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;">
+          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;">
             {#if notifications.count > 0 }
             {#each notifications.notify as notification}
             {#if notification.checked == false }
