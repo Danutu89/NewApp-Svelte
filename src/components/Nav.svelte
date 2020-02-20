@@ -165,10 +165,9 @@ function CloseMenu(){
           <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="display: none;">
           <a href="/notifications" style="color: var(--color);">Notifications</a>
           <hr style="margin:0.5rem -0.5rem 0rem -0.5rem;">
-          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;">
+          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;padding: 0.3rem;">
             {#if notifications.count > 0 }
             {#each notifications.notify as notification}
-            {#if notification.checked == false }
               <a href="{notification.link}">
                 <div class="dropdown-item" style="display:flex;">
                   <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
@@ -181,28 +180,11 @@ function CloseMenu(){
                     width: max-content;
                     display: flex;
                     margin-inline-start: auto;
-                    font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
+                    font-size: 0.6rem;margin-top: 0.3rem;
+                    margin-right: 0.2rem;ssss">{notification.time_ago} ago</span>
                 </div>
                 </div>
               </a>
-            {:else}
-              <a href="{notification.link}">
-                <div class="dropdown-item" style="display:flex;background: #1b1b1b;">
-                  <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
-                  <div style="display: block;margin-left: 0.4rem;line-height: 1.2;">
-                    <span style="color: var(--navbar-color);font-size:1rem;line-height: 1;"><span style="font-weight: 500;">{notification.title }</span></span>
-                    {#if notification.category != 'follow' || notification.category != 'unfollow' }
-                    <span style="color: var(--link)">{notification.body}</span>
-                    {/if}
-                    <span style="color: #828282;
-                    width: max-content;
-                    display: flex;
-                    margin-inline-start: auto;
-                    font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
-                </div>
-                </div>
-              </a>
-            {/if}
             {/each}
             {:else}
             No Notifications

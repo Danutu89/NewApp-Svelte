@@ -38,18 +38,22 @@ function Switch_Not(type){
     </div>
     <div class="notifications">
     {#each notifications as notification}
-        <div class="notification">
-            <img class="avatar" src="{notification.author.avatar}" alt="{notification.author.name}" width="60px" height="60px">
-            <div class="body">
-                <span class="text">
-                    <span style="color: var(--color);">{notification.title}</span>
-                    <span style="color: var(--link);">{notification.body}</span>
-                </span>
-                <span class="time">
-                    {notification.time_ago} ago
-                </span>
+        <a href="{notification.link}">
+            <div class="notification">
+                <img class="avatar" src="{notification.author.avatar}" alt="{notification.author.name}" width="60px" height="60px">
+                <div class="body">
+                    <span class="text">
+                        <span style="color: var(--color);">{notification.title}</span>
+                        {#if notification.category != 'follow'}
+                        <span style="color: var(--link);">{notification.body}</span>
+                        {/if}
+                    </span>
+                    <span class="time">
+                        {notification.time_ago} ago
+                    </span>
+                </div>
             </div>
-        </div>
+        </a>
     {/each}
     </div>
 </notifications>
