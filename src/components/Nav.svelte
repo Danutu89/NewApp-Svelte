@@ -1,7 +1,7 @@
 <script>
 import Login from './Login.svelte';
 import Register from './Register.svelte';
-import { onMount, beforeUpdate  } from 'svelte';
+import { onMount  } from 'svelte';
 import { stores, goto } from '@sapper/app';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
@@ -11,7 +11,7 @@ const { session, page } = stores();
 
 let l_modal, r_modal, j_modal,l_modal_in, r_modal_in, j_modal_in, user = null, user_center = null, user_image = null, overflow = null, search = "";
 var menu_open = false;
-let notifications,notifications_c,notifications_center_c;
+let notifications,notifications_c,notifications_center_c,notification_list;
 let isMobile;
 
 function LogOut(){
@@ -24,43 +24,41 @@ function LogOut(){
 function onClickDocument(e){
   if($session.auth){
     if(!user_image.contains(e.target) && !user_center.contains(e.target)){
-      if(user.style["display"] == "block"){
+      if(notifications_c.contains(e.target)){
+        user.style["display"] = "none";
+      }else if(user.style["display"] == "block"){
         user.style["display"] = "none";
         overflow.classList.remove("show");
-        menu_open = false;
       }
     }else if(user_image.contains(e.target)){
       if(user.style["display"] == "none"){
         user.style["display"] = "block";
         overflow.classList.add("show");
-        menu_open = true;
       }else if(user.style["display"] == "block"){
         user.style["display"] = "none";
         overflow.classList.remove("show");
-        menu_open = false;
       }
     }
-    if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target) && !menu_open){
-      if(notifications_center_c.style['display'] == 'block'){
-        notifications_center_c.style['display'] = 'none';
-        overflow.classList.remove("show");
+    if(isMobile == false){
+      if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target)){
+        if(user_image.contains(e.target)){
+          notifications_center_c.style["display"] = "none";
+        }else if(notifications_center_c.style['display'] == 'block'){
+          notifications_center_c.style['display'] = 'none';
+          overflow.classList.remove("show");
+        }
+      }else if(notifications_c.contains(e.target)){
+        if(notifications_center_c.style['display'] == 'none'){
+          notifications_center_c.style['display'] = 'block';
+          overflow.classList.add("show");
+        }else if(notifications_center_c.style['display'] == 'block'){
+          notifications_center_c.style['display'] = 'none';
+          overflow.classList.remove("show");
+        }
       }
-    }else if(!notifications_center_c.contains(e.target) && !menu_open){
-      if(notifications_center_c.style['display'] == 'block'){
-        notifications_center_c.style['display'] = 'none';
-        overflow.classList.remove("show");
-      }else{
-        // if(isMobile == true){
-        //   goto("/notifications");
-        // }else{
-          if(notifications_center_c.style['display'] == 'block'){
-            notifications_center_c.style['display'] = 'none';
-            overflow.classList.remove("show");
-          }else{
-            overflow.classList.add("show");
-            notifications_center_c.style['display'] = 'block';
-          }
-        //}
+    }else{
+      if(notifications_c.contains(e.target)){
+        goto("/notifications");
       }
     }
   }else{
@@ -100,19 +98,13 @@ onMount(async function(){
     capture: true
   });
 
+
   if($session.auth){
-    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token, { pregress: false }).then((response)=>{
+    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token+'&ex=false', { pregress: false }).then((response)=>{
       return response.data;
     })
     notifications = await not;
   }
-
-  return () => {
-    document.removeEventListener('click', onClickDocument, {
-      capture: true
-    });
-  }
-
 });
 
 function OpenModalLogin(){
@@ -167,12 +159,11 @@ function CloseMenu(){
           <span class="notifications-number">{notifications.count_new}</span>
           {/if}
           <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="display: none;">
-          Notifications
+          <a href="/notifications" style="color: var(--color);">Notifications</a>
           <hr style="margin:0.5rem -0.5rem 0rem -0.5rem;">
-          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;">
+          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;padding: 0.3rem;" bind:this={notification_list}>
             {#if notifications.count > 0 }
             {#each notifications.notify as notification}
-            {#if notification.checked == false }
               <a href="{notification.link}">
                 <div class="dropdown-item" style="display:flex;">
                   <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
@@ -185,28 +176,11 @@ function CloseMenu(){
                     width: max-content;
                     display: flex;
                     margin-inline-start: auto;
-                    font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
+                    font-size: 0.6rem;margin-top: 0.3rem;
+                    margin-right: 0.2rem;ssss">{notification.time_ago} ago</span>
                 </div>
                 </div>
               </a>
-            {:else}
-              <a href="{notification.link}">
-                <div class="dropdown-item" style="display:flex;background: #1b1b1b;">
-                  <img src="{notification.author.avatar}" height="30px" width="30px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
-                  <div style="display: block;margin-left: 0.4rem;line-height: 1.2;">
-                    <span style="color: var(--navbar-color);font-size:1rem;line-height: 1;"><span style="font-weight: 500;">{notification.title }</span></span>
-                    {#if notification.category != 'follow' || notification.category != 'unfollow' }
-                    <span style="color: var(--link)">{notification.body}</span>
-                    {/if}
-                    <span style="color: #828282;
-                    width: max-content;
-                    display: flex;
-                    margin-inline-start: auto;
-                    font-size: 0.6rem;margin-top: 0.3rem;">{notification.time_ago} ago</span>
-                </div>
-                </div>
-              </a>
-            {/if}
             {/each}
             {:else}
             No Notifications

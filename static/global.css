@@ -386,6 +386,120 @@
 	font-size: 0.7rem;
 	line-height: 1.0;
   }
+  notifications .notifications .notification {
+	display: flex;
+  }
+  notifications .notifications .notification .avatar {
+	width: 60px;
+	border-radius: 50px;
+  }
+  notifications .notifications .notification .body {
+	margin-left: 0.5rem;
+	width: 100%;
+	display: grid;
+  }
+  notifications .notifications .notification .body .text {
+	color: var(--color);
+	display: block;
+	font-size: 1rem;
+  }
+  notifications .notifications .notification .body .time {
+	font-size: 0.7rem;
+	color: rgb(130, 130, 130);
+	width: max-content;
+	display: flex;
+	margin-inline-start: auto;
+	flex-direction: column;
+	margin-top: auto;
+	align-self: flex-end;
+	margin-right: 0.5rem;
+  }
+  notifications .category .header {
+	font-size: 1.5rem;
+	color: var(--color);
+	font-weight: 300;
+	display: none;
+  }
+  notifications .category button{
+	  cursor: pointer;
+  }
+  notifications .category button:focus {
+	outline: none;
+  }
+  @media screen and (min-width: 950px){
+	notifications {
+		display: flex;
+		height: auto;
+		overflow: visible;
+	}
+	notifications .category {
+		display: block;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
+		border-radius: 20px;
+		height: fit-content;
+		padding: 0.5rem;
+	}
+	notifications .category button {
+		border: 1px solid rgba(0, 0, 0, 0.125);
+		background-color: var(--background);
+		border-radius: 20px;
+		color: var(--color);
+		font-weight: 500;
+		width: 100%;
+		margin: 0.5rem 0;
+		padding: 0.5rem;
+	}
+	notifications .notifications {
+		overflow: auto;
+		height: calc(100vh - 100px);
+		margin-left: 1rem;
+		width: 100%;
+		padding: 0.5rem;
+	}
+	notifications .category .header{
+		display: block;
+	}
+
+
+  }
+  @media screen and (max-width: 950px){
+	notifications {
+		display: block;
+		height: auto;
+		overflow: visible;
+	}
+	notifications .category {
+		justify-content: space-between;
+		display: flex;
+		padding: 0rem 0.5rem;
+		background: var(--navbar);
+		margin: -0.7rem -0.4rem 0rem -0.4rem;
+		top: 0;
+		position: fixed;
+		margin-top: 43px;
+		width: calc(100% - 1rem);
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
+	}
+	notifications .category button {
+		border: 1px solid rgba(0, 0, 0, 0.125);
+		background-color: var(--background);
+		border-radius: 20px;
+		color: var(--color);
+		font-weight: 500;
+		width: 100%;
+		margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+		padding: 0.3rem 0rem 0.3rem 0rem;
+	}
+	notifications .notifications {
+		overflow: auto;
+		height: calc(100vh - 100px);
+		padding-top: 0.5rem;
+		margin-top: 32px;
+	}
+	notifications .category .category-header {
+		display: none;
+	}
+  }
   ::-webkit-scrollbar {
 	width: 5px;
 	height: 5px;
@@ -511,19 +625,14 @@
 	display: none;
     position: absolute;
     background-color: var(--navbar);
-    min-width: 10rem;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
+    min-width: 15rem;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 0.6rem 0.5rem;
     border-radius: 20px;
+    margin-top: 0.9rem;
     color: var(--navbar-color);
     z-index: 5;
-    margin-inline-start: -8.9rem;
-    min-width: 16rem;
-    margin-inline-start: -15.4rem;
-    margin-top: 0.9rem;
-    padding-bottom: 0;
-    overflow: auto;
-    border: 1px solid #3c3c3c;
+    margin-inline-start: -15.9rem;
   }
 
   .newapp-dropdown-content#user {
@@ -557,11 +666,13 @@
   }
 
   .newapp-dropdown-content#notifications .dropdown-item {
-	padding: 0.3rem;
-	margin-left: 0;
+	margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    padding: 0.3rem;
+    border-radius: 4px;
+    margin-left: 0;
 	margin-right: 0;
-	border-bottom: 1px solid #6f6f6f44;
-	background-color: #272727;
+	border-radius: 20px;
   }
   hr {
 	border-style: solid;
