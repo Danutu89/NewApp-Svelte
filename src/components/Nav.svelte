@@ -11,7 +11,7 @@ const { session, page } = stores();
 
 let l_modal, r_modal, j_modal,l_modal_in, r_modal_in, j_modal_in, user = null, user_center = null, user_image = null, overflow = null, search = "";
 var menu_open = false;
-let notifications,notifications_c,notifications_center_c;
+let notifications,notifications_c,notifications_center_c,notification_list;
 let isMobile;
 
 function LogOut(){
@@ -24,40 +24,36 @@ function LogOut(){
 function onClickDocument(e){
   if($session.auth){
     if(!user_image.contains(e.target) && !user_center.contains(e.target)){
-      if(user.style["display"] == "block"){
+      if(notifications_c.contains(e.target)){
+        user.style["display"] = "none";
+      }else if(user.style["display"] == "block"){
         user.style["display"] = "none";
         overflow.classList.remove("show");
-        menu_open = false;
       }
     }else if(user_image.contains(e.target)){
       if(user.style["display"] == "none"){
         user.style["display"] = "block";
         overflow.classList.add("show");
-        menu_open = true;
       }else if(user.style["display"] == "block"){
         user.style["display"] = "none";
         overflow.classList.remove("show");
-        menu_open = false;
       }
     }
     if(isMobile == false){
-      if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target) && !menu_open){
-        if(notifications_center_c.style['display'] == 'block'){
+      if(!notifications_c.contains(e.target) && !notifications_center_c.contains(e.target)){
+        if(user_image.contains(e.target)){
+          notifications_center_c.style["display"] = "none";
+        }else if(notifications_center_c.style['display'] == 'block'){
           notifications_center_c.style['display'] = 'none';
           overflow.classList.remove("show");
         }
-      }else if(!notifications_center_c.contains(e.target) && !menu_open){
-        if(notifications_center_c.style['display'] == 'block'){
+      }else if(notifications_c.contains(e.target)){
+        if(notifications_center_c.style['display'] == 'none'){
+          notifications_center_c.style['display'] = 'block';
+          overflow.classList.add("show");
+        }else if(notifications_center_c.style['display'] == 'block'){
           notifications_center_c.style['display'] = 'none';
           overflow.classList.remove("show");
-        }else{
-          if(notifications_center_c.style['display'] == 'block'){
-            notifications_center_c.style['display'] = 'none';
-            overflow.classList.remove("show");
-          }else{
-            overflow.classList.add("show");
-            notifications_center_c.style['display'] = 'block';
-          }
         }
       }
     }else{
@@ -165,7 +161,7 @@ function CloseMenu(){
           <div bind:this={notifications_center_c} class="newapp-dropdown-content" id="notifications" style="display: none;">
           <a href="/notifications" style="color: var(--color);">Notifications</a>
           <hr style="margin:0.5rem -0.5rem 0rem -0.5rem;">
-          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;padding: 0.3rem;">
+          <div style="max-height: 20rem;overflow: auto;margin: 0rem -0.5rem 0rem -0.5rem;padding: 0.3rem;" bind:this={notification_list}>
             {#if notifications.count > 0 }
             {#each notifications.notify as notification}
               <a href="{notification.link}">
