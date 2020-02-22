@@ -57,6 +57,14 @@ function SavePost(id){
 	{/each}
 {:else}
 <div class="articles">
+    <div class="navigation-menu">
+        <a href="/"><button>Feed</button></a>
+        <a href="/saved"><button>Saved</button></a>
+        <a href="/recent"><button>Recent</button></a>
+        <a href="/questions"><button>Questions</button></a>
+        <a href="/discuss"><button>Discuss</button></a>
+        <a href="/tutorials"><button>Tutorials</button></a>
+    </div>
 	{#each articles as article}
 		<div class="article-card" id="post_{article.id}">
         {#if article.thumbnail}

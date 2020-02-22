@@ -22,6 +22,7 @@ let touchendY = 0;
 let document_;
 let window_;
 
+
 function Follow_Tag(tag_) {
     if($session.auth == false){
         OpenJoin();
@@ -100,7 +101,7 @@ onDestroy(function(){
         touchstartY = event.changedTouches[0].screenY;
         }, false);
         window_.removeEventListener('resize', onScreenChange);
-        wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"));
+        wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));
     }
 })
 
@@ -108,19 +109,19 @@ function handleGesture(event) {
     //Right Swipe
     if (touchendX - 10 < touchstartX && touchendY - touchstartY < 20 && touchstartY - touchendY < 20 && touchendX != touchstartX) {
         if (!wrapper_.opened){
-            wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"));
+            wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"),document.querySelector(".newapp-navbar"));
         }
     }
     //Left Swipe
     if (touchendX - 10 > touchstartX && touchstartY - touchendY < 20 && touchendY - touchstartY < 20 && touchendX != touchstartX) {
         if (wrapper_.opened){
-            wrapper_.setFalse(document.getElementById("sidebar-left"),document.querySelector("overflow"));
+            wrapper_.setFalse(document.getElementById("sidebar-left"),document.querySelector("overflow"),document.querySelector(".newapp-navbar"));
         }
     }
 
     if(touchendX == touchstartX && touchstartY == touchendY && !document.getElementById("sidebar-left").contains(event.target)){
         if (!wrapper_.opened){
-            wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"));
+            wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"),document.querySelector(".newapp-navbar"));
         }
     }
 
@@ -151,7 +152,7 @@ function handleGesture(event) {
     </a>
 </div>
 {/if}
-<div class="widget">
+<div class="widget" id="navigation">
     <div class="widget-header">
         <div class="widget-title">Navigation</div>
     </div>

@@ -11,7 +11,7 @@
 	--navbar: white;
 	--navbar-color: #212529;
 	--navbar-dropdown-hover: #ececec;
-	--wrapper-background: white;
+	--wrapper-background: var(--navbar);
 	--theme-color: #18BC9C;
 	--theme-hover-color: #14947b;
 	--input-group-bg: #d6d6d6;
@@ -31,7 +31,7 @@
 		--navbar: #262626;
 		--navbar-color: rgb(196, 196, 196);
 		--navbar-dropdown-hover: #333333;
-		--wrapper-background: #171717;
+		--wrapper-background: var(--navbar);
 		--input-group-bg: #2d2d2d;
 		--input-group-color: #d2d2d2;
 		--input-group-border: #4c4c4c 1px solid;
@@ -50,7 +50,7 @@
 		--navbar: white;
 		--navbar-color: #212529;
 		--navbar-dropdown-hover: #ececec;
-		--wrapper-background: white;
+		--wrapper-background: var(--navbar);
 		--input-group-bg: #d6d6d6;
 		--input-group-color: #444444;
 		--input-group-border: #b1b1b1 1px solid;
@@ -178,20 +178,6 @@
 	color: var(--color) !important;
 	border-radius: 20px !important;
 	background-color: var(--editor) !important;
-  }
-  .ql-container.ql-snow {
-	border: var(--border) !important;
-	background-color: var(--editor);
-  }
-  .ql-toolbar.ql-snow {
-	border: none !important;
-	background-color: none;
-  }
-  .ql-container {
-	border-radius: 20px;
-  }
-  .ql-toolbar {
-	border-radius: 20px;
   }
   .post_content img {
 	max-width: 100%;
@@ -520,7 +506,6 @@
   .newapp-navbar {
 	background-color: var(--navbar);
 	height: 30px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
 	margin: 0;
 	padding: 0.4rem 0.5rem;
 	font-size: 0.9375rem;
@@ -531,6 +516,9 @@
 	top: 0;
 	align-self: flex-start;
 	width: calc(100% - 1rem);
+  }
+  .newapp-navbar.shadow {
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
   }
   .newapp-navbar a {
 	text-decoration: none;
@@ -761,7 +749,7 @@
 	color: white;
   }
   content .wrapper-left {
-	height: calc(100% - 5.6rem);
+	height: 100%;
 	width: 250px;
 	position: fixed;
 	z-index: 6;
@@ -772,7 +760,6 @@
 	margin: -20px;
 	padding: 0.5rem;
 	padding-top: 3rem;
-	padding-bottom: 3rem;
 	margin: 0 0 0 20px;
 	background: var(--wrapper-background);
 	/* -webkit-transition: all 0.2s ease;
@@ -886,7 +873,7 @@
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
-	margin-block-start: 0.5rem;
+	margin-block-start: 0.6rem;
 	cursor: pointer;
   }
   content .article .post .post-reply div button.reply-button {
@@ -1150,8 +1137,7 @@
   content .wrapper-left .widget-post .post-header {
 	display: flex;
   }
-  content .sidebar .user-card,
-  content .wrapper-left .user-card {
+  content .sidebar .user-card {
 	display: block;
 	background-color: var(--background);
 	padding: 0.5rem;
@@ -1159,6 +1145,12 @@
 	border-radius: 20px;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
+	margin-bottom: 5%;
+  }
+  content .wrapper-left .user-card{
+	display: block;
+	padding: 0.5rem;
+	align-items: center;
 	margin-bottom: 5%;
   }
   content .sidebar .user-info,
@@ -1200,6 +1192,36 @@
   content .sidebar .user-image,
   content .wrapper-left .user-image {
 	margin-bottom: -5px;
+  }
+  content .articles .navigation-menu {
+	  display: none;
+	  text-align: center;
+	  margin-bottom: 0.8rem;
+	  width: 100%;
+  }
+  content .articles .navigation-menu a button {
+	border: none;
+    background-color: var(--background);
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+  }
+  content .articles .navigation-menu a button:focus {
+	  outline: none;
+  }
+  @media screen and (max-width: 1260px){
+	content .articles .navigation-menu {
+		display: block;
+	}
+	content .wrapper-left .widget#navigation{
+		display: none;
+	}
+  }
+  @media screen and (min-width: 768px){
+	content .articles .navigation-menu a button{
+		font-size: 1.0rem;
+	}
   }
   content .article-card {
 	border-radius: 20px;
