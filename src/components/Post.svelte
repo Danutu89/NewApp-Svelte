@@ -248,9 +248,12 @@ onMount(async function(){
                                 class="na-heart1" on:click|preventDefault={Like_Post} bind:this={like_button}></i>
                             <span>Like</span></span>
                         {/if}
+                        {#if article.closed == false}
                         <span style="cursor: pointer;margin-right:0.5rem;" on:click|preventDefault={Comment}><i id="comment"
                                 class="na-comment"></i>
-                            <span>Comment</span></span>
+                            <span>Comment</span>
+                        </span>
+                        {/if}
                         <span id="share" style="cursor: pointer;"><i class="na-share"></i> <span>Share</span></span>
                         <div id="share-options" class="share_post">
                             <div class="list">
