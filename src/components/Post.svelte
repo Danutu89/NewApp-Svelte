@@ -2,7 +2,6 @@
 <script>
 
 export let article;
-import SideBarRight from '../components/SideBarRight.svelte';
 import { onMount, beforeUpdate } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import axios from 'axios';
@@ -105,7 +104,7 @@ async function Reply(){
         return;
     }
 
-    reply = {'text': markdown,author: {'id': $session.id, 'name': $session.name, 'avatar': $session.avatar, 'status': 'Online', 'reply_id': data['id']}};
+    reply = {'id': data.data['reply_id'], 'text': markdown,author: {'id': $session.id, 'name': $session.name, 'avatar': $session.avatar, 'status': 'Online', 'reply_id': data['id']}};
     article.replies = [...article.replies,reply];
     editor.value("");
 }
@@ -131,6 +130,29 @@ function Comment(){
     }
     
 }
+
+async function Delete_Reply(id){
+    if($session.auth == false){
+        return;
+    }
+    let args = "?t="+$session.token+"&id="+id;
+    const not = await axios.get("https://newapp.nl/api/reply/delete"+args).then(response =>{
+        if(response.status != 200){
+            //alert
+            return;
+        }
+
+        if(response.data['operation'] != "success"){
+            //alert
+            return;
+        }
+
+        document.getElementById("reply_"+id).remove();
+
+        return;
+    })
+}
+
 async function CheckNotification(id){
     if($session.auth == false){
         return;
@@ -271,6 +293,13 @@ onMount(async function(){
         <br>
         <div class="info" style="display: flex">
             <div  style="margin-inline-start: auto;display:flex;">
+                {#if $session.auth}
+                {#if $session.id == reply.author.id || $session.permissions.delete_reply_permission == true}
+                <div class="reply-actions">
+                   <button on:click={()=>{Delete_Reply(reply.id)}}>Delete</button>
+                </div>
+                {/if}
+                {/if}
                 <div id="reply_img_{reply.author.id}" class="author" style="
                     border-radius: 20px;
                     padding: 0.5rem;
@@ -298,5 +327,3 @@ onMount(async function(){
         {#if $session.auth}or <a href="/newpost" rel="prefetch" style="color:#18BC9C;"> ask your own question</a>{/if}.</p>
 </div>
 {/if}
-
-<SideBarRight author={article.author} user={article.user} article={article} page={"post"}/>

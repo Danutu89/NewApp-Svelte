@@ -40,7 +40,7 @@
 	--navbar: #262626;
 	--navbar-color: rgb(196, 196, 196);
 	--navbar-dropdown-hover: #333333;
-	--wrapper-background: #171717;
+	--wrapper-background: var(--navbar);
 	--input-group-bg: #2d2d2d;
 	--input-group-color: #d2d2d2;
 	--input-group-border: #4c4c4c 1px solid;
@@ -60,7 +60,7 @@
 	--navbar: white;
 	--navbar-color: #212529;
 	--navbar-dropdown-hover: #ececec;
-	--wrapper-background: white;
+	--wrapper-background: var(--navbar);
 	--input-group-bg: #d6d6d6;
 	--input-group-color: #444444;
 	--input-group-border: #b1b1b1 1px solid;

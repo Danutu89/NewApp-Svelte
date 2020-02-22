@@ -18,6 +18,7 @@
 
 <script>
 import Post from '../../components/Post.svelte';
+import SideBarRight from '../../components/SideBarRight.svelte';
 export let article;
 
 </script>
@@ -43,6 +44,8 @@ export let article;
 
 {#if article}
 <Post {article}/>
+
+<SideBarRight author={article.author} user={article.user} article={article} page={"post"}/>
 {/if}
 
 
