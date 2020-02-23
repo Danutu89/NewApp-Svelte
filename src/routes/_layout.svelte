@@ -30,11 +30,13 @@
 <style>
 :root{
 	--background: #1e1e1e;
+	--background-1: #2d2d2d;
 	--color: rgb(255, 255, 255);
 	--body-bg: #121212;
 	--border: 1px solid rgba(47, 47, 47, 0.125);
 	--editor: #2d2d2d;
 	--code: #313131;
+	--code-color: #e6db74;
 	--placeholder: rgba(255, 255, 255, 0.836);
 	--link: rgb(0, 157, 230);
 	--navbar: #262626;
@@ -50,11 +52,13 @@
 <style>
 :root{
 	--background: #ffffff;
+	--background-1: #efefef;
 	--color: #212529;
 	--body-bg: #efefef;
 	--border: 1px solid #d6d6d6;
 	--editor: trasparent;
 	--code: #efefef;
+	--code-color: var(--color);
 	--placeholder: rgba(90, 90, 90, 0.836);
 	--link: rgb(0, 157, 230);
 	--navbar: white;
