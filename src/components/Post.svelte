@@ -185,16 +185,18 @@ onMount(async function(){
     }
 
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
-    let reply = document.querySelector(".post-reply");
-    if (isMobile === true){
-        if(reply.style['display'] == 'none')
-        reply.style["display"] = "none";
-    }else{
-        reply.style["display"] = "block";
+    if(article.closed == false){
+        let reply = document.querySelector(".post-reply");
+        if (isMobile === true){
+            if(reply.style['display'] == 'none')
+            reply.style["display"] = "none";
+        }else{
+            reply.style["display"] = "block";
+        }
+        editor_s = document.querySelectorAll("textarea")[1];
+        let SimpleMDE = require('simplemde');
+        editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
     }
-    editor_s = document.querySelectorAll("textarea")[1];
-    let SimpleMDE = require('simplemde');
-    editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
 })
 
 
@@ -311,8 +313,7 @@ onMount(async function(){
                         src="{reply.author.avatar}" alt="{reply.author.name}">
                     <div id="reply_name_{reply.author.id}" style="margin-top:-0.1rem;">
     
-                        <a id="reply_name" style="color: #333;font-size: 1rem;"
-                            href="/user/{reply.author.name}">@{reply.author.name}</a>
+                        <a id="reply_name" href="/user/{reply.author.name}">@{reply.author.name}</a>
                         <p style="font-size: 60%;opacity: 0.6;margin-bottom: 0;margin-top: 0;">
                             { reply.author.status }
                         </p>
