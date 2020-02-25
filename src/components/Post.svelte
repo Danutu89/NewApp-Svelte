@@ -169,9 +169,19 @@ async function Delete_Reply(id){
     })
 }
 
+function Cancel_Reply(){
+    if(editing){
+        editing = false;
+        editing_id = null;
+        editor.value("");
+    }
+}
+
 function Edit_Reply(reply){
     editing_id = reply;
     editing = true;
+    if ( isMobile )
+        Comment();
     editor.value(turndown.turndown(reply.text));
     editor.codemirror.focus();
 }
@@ -354,6 +364,7 @@ onMount(async function(){
                         {#if editing == false}
                         <button class="reply-button" on:click={Reply} style="margin-inline-start:auto;">Post Reply</button>
                         {:else}
+                        <button class="reply-button" on:click={Cancel_Reply}>Cancel Edit</button>
                         <button class="reply-button" on:click={C_Edit_Reply} style="margin-inline-start:auto;">Edit Reply</button>
                         {/if}
                         </div>
