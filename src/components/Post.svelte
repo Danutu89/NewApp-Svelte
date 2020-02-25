@@ -5,6 +5,7 @@ export let article;
 import { onMount, beforeUpdate } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import axios from 'axios';
+import TurndownService from 'turndown';
 import marked from 'marked';
 import { stores } from '@sapper/app';
 const { page, session } = stores();
@@ -13,6 +14,20 @@ let like_button;
 let like_counter;
 let editor, editor_s;
 let isMobile;
+let turndown = TurndownService();
+
+let editing=false;
+let editing_id;
+
+let dark_theme;
+
+var loadCss = function(cssPath){
+    var cssLink = document.createElement('link');
+    cssLink.rel = 'stylesheet';
+    cssLink.href = cssPath;
+    var head = document.getElementsByTagName('head')[0];
+    head.appendChild(cssLink);
+};
 
 function Like_Post() {
     if($session.auth == false){
@@ -106,6 +121,7 @@ async function Reply(){
 
     reply = {'id': data.data['reply_id'], 'text': markdown,author: {'id': $session.id, 'name': $session.name, 'avatar': $session.avatar, 'status': 'Online', 'reply_id': data['id']}};
     article.replies = [...article.replies,reply];
+    PR.prettyPrint();
     editor.value("");
 }
 
@@ -153,6 +169,45 @@ async function Delete_Reply(id){
     })
 }
 
+function Edit_Reply(reply){
+    editing_id = reply;
+    editing = true;
+    editor.value(turndown.turndown(reply.text));
+    editor.codemirror.focus();
+}
+
+async function C_Edit_Reply(){
+    if($session.auth == false && $session.id != editing_id.author.id || $session.permissions.edit_reply_permission == false){
+        return;
+    }
+    let args = "?t="+$session.token+"&id="+editing_id.id;
+    const resp = await axios.post("https://newapp.nl/api/reply/edit",{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
+        if(response.status != 200){
+            //alert
+            return;
+        }
+
+        if(response.data['operation'] != "success"){
+            //alert
+            return;
+        }
+
+        let replies = article.replies;
+        replies.forEach(reply => {
+            if(reply.id == editing_id.id){
+                reply.text = marked(editor.value());
+            }
+        });
+        article.replies = replies;
+        editing_id = null;
+        editing = false;
+        editor.value("");
+        PR.prettyPrint();
+        return;
+    })
+    
+}
+
 async function CheckNotification(id){
     if($session.auth == false){
         return;
@@ -196,6 +251,28 @@ onMount(async function(){
         editor_s = document.querySelectorAll("textarea")[1];
         let SimpleMDE = require('simplemde');
         editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
+    }
+    dark_theme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if($session.auth == true){
+        if($session.theme_mode == 'system'){
+            if (dark_theme){
+                loadCss("https://newappcdn.b-cdn.net/dark_code.css");
+            }else{
+                loadCss("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css");
+            }
+        }else{
+            if($session.theme == 'Dark'){
+                loadCss("https://newappcdn.b-cdn.net/dark_code.css");
+            }else{
+                loadCss("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css");
+            }
+        }
+    }else{
+        if (dark_theme){
+            loadCss("https://newappcdn.b-cdn.net/dark_code.css");
+        }else{
+            loadCss("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css");
+        }
     }
 })
 
@@ -274,7 +351,11 @@ onMount(async function(){
                     <div class="post-reply" style="margin-top:3%;">
                         <textarea class="editor" id="editor" style="margin-bottom:1%;" minlength="0"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                         <div style="display:flex;">
+                        {#if editing == false}
                         <button class="reply-button" on:click={Reply} style="margin-inline-start:auto;">Post Reply</button>
+                        {:else}
+                        <button class="reply-button" on:click={C_Edit_Reply} style="margin-inline-start:auto;">Edit Reply</button>
+                        {/if}
                         </div>
                     </div>
                     {:else}
@@ -299,11 +380,14 @@ onMount(async function(){
         <div class="info" style="display: flex">
             <div  style="margin-inline-start: auto;display:flex;">
                 {#if $session.auth}
-                {#if $session.id == reply.author.id || $session.permissions.delete_reply_permission == true}
                 <div class="reply-actions">
-                   <button on:click={()=>{Delete_Reply(reply.id)}}>Delete</button>
-                </div>
+                {#if $session.id == reply.author.id || $session.permissions.edit_reply_permission == true}
+                    <button class="edit" on:click={()=>{Edit_Reply(reply)}}>Edit</button>
                 {/if}
+                {#if $session.id == reply.author.id || $session.permissions.delete_reply_permission == true}
+                    <button class="delete" on:click={()=>{Delete_Reply(reply.id)}}>Delete</button>
+                {/if}
+                </div>
                 {/if}
                 <div id="reply_img_{reply.author.id}" class="author" style="
                     border-radius: 20px;

@@ -64,6 +64,11 @@
 	}
 }
 
+pre.prettyprint {
+	padding: 0 !important;
+	border: none !important;
+}
+
 #nprogress .bar {
 	background: var(--theme-color) !important;
 }
@@ -157,6 +162,11 @@ pre code {
 	padding: 1.5rem;
 	display: block;
 	margin: 0rem -0.5rem;
+}
+
+.reply p img {
+	width: 100%;
+	border-radius: 20px;
 }
 
 .reply pre.ql-syntax {
@@ -1008,15 +1018,22 @@ content .article .reply .info div .author div a {
 	color: var(--color);
 }
 
-content .article .reply .info .reply-actions button {
-	border: 1px solid rgba(0, 0, 0, 0.125);
+content .article .reply .info .reply-actions .delete {
 	background-color: red;
+}
+content .article .reply .info .reply-actions button {
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
 	margin-block-start: 0.6rem;
 	cursor: pointer;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	width: 4rem;
+}
+
+content .article .reply .info .reply-actions .edit {
+	background-color: rgb(0, 157, 230);
 }
 
 content .article .post .post-reply div button.reply-button {

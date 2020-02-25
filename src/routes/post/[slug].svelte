@@ -40,8 +40,9 @@ export let article;
 <meta property="og:description" content="{article.description}...">
 <meta name="twitter:description" content="{article.description}...">
 <meta name="keywords" content="{article.keywords}newapp">
-</svelte:head>
 
+<script async src="https://newappcdn.b-cdn.net/prettify.js"></script>
+</svelte:head>
 {#if article}
 <Post {article}/>
 
