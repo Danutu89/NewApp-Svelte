@@ -9,7 +9,10 @@
 	onMount(async function() {
 		loadProgressBar();
 		if($session.auth){
-			const socket = io.connect("https://newapp.nl/",{transports: [ 'websocket', 'polling' ]});
+			var options = {
+				transports: ['websocket','polling'],
+			}
+			const socket = io.connect("https://newapp.nl/",options);
 			socket.on('connect', function () {
 				socket.emit('myevent', {
 					data: 'I\'m connected!'
@@ -27,6 +30,11 @@
 				}
 				});
 			}
+			else if (Notification.permission === 'granted'){
+				if ('serviceWorker' in navigator) {
+					navigator.serviceWorker.controller.postMessage($session.token);
+				}
+		    }
 		}
 	});
 </script>
