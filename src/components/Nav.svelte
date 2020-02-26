@@ -6,6 +6,7 @@ import { stores, goto } from '@sapper/app';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
 import axios from 'axios';
+import {socketio} from '../modules/SocketIO.js';
 const cookies = Cookie();
 const { session, page } = stores();
 
@@ -16,6 +17,9 @@ let isMobile;
 
 function LogOut(){
   if($session.auth == true){
+      socketio.emit('logout', {
+				data: $session.token
+			});	
       cookies.remove("token");
       location.reload();
   }

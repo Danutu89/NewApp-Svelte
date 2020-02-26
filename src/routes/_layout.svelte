@@ -1,23 +1,24 @@
 <script>
 	import {onMount} from 'svelte'
 	import Nav from '../components/Nav.svelte';
-	import io from 'socket.io-client';
 	import { loadProgressBar } from 'axios-progress-bar';
 	import { stores } from '@sapper/app';
 	const { session } = stores();
+	import {socketio} from '../modules/SocketIO';
 	
 	onMount(async function() {
 		loadProgressBar();
 		if($session.auth){
-			var options = {
-				transports: ['websocket','polling'],
-			}
-			const socket = io.connect("https://newapp.nl/",options);
-			socket.on('connect', function () {
-				socket.emit('myevent', {
-					data: 'I\'m connected!'
+			socketio.on('connect', function () {
+				socketio.emit('access', {
+					data: $session.token
 				});												
-			});									
+			});
+			socketio.on('logout', function () {
+				socketio.emit('exit', {
+					data: $session.token
+				});												
+			});					
 			if (window.Notification && Notification.permission !== "granted") {
 				Notification.requestPermission(function (status) {
 				if (Notification.permission !== status) {
