@@ -251,7 +251,7 @@ onMount(async function(){
         CheckNotification($page.query.notification_id);
     }
     var ua = navigator.userAgent;
-    if (ua.includes('wv')) {
+    if (ua.includes('wv') && $session.auth == false) {
         OpenJoin();
         webview = true;
     } else {
