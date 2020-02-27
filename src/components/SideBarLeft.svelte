@@ -11,13 +11,13 @@ export let user;
 export let utilities;
 let tag_button = [];
 let isMobile;
-let sidebar;
-let overflow;
 
 let touchstartX = 0;
 let touchstartY = 0;
 let touchendX = 0;
 let touchendY = 0;
+
+let top, height, winHeight;
 
 let document_;
 let window_;
@@ -66,27 +66,28 @@ function TouchEnd(event){
 function onScreenChange(){
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
     if (isMobile === true){
-        sidebar.classList.add('wrapper-left');
-        sidebar.classList.remove('sidebar');
+        document.getElementById("sidebar-left").classList.add('wrapper-left');
+        document.getElementById("sidebar-left").classList.remove('sidebar');
     }else{
-        sidebar.classList.remove('wrapper-left');
-        sidebar.classList.add('sidebar');
+        document.getElementById("sidebar-left").classList.remove('wrapper-left');
+        document.getElementById("sidebar-left").classList.add('sidebar');
     }
 }
 
 onMount(async function(){
-    sidebar = document.getElementById('sidebar-left');
-    overflow = document.querySelector("overflow");
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
     window.addEventListener('resize', onScreenChange);
     window_ = window;
     if (isMobile === true){
-        sidebar.classList.add('wrapper-left');
-        sidebar.classList.remove('sidebar');
+        document.getElementById("sidebar-left").classList.add('wrapper-left');
+        document.getElementById("sidebar-left").classList.remove('sidebar');
     }else{
-        sidebar.classList.remove('wrapper-left');
-        sidebar.classList.add('sidebar');
+        document.getElementById("sidebar-left").classList.remove('wrapper-left');
+        document.getElementById("sidebar-left").classList.add('sidebar');
     }
+    top = document.getElementById("sidebar-left").offsetTop;
+    height = document.getElementById("sidebar-left").offsetHeight;
+    winHeight = window.innerHeight;
     document.addEventListener('touchstart', TouchStart, false);
 
     document.addEventListener('touchend', TouchEnd, false); 

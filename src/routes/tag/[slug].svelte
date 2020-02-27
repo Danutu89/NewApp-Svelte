@@ -31,7 +31,7 @@ let articles;
 let trending;
 let utilities;
 let user;
-let sidebar, overflow;
+let sidebar, overflow, navbar;
 trending = tag['trending'];
 articles = tag['posts'];
 if($session.auth){
@@ -44,8 +44,9 @@ let title = tag.info['name'][0].toUpperCase() + tag.info['name'].slice(1);
 onMount(async function(){
     sidebar = document.getElementById("sidebar-left");
     overflow = document.querySelector("overflow");
+    navbar = document.getElementById("navbar");
     document.addEventListener("scroll", onScroll);
-    wrapper_.setTrue(sidebar,overflow);
+    wrapper_.setTrue(sidebar,overflow,navbar);
 })
 
 beforeUpdate(()=>{
@@ -57,7 +58,7 @@ beforeUpdate(()=>{
     utilities = tag['utilities'];
     title = tag.info['name'][0].toUpperCase() + tag.info['name'].slice(1);
     if(overflow && sidebar)
-    wrapper_.setTrue(sidebar,overflow);
+    wrapper_.setTrue(sidebar,overflow,navbar);
 })
 
 async function LoadMore(){

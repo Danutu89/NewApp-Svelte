@@ -19,6 +19,8 @@ let turndown = TurndownService();
 let editing=false;
 let editing_id;
 
+let webview = false;
+
 let dark_theme;
 
 var loadCss = function(cssPath){
@@ -247,6 +249,13 @@ beforeUpdate(async function(){
 onMount(async function(){
     if($page.query.notification_id){
         CheckNotification($page.query.notification_id);
+    }
+    var ua = navigator.userAgent;
+    if (ua.includes('wv')) {
+        OpenJoin();
+        webview = true;
+    } else {
+        webview = false;
     }
 
     isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;

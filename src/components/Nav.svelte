@@ -141,7 +141,7 @@ function CloseMenu(){
 
 </script>
 
-<nav class="newapp-navbar">
+<nav class="newapp-navbar" id="navbar">
 	<div class="navbar-items">
       <div class="navbar-item">
         <a href="/" class="navbar-logo"><img style="vertical-align: middle;margin-left: -1px;" loading="lazy" src="https://newapp.nl/static/logo.svg"
