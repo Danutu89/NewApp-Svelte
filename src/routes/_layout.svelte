@@ -1,12 +1,27 @@
 <script>
-	import {onMount} from 'svelte'
+	import {onMount, beforeUpdate} from 'svelte'
 	import Nav from '../components/Nav.svelte';
 	import { loadProgressBar } from 'axios-progress-bar';
 	import { stores } from '@sapper/app';
 	const { session } = stores();
 	import {socketio} from '../modules/SocketIO';
+	import SideBarAdmin from '../components/SideBarAdmin.svelte';
+	export let segment;
+
+	let admin = false;
 	
-	onMount(async function() {
+	var path = segment;
+	try {
+		if(path.includes('admin')){
+			admin = true;
+		}else{
+			admin = false;
+		}
+	} catch (error) {
+		admin = false;
+	}
+
+	onMount(function() {
 		loadProgressBar();
 		if($session.auth){
 			socketio.on('connect', function () {
@@ -36,6 +51,15 @@
 					navigator.serviceWorker.controller.postMessage($session.token);
 				}
 		    }
+		}
+	});
+
+	beforeUpdate(async function(){
+		var path = location.pathname;
+		if(path.includes('admin')){
+			admin = true;
+		}else{
+			admin = false;
 		}
 	});
 </script>
@@ -93,6 +117,7 @@
 
 <Nav/>
 
+{#if admin == false}
 <reload style="height: 3rem;display:block"></reload>
 
 <overflow></overflow>
@@ -101,5 +126,14 @@
 	<slot></slot>
 </content>
 
+{:else}
+<reload style="height: 2.7rem;display:block"></reload>
 
+<SideBarAdmin/>
+
+<a-content>
+	<slot></slot>
+</a-content>
+
+{/if}
 

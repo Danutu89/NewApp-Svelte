@@ -236,11 +236,11 @@ function handleGesture(event) {
     <a href="https://newapp.nl"><img style="vertical-align: middle;margin-left: -1px;" src="https://newapp.nl/static/logo.svg"
             width="25" height="30" alt=""></a>
     <a href="https://www.facebook.com/newapp.nl"><i class="na-facebook-square" style="font-size: 2rem;
-        color: #18BC9C;
+        color: var(--theme-color);
         vertical-align: middle;
         margin-left: 0.5rem;"></i></a>
     <a href="https://twitter.com/_NewApp_"><i class="na-twitter" style="font-size: 2rem;
-        color: #18BC9C;
+        color: var(--theme-color);
         vertical-align: middle;
         margin-left: 0.5rem;"></i></a>
     <a href="/about" style="display: block;margin-top: 0.5rem;">About</a>

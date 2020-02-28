@@ -145,8 +145,8 @@ function CloseMenu(){
 	<div class="navbar-items">
       <div class="navbar-item">
         <a href="/" class="navbar-logo"><img style="vertical-align: middle;margin-left: -1px;" loading="lazy" src="https://newapp.nl/static/logo.svg"
-            width="25" alt=""><span style="margin-left: 0.2rem;" class="newapp-title"><span style="color:#18BC9C;">New</span><span
-              style="color:var(--navbar-color);">App</span><span style="color:#18BC9C;font-size: 55%;font-weight: 600;">
+            width="25" alt=""><span style="margin-left: 0.2rem;" class="newapp-title"><span style="color:var(--theme-color);">New</span><span
+              style="color:var(--navbar-color);">App</span><span style="color:var(--theme-color);font-size: 55%;font-weight: 600;">
               Beta</span></span></a>
       </div>
       <div class="navbar-item navbar-center navbar-search">
