@@ -1,7 +1,7 @@
 <script>
 import Login from './Login.svelte';
 import Register from './Register.svelte';
-import { onMount  } from 'svelte';
+import { onMount } from 'svelte';
 import { stores, goto } from '@sapper/app';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
