@@ -115,23 +115,26 @@
 {/if}
 
 
-<Nav/>
+<Nav admin={admin}/>
 
 {#if admin == false}
 <reload style="height: 3rem;display:block"></reload>
+{:else}
+<reload style="height: 2.7rem;display:block"></reload>
+{/if}
 
 <overflow></overflow>
+
+{#if admin == false}
 
 <content>
 	<slot></slot>
 </content>
 
 {:else}
-<reload style="height: 2.7rem;display:block"></reload>
-
-<SideBarAdmin/>
 
 <a-content>
+	<SideBarAdmin/>
 	<slot></slot>
 </a-content>
 

@@ -655,6 +655,11 @@ notifications .category button:focus {
 	margin: auto;
 }
 
+.navbar-items-admin {
+	display: flex;
+	width: 100%;
+}
+
 .navbar-center {
 	margin-left: auto;
 	margin-right: auto;
@@ -738,7 +743,7 @@ notifications .category button:focus {
 	margin-top: 0.9rem;
 	color: var(--navbar-color);
 	z-index: 5;
-	margin-inline-start: -15.9rem;
+	margin-inline-start: -13.9rem;
 }
 
 .newapp-dropdown-content#user {
@@ -2728,6 +2733,10 @@ join .join svg g path {
 	fill: var(--color);
 }
 
+a-content {
+	display: flex;
+}
+
 .sidebar-admin {
 	height: 100%;
     padding: 0.5rem;
@@ -2743,13 +2752,15 @@ join .join svg g path {
 
 .sidebar-admin a{
 	text-decoration: none;
+	color: var(--color);
 }
 
 .sidebar-admin .user-card {
 	display: block;
     padding: 0.5rem;
     align-items: center;
-    margin-bottom: 5%;
+	margin-bottom: 2rem;
+	margin-top: 0.5rem;
 }
 
 .sidebar-admin .user-card .profile_image {
@@ -2761,4 +2772,93 @@ join .join svg g path {
     width: 100%;
     color: var(--color);
     padding-top: 0.5rem;
+}
+
+.sidebar-admin .navigation {
+	margin: -0.5rem;
+}
+
+.sidebar-admin .navigation .header {
+	background-color: var(--background-1);
+    padding: 1rem;
+    color: var(--color);
+}
+
+.sidebar-admin .navigation .item {
+	padding: 1rem;
+	cursor: pointer;
+}
+
+.sidebar-admin .navigation .item:hover {
+	background-color: var(--background);
+}
+
+a-content .dashboard {
+	width: 100%;
+    padding: 1rem;
+}
+
+a-content .dashboard .main-data {
+	display: flex;
+}
+
+a-content .dashboard .main-data .card {
+	position: relative;
+    width: 100%;
+    color: var(--color);
+    margin-bottom: 30px;
+    background-color: var(--background);
+    overflow: hidden;
+    -webkit-box-shadow: 0 6px 0 0 rgba(0,0,0,0.01), 0 15px 32px 0 rgba(0,0,0,0.06);
+    -moz-box-shadow: 0 6px 0 0 rgba(0,0,0,0.01),0 15px 32px 0 rgba(0,0,0,0.06);
+    box-shadow: 0 6px 0 0 rgba(0,0,0,0.01), 0 15px 32px 0 rgba(0,0,0,0.06);
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+a-content .dashboard .main-data .card .main {
+	padding: 1rem;
+	display: flex;
+}
+
+a-content .dashboard .main-data .card .main .data {
+	width: 100%;
+}
+
+a-content .dashboard .main-data .card .main .icon {
+	width: 25%;
+	text-align: center;
+	font-size: 1.8rem;
+}
+
+a-content .dashboard .main-data .card .main .data span {
+	display: block;
+}
+
+a-content .dashboard .main-data .card .footer .bar {
+	display: flex;
+    height: 0.5rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: var(--background-1);
+    border-radius: 0px;
+}
+
+a-content .dashboard .main-data .card .footer .bar .progress {
+	display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #007bff;
+    transition: width .6s ease;
 }

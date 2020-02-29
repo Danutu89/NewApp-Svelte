@@ -15,6 +15,15 @@ var menu_open = false;
 let notifications,notifications_c,notifications_center_c,notification_list;
 let isMobile;
 
+export let admin;
+let navbar_class;
+
+$: if(admin){
+  navbar_class="navbar-items-admin";
+}else{
+  navbar_class="navbar-items";
+}
+
 function LogOut(){
   if($session.auth == true){
       socketio.emit('logout', {
@@ -142,7 +151,7 @@ function CloseMenu(){
 </script>
 
 <nav class="newapp-navbar" id="navbar">
-	<div class="navbar-items">
+	<div class="{navbar_class}">
       <div class="navbar-item">
         <a href="/" class="navbar-logo"><img style="vertical-align: middle;margin-left: -1px;" loading="lazy" src="https://newapp.nl/static/logo.svg"
             width="25" alt=""><span style="margin-left: 0.2rem;" class="newapp-title"><span style="color:var(--theme-color);">New</span><span
@@ -214,6 +223,13 @@ function CloseMenu(){
                   <i class="na-user-cog"></i> Settings
                 </div>
                 </a>
+                {#if $session.permissions.admin_panel_permission == true}
+                <a rel="preload" href="/admin" style="color: var(--navbar-color);">
+                <div class="dropdown-item" on:click={CloseMenu}>
+                  <i class="na-user-shield"></i> Admin
+                </div>
+                </a>
+                {/if}
                 <span style="color: var(--navbar-color);">
                 <div class="dropdown-item" on:click={()=>{CloseMenu(),LogOut()}}>
                   <i class="na-sign-out-alt"></i> Logout
@@ -232,7 +248,7 @@ function CloseMenu(){
 	</div>
 </nav>
 
-{#if $session.auth == false}
+{#if $session.auth == false && admin == false}
 <Login/>
 <Register/>
 <Join/>

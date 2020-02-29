@@ -99,7 +99,11 @@ onDestroy(function(){
         document.removeEventListener('touchstart', TouchStart, false);
         document.removeEventListener('touchend', TouchEnd, false); 
         window_.removeEventListener('resize', onScreenChange);
-        wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));
+        try {
+            wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));   
+        } catch (error) {
+        
+        }
     }
 })
 
