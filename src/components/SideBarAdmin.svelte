@@ -28,7 +28,7 @@ const { session } = stores();
                         <span>Sessions</span>
                 </div></a>
                 <a href="/admin/users"><div class="item">
-                        <span>users</span>
+                        <span>Users</span>
                 </div></a>
         </div>
 </div>

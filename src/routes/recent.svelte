@@ -1,5 +1,6 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../modules/Options.js';
     export async function preload(page,session){
         let args = '';
         if (session.token){
@@ -7,7 +8,7 @@
         }else{
             args = '?mode=recent';
         }
-        const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
+        const res = await axios.get(host+'/api/home' + args).then(function (response) {
                 return response.data;
             });
         const json = await res;
@@ -55,7 +56,7 @@ async function LoadMore(){
         args = '?mode=recent';
     }
     page++;
-    await axios.get('https://newapp.nl/api/home/'+ page +args, { progress: false }).then(function (response) {
+    await axios.get(host+'/api/home/'+ page +args, { progress: false }).then(function (response) {
         articles = [...articles , ...response.data['posts']];
         articles = articles;
         if (response.data['hasnext']){
@@ -82,7 +83,7 @@ function onScroll(e) {
 </script>
 
 <svelte:head>
-<title>New App - Where Developers Learn, Share, & Code</title>
+<title>NewApp - Where Developers Learn, Share, & Code</title>
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

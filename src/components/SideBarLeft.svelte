@@ -217,7 +217,7 @@ function handleGesture(event) {
             <button class="widget-button" bind:this={tag_button[tag]} on:click|preventDefault={() => Follow_Tag(tag)} id="follow-tag-{tag}" style="margin-inline-start: auto;">Unfollow</button>
         </div>
         {/each}
-        <div class="widget-item" style="border-top: none;display: flex;background-color: var(--body-bg);">
+        <div class="widget-item" style="border-top: none;display: flex;background-color: var(--background-1);">
             <div class="text">
                 Other Popular Tags
             </div>

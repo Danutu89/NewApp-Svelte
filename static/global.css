@@ -9,6 +9,7 @@
 	--code-color: #e6db74;
 	--placeholder: rgba(90, 90, 90, 0.836);
 	--link: rgb(0, 157, 230);
+	--secondary-color: #007bff;
 	--navbar: white;
 	--navbar-color: #212529;
 	--navbar-dropdown-hover: #ececec;
@@ -62,6 +63,10 @@
 		--input-group-color: #444444;
 		--input-group-border: #b1b1b1 1px solid;
 	}
+}
+
+* {
+	-webkit-font-smoothing: antialiased;
 }
 
 pre.prettyprint {
@@ -1038,7 +1043,7 @@ content .article .reply .info .reply-actions button {
 }
 
 content .article .reply .info .reply-actions .edit {
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 }
 
 content .article .post .post-reply div button.reply-button {
@@ -1276,7 +1281,7 @@ content .wrapper-left .widget .widget-post {
 content .sidebar .widget .widget-list .widget-item button.widget-button,
 content .wrapper-left .widget .widget-list .widget-item button.widget-button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -1383,7 +1388,7 @@ content .wrapper-left .profile-actions button.follow-user {
 	width: 100%;
 	height: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -1531,7 +1536,7 @@ content .article-card .article-footbar .article-date {
 
 content .article-card .article-footbar .article-misc button.article-save {
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -1583,7 +1588,7 @@ content .sidebar .widget#widget-register .moto {
 
 content .sidebar .widget#widget-register .register button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -1802,7 +1807,7 @@ content profile .profile-main .sidebar-info .profile-actions {
 content profile .profile-main .sidebar-info .profile-actions button.follow-user {
 	width: 70%;
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -1813,7 +1818,7 @@ content profile .profile-main .sidebar-info .profile-actions button.follow-user 
 content profile .profile-main .sidebar-info .profile-actions button.save-settings {
 	width: 70%;
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -2227,7 +2232,7 @@ new_post input[type=text] {
 new_post .footer button.newpost {
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -2319,7 +2324,7 @@ editpost input[type=text] {
 editpost .footer button.newpost {
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -2438,7 +2443,7 @@ modal .modal .modal-footer span a {
 
 modal .modal .modal-footer button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	padding: 0.25rem 0.5rem 0.25rem 0.5rem;
 	color: white;
@@ -2720,7 +2725,7 @@ join .join .buttons button {
 	width: 100%;
 	height: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgb(0, 157, 230);
+	background-color: var(--secondary-color);
 	border-radius: 20px;
 	color: white;
 	font-weight: 600;
@@ -2734,28 +2739,30 @@ join .join svg g path {
 }
 
 a-content {
+    position: relative;
+    min-height: 440px;
 	display: flex;
 }
 
-.sidebar-admin {
-	height: 100%;
+a-content .sidebar-admin {
     padding: 0.5rem;
 	background-color: var(--navbar);
-	width: 240px;
+	width: 340px;
     text-align: left;
     font-size: 0.92em;
     line-height: 1.35em;
     min-height: 5px;
-    position: relative;
-    z-index: 4
+	position: relative;
+	z-index: 4;
+	height: calc(100vh - 3.7rem);
 }
 
-.sidebar-admin a{
+a-content .sidebar-admin a{
 	text-decoration: none;
 	color: var(--color);
 }
 
-.sidebar-admin .user-card {
+a-content .sidebar-admin .user-card {
 	display: block;
     padding: 0.5rem;
     align-items: center;
@@ -2763,43 +2770,110 @@ a-content {
 	margin-top: 0.5rem;
 }
 
-.sidebar-admin .user-card .profile_image {
+a-content .sidebar-admin .user-card .profile_image {
 	border-radius: 50px;
 }
 
-.sidebar-admin .user-card .user-info {
+a-content .sidebar-admin .user-card .user-info {
 	margin-left: 4%;
     width: 100%;
     color: var(--color);
     padding-top: 0.5rem;
 }
 
-.sidebar-admin .navigation {
+a-content .sidebar-admin .navigation {
 	margin: -0.5rem;
 }
 
-.sidebar-admin .navigation .header {
+a-content .sidebar-admin .navigation .header {
 	background-color: var(--background-1);
     padding: 1rem;
     color: var(--color);
 }
 
-.sidebar-admin .navigation .item {
+a-content .sidebar-admin .navigation .item {
 	padding: 1rem;
 	cursor: pointer;
 }
 
-.sidebar-admin .navigation .item:hover {
+a-content .sidebar-admin .navigation .item:hover {
 	background-color: var(--background);
 }
 
 a-content .dashboard {
-	width: 100%;
-    padding: 1rem;
+	width: calc(100% - 2rem );
+	padding: 1rem;
+	display: flex;
+    justify-content: center;
 }
 
 a-content .dashboard .main-data {
 	display: flex;
+	width: calc(100%);
+}
+
+a-content .dashboard .main-data .row {
+	display: flex;
+	width: calc(100%);
+}
+
+@media screen and (max-width: 730px){
+	a-content .dashboard .main-data {
+		display: block;
+	}
+	a-content .dashboard .main-data .card {
+		-ms-flex: 0 0 calc(50% - 1rem );
+		flex: 0 0 calc(50% - 1rem );
+		max-width: calc(50% - 1rem );
+	}
+}
+
+@media screen and (min-width: 730px){
+	a-content .dashboard .main-data .row{
+		display: block;
+	}
+	a-content .dashboard .main-data .card {
+		-ms-flex: 0 0 calc(100% - 1rem );
+		flex: 0 0 calc(100% - 1rem );
+		max-width: calc(100% - 1rem );
+	}
+}
+
+@media screen and (min-width: 800px){
+	a-content .dashboard .main-data .row{
+		display: flex;
+	}
+	a-content .dashboard .main-data{
+		display: flex;
+	}
+	a-content .dashboard .main-data .card {
+		-ms-flex: 0 0 calc(50% - 1rem );
+		flex: 0 0 calc(50% - 1rem );
+		max-width: calc(50% - 1rem );
+	}
+}
+
+@media screen and (max-width: 410px){
+	a-content .dashboard .main-data .row{
+		display: block;
+	}
+	a-content .dashboard .main-data{
+		display: block;
+	}
+	a-content .dashboard .main-data .card {
+		-ms-flex: 0 0 calc(100% - 1rem );
+		flex: 0 0 calc(100% - 1rem );
+		max-width: calc(100% - 1rem );
+	}
+}
+
+@media screen and (max-width: 970px){
+	a-content .sidebar-admin{
+		display: none;
+	}
+	a-content .dashboard {
+		width: 100%;
+	}
 }
 
 a-content .dashboard .main-data .card {
@@ -2859,6 +2933,70 @@ a-content .dashboard .main-data .card .footer .bar .progress {
     justify-content: center;
     text-align: center;
     white-space: nowrap;
-    background-color: #007bff;
+    background-color: var(--secondary-color);
     transition: width .6s ease;
+}
+
+a-content .dashboard .charts {
+	display: flex;
+
+}
+
+@media screen and (max-width: 800px){
+	a-content .dashboard .charts{
+		display: block;
+		width: 100%;
+	}
+	a-content .dashboard .charts *{
+		width: calc(100% - 3rem ) !important;
+	}
+}
+
+a-content .dashboard .charts * canvas {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+a-content .dashboard .charts .line-chart {
+	position: relative;
+    width: 70%;
+    color: var(--color);
+    margin-bottom: 30px;
+    background-color: var(--background);
+    overflow: hidden;
+    -webkit-box-shadow: 0 6px 0 0 rgba(0,0,0,0.01), 0 15px 32px 0 rgba(0,0,0,0.06);
+    -moz-box-shadow: 0 6px 0 0 rgba(0,0,0,0.01),0 15px 32px 0 rgba(0,0,0,0.06);
+    box-shadow: 0 6px 0 0 rgba(0,0,0,0.01), 0 15px 32px 0 rgba(0,0,0,0.06);
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	padding: 1rem;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+a-content .dashboard .charts .doughtnut-chart {
+	position: relative;
+    width: 30%;
+    color: var(--color);
+    margin-bottom: 30px;
+    background-color: var(--background);
+    overflow: hidden;
+    -webkit-box-shadow: 0 6px 0 0 rgba(0,0,0,0.01), 0 15px 32px 0 rgba(0,0,0,0.06);
+    -moz-box-shadow: 0 6px 0 0 rgba(0,0,0,0.01),0 15px 32px 0 rgba(0,0,0,0.06);
+    box-shadow: 0 6px 0 0 rgba(0,0,0,0.01), 0 15px 32px 0 rgba(0,0,0,0.06);
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	padding: 1rem;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }

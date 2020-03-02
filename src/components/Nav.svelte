@@ -3,6 +3,7 @@ import Login from './Login.svelte';
 import Register from './Register.svelte';
 import { onMount } from 'svelte';
 import { stores, goto } from '@sapper/app';
+import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
 import axios from 'axios';
@@ -113,7 +114,7 @@ onMount(async function(){
 
 
   if($session.auth){
-    let not = await axios.get('https://newapp.nl/api/notifications?t='+$session.token+'&ex=false', { pregress: false }).then((response)=>{
+    let not = await axios.get(host+'/api/notifications?t='+$session.token+'&ex=false', { pregress: false }).then((response)=>{
       return response.data;
     })
     notifications = await not;
