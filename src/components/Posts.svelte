@@ -58,8 +58,10 @@ function SavePost(id){
 {:else}
 <div class="articles">
     <div class="navigation-menu">
+        {#if $session.auth}
         <a href="/"><button>Feed</button></a>
         <a href="/saved"><button>Saved</button></a>
+        {/if}
         <a href="/recent"><button>Recent</button></a>
         <a href="/questions"><button>Questions</button></a>
         <a href="/discuss"><button>Discuss</button></a>

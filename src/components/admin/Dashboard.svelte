@@ -130,8 +130,7 @@ onMount(async function () {
                         <div class="data">
                             <span style="font-size: 1.4rem;">Users</span>
                             <span style="font-size: 1.8rem;">{json.main_data['users']['new']}</span>
-                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['users']['perc']}%
-                                higher than last month</span>
+                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['users']['perc']}</span>
                         </div>
                         <div class="icon">
                             <i class="na-user-friends"></i>
@@ -139,7 +138,7 @@ onMount(async function () {
                     </div>
                     <div class="footer">
                         <div class="bar">
-                            <div class="progress" style="width: 35%;"></div>
+                            <div class="progress" style="width: {json.main_data['users']['p_perc']}%;"></div>
                         </div>
                     </div>
                 </div>
@@ -148,8 +147,7 @@ onMount(async function () {
                         <div class="data">
                             <span style="font-size: 1.4rem;">Posts</span>
                             <span style="font-size: 1.8rem;">{json.main_data['posts']['new']}</span>
-                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['posts']['perc']}%
-                                higher than last month</span>
+                            <span style="font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['posts']['perc']}</span>
                         </div>
                         <div class="icon">
                             <i class="na-pen-square"></i>
@@ -157,7 +155,7 @@ onMount(async function () {
                     </div>
                     <div class="footer">
                         <div class="bar">
-                            <div class="progress" style="width: 45%;"></div>
+                            <div class="progress" style="width: {json.main_data['posts']['p_perc']}%;"></div>
                         </div>
                     </div>
                 </div>
@@ -168,8 +166,7 @@ onMount(async function () {
                         <div class="data">
                             <span style="font-size: 1.4rem;">Replies</span>
                             <span style="font-size: 1.8rem;">{json.main_data['replies']['new']}</span>
-                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['replies']['perc']}%
-                                higher than last month</span>
+                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['replies']['perc']}</span>
                         </div>
                         <div class="icon">
                             <i class="na-comments"></i>
@@ -177,7 +174,7 @@ onMount(async function () {
                     </div>
                     <div class="footer">
                         <div class="bar">
-                            <div class="progress" style="width: 75%;"></div>
+                            <div class="progress" style="width: {json.main_data['replies']['p_perc']}%;"></div>
                         </div>
                     </div>
                 </div>
@@ -186,8 +183,7 @@ onMount(async function () {
                         <div class="data">
                             <span style="font-size: 1.4rem;">Views</span>
                             <span style="font-size: 1.8rem;">{json.main_data['views']['new']}</span>
-                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['views']['perc']}%
-                                higher than last month</span>
+                            <span style="    font-size: 0.7rem;margin-top: 0.5rem;">{json.main_data['views']['perc']}</span>
                         </div>
                         <div class="icon">
                             <i class="na-rocket"></i>
@@ -195,7 +191,7 @@ onMount(async function () {
                     </div>
                     <div class="footer">
                         <div class="bar">
-                            <div class="progress" style="width: 73%;"></div>
+                            <div class="progress" style="width: {json.main_data['views']['p_perc']}%;"></div>
                         </div>
                     </div>
                 </div>

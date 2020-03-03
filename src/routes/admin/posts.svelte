@@ -1,0 +1,24 @@
+<script context="module">
+    import axios from 'axios';
+    export async function preload(page, session){
+        if (session.auth == false){
+            this.redirect(302, '/');
+        }
+        const res = await axios.get('http://localhost:5000/api/admin/posts' + '?t=' + session.token).then(function (response) {
+                return response.data;
+            });
+        const response = await res;
+        return { json: response };
+    }
+</script>
+
+<script>
+import Posts from '../../components/admin/Posts.svelte';
+export let json;
+</script>
+
+<svelte:head>
+<title>NewApp - Admin</title>
+</svelte:head>
+
+<Posts json={json}/>
