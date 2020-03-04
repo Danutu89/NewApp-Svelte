@@ -4,6 +4,7 @@
 export let article;
 import { onMount, beforeUpdate } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
+import { host } from '../modules/Options.js';
 import axios from 'axios';
 import TurndownService from 'turndown';
 import marked from 'marked';
@@ -51,7 +52,7 @@ function Like_Post() {
         like_button.classList.remove('na-heart1');
         like_button.classList.add('heartscale');
     }
-    axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+    axios.get(host+'/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
         .then(response => {
             if(response.status != 200){
                 if(like_button.classList.contains("na-heart1")){
@@ -106,7 +107,7 @@ async function Reply(){
     }
     let markdown = marked(editor.value());
     let reply;
-    let json = await axios.post('https://newapp.nl/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
+    let json = await axios.post(host+'/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
         return response;
     })
     let data = await json;
@@ -154,7 +155,7 @@ async function Delete_Reply(id){
         return;
     }
     let args = "?t="+$session.token+"&id="+id;
-    const not = await axios.get("https://newapp.nl/api/reply/delete"+args).then(response =>{
+    const not = await axios.get(host+"/api/reply/delete"+args).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -193,7 +194,7 @@ async function C_Edit_Reply(){
         return;
     }
     let args = "?t="+$session.token+"&id="+editing_id.id;
-    const resp = await axios.post("https://newapp.nl/api/reply/edit",{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
+    const resp = await axios.post(host+"/api/reply/edit",{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -225,7 +226,7 @@ async function CheckNotification(id){
         return;
     }
     let args = "?t="+$session.token+"&not_id="+id;
-    const not = await axios.get("https://newapp.nl/api/notifications/check"+args).then(response =>{
+    const not = await axios.get(host+"/api/notifications/check"+args).then(response =>{
         if(response.status != 200){
             //alert
             return;

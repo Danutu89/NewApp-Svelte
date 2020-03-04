@@ -1,5 +1,6 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../../modules/Options.js';
     export async function preload(page, session){
         let args = '';
         if (session.token){
@@ -7,9 +8,15 @@
         }
         let temp = (page.params.slug).toString().split("-");
         let id = temp[temp.length-1];
-        const res = await axios.get('https://newapp.nl/api/post/'+id+ args).then(function (response) {
+        const res = await axios.get(host+'/api/post/'+id+ args).then(function (response) {
+            console.log(response.status);
+            if(response.status == 200){
                 return response.data;
-            });
+            }else{
+                return this.error(404, 'Not Found');
+            }
+                
+        });
         const json = await res;
         json['link'] = page.params.slug;
         return { article: json };

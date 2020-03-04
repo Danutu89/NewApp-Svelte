@@ -1078,12 +1078,6 @@ content .article .post .post-author .author-info .post-tags a tag {
 	font-weight: 700;
 }
 
-content .article .post p,
-content .article .reply p {
-	margin: 0;
-	padding: 0;
-}
-
 tag {
 	border-radius: 10px;
 	background-color: var(--theme-color);

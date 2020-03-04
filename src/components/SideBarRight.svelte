@@ -2,6 +2,7 @@
 import axios from 'axios';
 import OpenJoin from '../modules/OpenJoin.js';
 import OpenRegister from '../modules/OpenRegister.js';
+import { host } from '../modules/Options.js';
 import { stores, goto } from '@sapper/app';
 const { session } = stores();
 
@@ -17,7 +18,7 @@ function Follow_User(id){
         OpenJoin();
         return;
     }
-    axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token, { progress: false }).then((response) => {
+    axios.get(host+'/api/follow-user/' + id + '?t=' + $session.token, { progress: false }).then((response) => {
         if (response.status != 200){
             //alert
             return;
@@ -36,7 +37,7 @@ function Delete_Post(id){
         OpenJoin();
         return;
     }
-    axios.get('https://newapp.nl/api/post/delete/' + id + '?t=' + $session.token).then((response)=>{
+    axios.get(host+'/api/post/delete/' + id + '?t=' + $session.token).then((response)=>{
         if (response.status != 200){
             //alert
             return;
