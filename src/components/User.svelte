@@ -2,6 +2,7 @@
 import Posts from './Posts.svelte';
 import { stores } from '@sapper/app';
 import axios from 'axios';
+
 import OpenJoin from '../modules/OpenJoin.js';
 const { session } = stores();
 export let user;
@@ -11,7 +12,7 @@ let follow_button;
 function Follow_User(id){
     if($session.auth){
         if($session.id != id){
-            axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token)
+            axios.get(host+'/api/follow-user/' + id + '?t=' + $session.token)
             .then(response => {
                 if (response.data['operation'] == 'unfollowed') {
                     follow_button.innerHTML = 'Follow';

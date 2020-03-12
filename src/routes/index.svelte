@@ -4,6 +4,7 @@ import SideBarLeft from '../components/SideBarLeft.svelte';
 import SideBarRight from '../components/SideBarRight.svelte';
 import Posts from '../components/Posts.svelte';
 import { host } from '../modules/Options.js';
+import Analytics from '../modules/Analytics.js';
 import axios from 'axios';
 import { stores } from '@sapper/app';
 const { session } = stores();
@@ -17,6 +18,7 @@ let page = 1;
 let isLoadMore = true, CanLoad = false;
 let args = "";
 let document_;
+let analytics = new Analytics;
 
 if ($session.auth){
     args = "?t="+$session.token;
@@ -36,11 +38,13 @@ onMount(async function() {
     utilities = home['utilities'];
     document_ = document;
     document.addEventListener("scroll", onScroll);
+    analytics.init();
 });
 
 onDestroy(function(){
     if(document_)
         document_.removeEventListener("scroll", onScroll);
+    analytics.validate();
 })
 
 async function LoadMore(){

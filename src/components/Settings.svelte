@@ -3,6 +3,7 @@ import axios from 'axios';
 import { onMount } from 'svelte';
 import { stores, goto } from '@sapper/app';
 import jwt from 'jsonwebtoken';
+import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 const cookies = Cookie();
 const {session} = stores();
@@ -84,7 +85,7 @@ async function SaveSettings(){
   }
   formdata.append('data', JSON.stringify(payload));
 
-  const resp = await axios.post('https://newapp.nl/api/user/settings?t='+token, formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response)=>{
+  const resp = await axios.post(host+'/api/user/settings?t='+token, formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response)=>{
     return response;
   })
 

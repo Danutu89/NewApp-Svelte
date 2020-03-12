@@ -8,15 +8,16 @@
         }else{
             args = '?tag=' + page.params.slug; 
         }
-        const res = await axios.get(host+'/api/home' + args).then(function (response) {
-            if(response.status == 200){
+        try {
+            const res = await axios.get(host+'/api/home'+ args).then(function (response) {
                 return response.data;
-            }else{
-                return this.error(404, 'Not Found');
-            }
-        });
-        const json = await res;
-        return { tag: json };
+            });
+            const json = await res;
+            return { tag: json };
+        } catch (error) {
+            return this.error(404, 'Not Found');
+        }
+        
     }
 </script>
 <script>

@@ -3,6 +3,7 @@ import { onMount } from 'svelte';
 import axios from 'axios';
 import { stores } from '@sapper/app';
 import jwt from 'jsonwebtoken';
+import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 const cookies = Cookie();
 const { session, page } = stores();
@@ -58,7 +59,7 @@ async function Login(){
   }
   
 
-  const res = await axios.get('https://newapp.nl/api/login',{
+  const res = await axios.get(host+'/api/login',{
     auth: {
       username: String(username).toLowerCase(),
       password: password

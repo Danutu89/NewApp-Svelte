@@ -1,5 +1,4 @@
 <script>
-
 export let not;
 let notifications = not.notify['new'];
 

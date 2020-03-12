@@ -2801,21 +2801,28 @@ a-content .dashboard {
     justify-content: center;
 }
 
-a-content .dashboard .main-data {
+a-content .posts {
+	width: calc(100% - 2rem );
+	padding: 1rem;
+	display: flex;
+    justify-content: center;
+}
+
+a-content * .main-data {
 	display: flex;
 	width: calc(100%);
 }
 
-a-content .dashboard .main-data .row {
+a-content * .main-data .row {
 	display: flex;
 	width: calc(100%);
 }
 
 @media screen and (max-width: 730px){
-	a-content .dashboard .main-data {
+	a-content * .main-data {
 		display: block;
 	}
-	a-content .dashboard .main-data .card {
+	a-content * .main-data .card {
 		-ms-flex: 0 0 calc(50% - 1rem );
 		flex: 0 0 calc(50% - 1rem );
 		max-width: calc(50% - 1rem );
@@ -2823,10 +2830,10 @@ a-content .dashboard .main-data .row {
 }
 
 @media screen and (min-width: 730px){
-	a-content .dashboard .main-data .row{
+	a-content * .main-data .row{
 		display: block;
 	}
-	a-content .dashboard .main-data .card {
+	a-content * .main-data .card {
 		-ms-flex: 0 0 calc(100% - 1rem );
 		flex: 0 0 calc(100% - 1rem );
 		max-width: calc(100% - 1rem );
@@ -2834,13 +2841,13 @@ a-content .dashboard .main-data .row {
 }
 
 @media screen and (min-width: 800px){
-	a-content .dashboard .main-data .row{
+	a-content * .main-data .row{
 		display: flex;
 	}
-	a-content .dashboard .main-data{
+	a-content * .main-data{
 		display: flex;
 	}
-	a-content .dashboard .main-data .card {
+	a-content * .main-data .card {
 		-ms-flex: 0 0 calc(50% - 1rem );
 		flex: 0 0 calc(50% - 1rem );
 		max-width: calc(50% - 1rem );
@@ -2848,13 +2855,13 @@ a-content .dashboard .main-data .row {
 }
 
 @media screen and (max-width: 410px){
-	a-content .dashboard .main-data .row{
+	a-content * .main-data .row{
 		display: block;
 	}
-	a-content .dashboard .main-data{
+	a-content * .main-data{
 		display: block;
 	}
-	a-content .dashboard .main-data .card {
+	a-content * .main-data .card {
 		-ms-flex: 0 0 calc(100% - 1rem );
 		flex: 0 0 calc(100% - 1rem );
 		max-width: calc(100% - 1rem );
@@ -2865,12 +2872,13 @@ a-content .dashboard .main-data .row {
 	a-content .sidebar-admin{
 		display: none;
 	}
-	a-content .dashboard {
+	a-content .dashboard,
+	a-content .posts {
 		width: 100%;
 	}
 }
 
-a-content .dashboard .main-data .card {
+a-content * .main-data .card {
 	position: relative;
     width: 100%;
     color: var(--color);
@@ -2889,28 +2897,29 @@ a-content .dashboard .main-data .card {
 	-moz-border-radius: 10px;
 	margin-left: 0.5rem;
 	margin-right: 0.5rem;
+	height: fit-content;
 }
 
-a-content .dashboard .main-data .card .main {
+a-content * .main-data .card .main {
 	padding: 1rem;
 	display: flex;
 }
 
-a-content .dashboard .main-data .card .main .data {
+a-content * .main-data .card .main .data {
 	width: 100%;
 }
 
-a-content .dashboard .main-data .card .main .icon {
+a-content * .main-data .card .main .icon {
 	width: 25%;
 	text-align: center;
 	font-size: 1.8rem;
 }
 
-a-content .dashboard .main-data .card .main .data span {
+a-content * .main-data .card .main .data span {
 	display: block;
 }
 
-a-content .dashboard .main-data .card .footer .bar {
+a-content * .main-data .card .footer .bar {
 	display: flex;
     height: 0.5rem;
     overflow: hidden;
@@ -2919,7 +2928,7 @@ a-content .dashboard .main-data .card .footer .bar {
     border-radius: 0px;
 }
 
-a-content .dashboard .main-data .card .footer .bar .progress {
+a-content * .main-data .card .footer .bar .progress {
 	display: flex;
     -ms-flex-direction: column;
     flex-direction: column;

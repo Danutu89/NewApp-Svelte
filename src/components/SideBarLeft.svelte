@@ -3,6 +3,7 @@ import axios from 'axios';
 import { wrapper } from '../modules/Variables.js';
 import { onMount, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
+import { host } from '../modules/Options.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
 const wrapper_ = wrapper;
@@ -28,7 +29,7 @@ function Follow_Tag(tag_) {
         OpenJoin();
         return;
     }
-    axios.get('https://newapp.nl/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
+    axios.get(host+'/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
         .then(function (response){
             var x = tag_button[tag_];
             tag_button[tag_] = x;
