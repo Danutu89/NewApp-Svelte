@@ -11,6 +11,7 @@
   <a href="#">
     <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="build pass">
   </a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FDanutu89%2FNewApp-Svelte?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FDanutu89%2FNewApp-Svelte.svg?type=shield"/></a>
 </p>
 
 Welcome to [newapp.nl](https://newapp.nl). With your help, we can build out NewApp to be more stable and better serve our community.
@@ -33,6 +34,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 Any questions, please refer to our email contact@newapp.nl
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDanutu89%2FNewApp-Svelte.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDanutu89%2FNewApp-Svelte?ref=badge_large)
 
 ## Running the project
 
@@ -72,4 +76,3 @@ There are three simple rules for naming the files that define your routes:
 * A file called `src/routes/about.svelte` corresponds to the `/about` route. A file called `src/routes/blog/[slug].svelte` corresponds to the `/blog/:slug` route, in which case `params.slug` is available to the route
 * The file `src/routes/index.svelte` (or `src/routes/index.js`) corresponds to the root of your app. `src/routes/about/index.svelte` is treated the same as `src/routes/about.svelte`.
 * Files and directories with a leading underscore do *not* create routes. This allows you to colocate helper modules and components with the routes that depend on them — for example you could have a file called `src/routes/_helpers/datetime.js` and it would *not* create a `/_helpers/datetime` route
-
