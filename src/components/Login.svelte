@@ -127,7 +127,7 @@ function handleKeydown(event) {
     <div class="modal" on:keydown={handleKeydown} id="login-modal-inner">
         <span on:click={CloseModalLogin} class="close-modal" style='font-size: 0.7rem;cursor:pointer;'>Close</span>
         <div class="modal-header">
-            <img style="vertical-align: middle;" src="https://newapp.nl/static/logo.svg" width="70"
+            <img style="vertical-align: middle;" onerror="this.style.display='none'" data="/static/logo.svg" width="70"
                 alt="">
             <br>
             <span style="color:var(--color)"><span style="color:#18BC9C;">New</span>App - Login</span>

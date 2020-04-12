@@ -5,10 +5,12 @@ export default class Analytics{
     constructor(){
         this.time_new = null;
         this.time_old = null;
+        this.external = false;
     }
 
-    init() {
+    init(external) {
         this.time_old = Date.now();
+        this.external = external;
     }
 
     validate(){
@@ -23,6 +25,6 @@ export default class Analytics{
 
     sendView(){
         let path = location.pathname;
-        axios.post(host+'/api/analytics/view', {path: path});
+        axios.post(host+'/api/analytics/view', {path: path,external: this.external});
     }
 }

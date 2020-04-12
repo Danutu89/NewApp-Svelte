@@ -145,7 +145,7 @@ function handleGesture(event) {
 <div class="user-card">
     <a href="/user/{$session.name}" style="display: flex;">
     <div class="user-image" style="margin-bottom:0;">
-        <img class="profile_image" alt="" src="{$session.avatar}" height="50px" width="50px" title="profile image">
+        <img class="profile_image" alt="" data="{$session.avatar}" onerror="this.style.display='none'" height="50px" width="50px" title="profile image">
     </div>
     <div class="user-info" style="margin-top: -0.2rem;">
         <span>{$session.real_name}</span>
@@ -162,42 +162,9 @@ function handleGesture(event) {
     <div class="widget-list">
         <div class="widget-item" id='posts-show'>
             <div class="text"><a href="/"><span class="section"><i class="na-pen-square"></i> Posts</span></a></div>
-            <div class='multilevel' id='posts'>
-                {#if $session.auth}
-                <div class="widget-item">
-                    <div class="text"><a href="/saved"><span class="section"><span style='color:#18BC9C'>•</span> Saved</span></a></div>
-                </div>
-                <div class="widget-item">
-                    <div class="text"><a href="/"><span class="section"><span style='color:#18BC9C'>•</span> Feed</span></a></div>
-                </div>
-                {/if}
-                <div class="widget-item">
-                        <div class="text"><a href="/recent"><span class="section"><span style='color:#18BC9C'>•</span> Recent</span></a></div>
-                </div>
-                <div class="widget-item">
-                        <div class="text"><a href="/questions"><span class="section"><span style='color:#18BC9C'>•</span> Questions</span></a></div>
-                </div>
-                <div class="widget-item">
-                        <div class="text"><a href="/discuss"><span class="section"><span style='color:#18BC9C'>•</span> Discuss</span></a></div>
-                </div>
-                <div class="widget-item">
-                        <div class="text"><a href="/tutorials"><span class="section"><span style='color:#18BC9C'>•</span> Tutorials</span></a></div>
-                </div>
-            </div>
         </div>
         <div class="widget-item" id='podcasts-show'>
             <div class="text"><a href="/podcasts"><span class="section"><i class="na-headphones"></i> Podcasts</span></a></div>
-            <div class='multilevel' id='podcasts'>
-                <div class="widget-item">
-                    <div class="text"><a href="/podcasts/saved"><span class="section"><span style='color:#18BC9C'>•</span> Saved Podcasts</span></a></div>
-                </div>
-                <div class="widget-item">
-                    <div class="text"><a href="/podcasts"><span class="section"><span style='color:#18BC9C'>•</span> Feed</span></a></div>
-                </div>
-                <div class="widget-item">
-                    <div class="text"><a href="/podcasts/all"><span class="section"><span style='color:#18BC9C'>•</span> All</span></a></div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -238,7 +205,7 @@ function handleGesture(event) {
 </div>
 {/if}
 <div class="widget" style="display: block;padding: 1rem;">
-    <a href="https://newapp.nl"><img style="vertical-align: middle;margin-left: -1px;" src="https://newapp.nl/static/logo.svg"
+    <a href="https://newapp.nl"><img style="vertical-align: middle;margin-left: -1px;" onerror="this.style.display='none'" data="/static/logo.svg"
             width="25" height="30" alt=""></a>
     <a href="https://www.facebook.com/newapp.nl"><i class="na-facebook-square" style="font-size: 2rem;
         color: var(--theme-color);

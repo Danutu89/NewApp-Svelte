@@ -1,6 +1,6 @@
 <script context="module">
     import axios from 'axios';
-    
+    import { host } from '../modules/Options.js';
     export async function preload(page, session){
         let search = page.query.q;
         let args = '?search=' + search;
@@ -89,6 +89,7 @@ function onScroll(e) {
 
 <svelte:head>
 <title>Search - {search.utilities['search']}</title>
+<meta name="robots" content="noindex">
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

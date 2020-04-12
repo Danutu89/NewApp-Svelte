@@ -11,3 +11,8 @@
 </script>
 
 <NewPost/>
+
+<svelte:head>
+<title>New Post - NewApp</title>
+<meta name="robots" content="noindex">
+</svelte:head>

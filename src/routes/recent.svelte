@@ -84,6 +84,7 @@ function onScroll(e) {
 
 <svelte:head>
 <title>NewApp - Where Developers Learn, Share, & Code</title>
+<meta name="robots" content="noindex">
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

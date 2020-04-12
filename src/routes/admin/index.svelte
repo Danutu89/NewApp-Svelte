@@ -19,6 +19,7 @@ export let json;
 
 <svelte:head>
 <title>NewApp - Admin</title>
+<meta name="robots" content="noindex">
 </svelte:head>
 
 <Dashboard json={json}/>

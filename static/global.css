@@ -1,6 +1,7 @@
 :root {
 	--background: white;
 	--background-1: #efefef;
+	--secondary-background: #f0f2f5;
 	--color: #212529;
 	--body-bg: #efefef;
 	--border: 1px solid #d6d6d6;
@@ -19,50 +20,51 @@
 	--input-group-bg: #d6d6d6;
 	--input-group-color: #444444;
 	--input-group-border: #b1b1b1 1px solid;
+	--border-radius: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #1e1e1e;
-		--background-1: #2d2d2d;
-		--color: rgb(255, 255, 255);
-		--body-bg: #121212;
-		--border: 1px solid rgba(47, 47, 47, 0.125);
-		--editor: #2d2d2d;
-		--code: #313131;
-		--code-color: #e6db74;
-		--placeholder: rgba(255, 255, 255, 0.836);
-		--link: rgb(0, 157, 230);
-		--navbar: #262626;
-		--navbar-color: rgb(196, 196, 196);
-		--navbar-dropdown-hover: #333333;
-		--wrapper-background: var(--navbar);
-		--input-group-bg: #2d2d2d;
-		--input-group-color: #d2d2d2;
-		--input-group-border: #4c4c4c 1px solid;
-	}
+html[theme="Dark"]{
+	--background: #242526;
+	--secondary-background: #404041;
+	--hover: rgb(255,255,255,0.2);
+	--background-1: #3b3b3c;
+	--color: rgb(255, 255, 255);
+	--body-bg: #121212;
+	--border: 1px solid rgba(47, 47, 47, 0.125);
+	--editor: #3a3b3c;
+	--code: #313131;
+	--code-color: #e6db74;
+	--placeholder: rgba(255, 255, 255, 0.836);
+	--link: rgb(0, 157, 230);
+	--navbar: #262626;
+	--navbar-color: rgb(196, 196, 196);
+	--navbar-dropdown-hover: #333333;
+	--wrapper-background: var(--navbar);
+	--input-group-bg: #2d2d2d;
+	--input-group-color: #d2d2d2;
+	--input-group-border: #4c4c4c 1px solid;
 }
 
-@media (prefers-color-scheme: light) {
-	:root {
-		--background: #ffffff;
-		--background-1: #efefef;
-		--color: #212529;
-		--body-bg: #efefef;
-		--border: 1px solid #d6d6d6;
-		--editor: trasparent;
-		--code: #efefef;
-		--code-color: var(--color);
-		--placeholder: rgba(90, 90, 90, 0.836);
-		--link: rgb(0, 157, 230);
-		--navbar: white;
-		--navbar-color: #212529;
-		--navbar-dropdown-hover: #ececec;
-		--wrapper-background: var(--navbar);
-		--input-group-bg: #d6d6d6;
-		--input-group-color: #444444;
-		--input-group-border: #b1b1b1 1px solid;
-	}
+html[theme="Light"]{
+	--background: #ffffff;
+	--background-1: #efefef;
+	--secondary-background: #f0f2f5;
+	--hover: rgba(0, 0, 0, 0.05);
+	--color: #212529;
+	--body-bg: #efefef;
+	--border: 1px solid #d6d6d6;
+	--editor: trasparent;
+	--code: #efefef;
+	--code-color: var(--color);
+	--placeholder: rgba(90, 90, 90, 0.836);
+	--link: rgb(0, 157, 230);
+	--navbar: white;
+	--navbar-color: #212529;
+	--navbar-dropdown-hover: #ececec;
+	--wrapper-background: var(--navbar);
+	--input-group-bg: #d6d6d6;
+	--input-group-color: #444444;
+	--input-group-border: #b1b1b1 1px solid;
 }
 
 * {
@@ -113,13 +115,22 @@ i.na-heart {
 }
 
 select {
-	background-color: var(--body-bg);
+	-webkit-appearance: none;
+  	appearance: none;
+	background-color: var(--editor);
 	border-radius: 20px;
 	border: var(--border);
+	background-image: url("data:image/svg+xml,%3Csvg%20height%3D%2224%22%20fill%3D%22%23ffff%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M7.41%207.84L12%2012.42l4.59-4.58L18%209.25l-6%206-6-6z%22%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M0-.75h24v24H0z%22%20fill%3D%22none%22%2F%3E%0A%3C%2Fsvg%3E");
 	width: 100%;
-	padding: 0.28rem 0.1rem;
+	padding: 0.35rem 0rem 0.35rem 0.4rem;
 	color: var(--color);
 	margin: 0rem .2rem;
+	background-position: right 50%;
+    background-repeat: no-repeat;
+}
+
+.{
+	fill: var(--color);
 }
 
 select:focus {
@@ -127,12 +138,12 @@ select:focus {
 }
 
 select option {
-	background-color: var(--body-bg);
-	border-radius: 20px;
+	background-color: var(--editor);
+	border-radius: var(--border-radius);
 }
 
 select option:hover {
-	background-color: var(--body-bg);
+	background-color: var(--hover);
 }
 
 code {
@@ -171,7 +182,7 @@ pre code {
 
 .reply p img {
 	width: 100%;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 }
 
 .reply pre.ql-syntax {
@@ -199,7 +210,7 @@ pre.ql-syntax {
 }
 
 .cc-color-override-2027711132 .cc-btn {
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 }
 
 .CodeMirror,
@@ -213,11 +224,11 @@ pre.ql-syntax {
 
 .CodeMirror {
 	border: var(--border) !important;
-	padding: 20px;
+	padding: var(--border-radius);
 	font: inherit;
 	z-index: 1;
 	color: var(--color) !important;
-	border-radius: 20px !important;
+	border-radius: var(--border-radius) !important;
 	background-color: var(--editor) !important;
 }
 
@@ -407,7 +418,7 @@ contact {
 	margin-left: auto;
 	background-color: var(--background);
 	align-items: center;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	padding: 2rem;
@@ -427,7 +438,7 @@ notifications {
 
 .notification {
 	width: auto;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.6rem;
@@ -468,6 +479,7 @@ notifications .notifications .notification .body .text {
 	color: var(--color);
 	display: block;
 	font-size: 1rem;
+	margin: auto 0;
 }
 
 notifications .notifications .notification .body .time {
@@ -491,6 +503,11 @@ notifications .category .header {
 
 notifications .category button {
 	cursor: pointer;
+	transition: 100ms cubic-bezier(0,0,1,1);
+}
+
+notifications .category button:hover {
+	background-color: var(--hover);
 }
 
 notifications .category button:focus {
@@ -506,16 +523,16 @@ notifications .category button:focus {
 
 	notifications .category {
 		display: block;
-		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
-		border-radius: 20px;
+		border-radius: var(--border-radius);
 		height: fit-content;
 		padding: 0.5rem;
+		width: 350px;
 	}
 
 	notifications .category button {
 		border: 1px solid rgba(0, 0, 0, 0.125);
 		background-color: var(--background);
-		border-radius: 20px;
+		border-radius: var(--border-radius);
 		color: var(--color);
 		font-weight: 500;
 		width: 100%;
@@ -553,15 +570,14 @@ notifications .category button:focus {
 		margin: -0.7rem -0.4rem 0rem -0.4rem;
 		top: 0;
 		position: fixed;
-		margin-top: 43px;
+		margin-top: 42px;
 		width: calc(100% - 1rem);
-		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
 	}
 
 	notifications .category button {
 		border: 1px solid rgba(0, 0, 0, 0.125);
 		background-color: var(--background);
-		border-radius: 20px;
+		border-radius: var(--border-radius);
 		color: var(--color);
 		font-weight: 500;
 		width: 100%;
@@ -579,6 +595,10 @@ notifications .category button:focus {
 	notifications .category .category-header {
 		display: none;
 	}
+}
+
+reload {
+	height: 3rem;
 }
 
 ::-webkit-scrollbar {
@@ -615,10 +635,6 @@ notifications .category button:focus {
 	top: 0;
 	align-self: flex-start;
 	width: calc(100% - 1rem);
-}
-
-.newapp-navbar.shadow {
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
 }
 
 .newapp-navbar a {
@@ -668,11 +684,8 @@ notifications .category button:focus {
 .navbar-center {
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.navbar-search {
 	left: calc(50px + 5vw);
-	width: calc(55vw - 63px);
+	width: calc(40vw - 63px);
 	position: absolute;
 	right: 0;
 	left: 0;
@@ -680,47 +693,42 @@ notifications .category button:focus {
 	top: 8px;
 	margin: auto;
 	height: 30px;
+	justify-content: center;
+	display: flex;
+	margin-top: -1px;
 }
 
-@media (min-width: 560px) and (max-width: 950px) {
-	.navbar-search {
-		width: 46vw;
-		position: absolute;
-	}
+.newapp-navbar .navigation {
+	display: flex;
 }
 
-@media screen and (min-width: 560px) {
-	.navbar-search {
-		width: calc(46vw - 52px);
-	}
-
-	.newapp-title {
-		display: initial;
-	}
+.newapp-navbar .navigation .nav-item {
+	padding: 0 1rem;
+	font-weight: 450;
+	color: var(--color);
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	margin: 0rem 0.25rem;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
-@media screen and (max-width: 560px) {
-	.newapp-title {
-		display: none;
-	}
+.newapp-navbar .navigation .nav-item:hover {
+	background-color: var(--hover);
+	
 }
 
-@media screen and (min-width: 450px) {
-	.navbar-search {
-		width: calc(61vw - 75px);
-	}
+.newapp-navbar .navigation .nav-item span{
+	vertical-align: sub;
 }
 
-@media screen and (min-width: 1120px) {
-	.navbar-search {
-		width: calc(100% - 760px);
-	}
+.newapp-navbar .navigation .nav-item a {
+	color: var(--color);
 }
 
-@media screen and (min-width: 950px) {
-	.navbar-search {
-		width: 400px;
-	}
+.navbar-search {
+	margin-left: 1rem;
+    width: calc(280px - 1rem - 25px);
+    margin-top: 0.1rem;	
 }
 
 .navbar-logo {
@@ -737,6 +745,15 @@ notifications .category button:focus {
 	display: inline-block;
 }
 
+.newapp-dropdown>i[class*="na-"],
+.navbar-item>a>i[class*="na-"]{
+	display: block;
+    margin-top: 0.35rem;
+    font-size: 1.2rem !important;
+    margin-right: 0.8rem;
+}
+
+
 .newapp-dropdown-content#notifications {
 	display: none;
 	position: absolute;
@@ -744,7 +761,7 @@ notifications .category button:focus {
 	min-width: 15rem;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	padding: 0.6rem 0.5rem;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin-top: 0.9rem;
 	color: var(--navbar-color);
 	z-index: 5;
@@ -755,13 +772,13 @@ notifications .category button:focus {
 	display: none;
 	position: absolute;
 	background-color: var(--navbar);
-	min-width: 10rem;
+	min-width: 14rem;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.09);
 	padding: 0.6rem 0.5rem;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: var(--navbar-color);
 	z-index: 5;
-	margin-inline-start: -8.9rem;
+	margin-inline-start: -12.9rem;
 }
 
 .newapp-dropdown-content#notifications ::-webkit-scrollbar {
@@ -772,13 +789,29 @@ notifications .category button:focus {
 	margin-top: 0.2rem;
 }
 
+
 .newapp-dropdown-content#user .dropdown-item {
 	margin-top: 0.2rem;
 	margin-bottom: 0.2rem;
-	padding: 0.3rem;
-	border-radius: 20px;
+	padding: 0.5rem;
+	border-radius: var(--border-radius);
 	margin-left: 0;
 	margin-right: 0;
+	font-size: 1rem;
+	display: flex;
+	transition: 100ms cubic-bezier(0,0,1,1);
+}
+
+.newapp-dropdown-content#user .dropdown-item i {
+	margin-right: 0.2rem;
+}
+
+.newapp-dropdown-content#user .dropdown-item i.na-chevron-right{
+	margin-inline-start: auto;
+}
+
+.newapp-dropdown-content#user .dropdown-item span{
+	line-height: 0.9;
 }
 
 .newapp-dropdown-content#notifications .dropdown-item {
@@ -788,7 +821,8 @@ notifications .category button:focus {
 	border-radius: 4px;
 	margin-left: 0;
 	margin-right: 0;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
+	transition: 100ms cubic-bezier(0,0,1,1);
 }
 
 hr {
@@ -797,14 +831,14 @@ hr {
 }
 
 .newapp-navbar .profile_image {
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 }
 
 .newapp-navbar .navbar-item button.navbar-button {
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
 	background-color: var(--theme-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.2rem 0.5rem 0.2rem 0.5rem;
@@ -829,7 +863,7 @@ hr {
 	vertical-align: baseline;
 	vertical-align: -webkit-baseline-middle;
 	border: none;
-	background-color: var(--body-bg) !important;
+	background-color: var(--secondary-background) !important;
 	border-radius: 20px;
 	padding: 0.4rem 0.4rem 0.4rem 0.4rem;
 	color: var(--navbar-color);
@@ -971,7 +1005,7 @@ content .articles {
 
 content .article .post {
 	background-color: var(--background);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	border: var(--border);
 	margin-bottom: 0.5rem;
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -984,7 +1018,7 @@ content .artcile .post .content-post {
 
 content .article .reply {
 	background-color: var(--background);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	border: var(--border);
 	padding: 0.5rem;
 	margin-bottom: 0.2rem;
@@ -995,7 +1029,7 @@ content .article .reply {
 content .article .post .user-actions .share_post {
 	background-color: var(--background-1);
 	width: auto;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	position: absolute;
 	left: 4.3rem;
 	margin-top: 0.3rem;
@@ -1008,11 +1042,11 @@ content .article .post .user-actions .share_post {
 content .article .post .user-actions .share_post .list .item {
 	cursor: pointer;
 	padding: 0.5rem;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 }
 
 content .article .post .user-actions .share_post .list .item:hover {
-	background-color: var(--body-bg);
+	background-color: var(--hover);
 }
 
 content .article .reply .info .reply-actions {
@@ -1032,7 +1066,7 @@ content .article .reply .info .reply-actions .delete {
 	background-color: red;
 }
 content .article .reply .info .reply-actions button {
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
@@ -1040,6 +1074,7 @@ content .article .reply .info .reply-actions button {
 	cursor: pointer;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	width: 4rem;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 content .article .reply .info .reply-actions .edit {
@@ -1049,11 +1084,13 @@ content .article .reply .info .reply-actions .edit {
 content .article .post .post-reply div button.reply-button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--theme-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
 	margin-top: 0.5rem;
+	cursor: pointer;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 content .article .post .post-reply div button.reply-button:hover {
@@ -1176,7 +1213,7 @@ tag {
 	content .content-post .user-actions {
 		background: var(--background-1);
 		padding: 0.5rem;
-		border-radius: 20px;
+		border-radius: var(--border-radius);
 		/* justify-content: space-between; */
 		display: flex;
 	}
@@ -1262,7 +1299,7 @@ content .wrapper-left .widget-posts .widget-post {
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--background);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 }
 
 content .sidebar .widget .widget-post,
@@ -1276,13 +1313,14 @@ content .sidebar .widget .widget-list .widget-item button.widget-button,
 content .wrapper-left .widget .widget-list .widget-item button.widget-button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem 0rem 0.5rem 0rem;
 	width: 5rem;
 	margin: 0.2rem;
 	cursor: pointer;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 content .sidebar .widget .widget-list .widget-item form,
@@ -1293,16 +1331,16 @@ content .wrapper-left .widget .widget-list .widget-item {
 content .sidebar .widget .widget-list .widget-item#widget-tags button.widget-button,
 content .wrapper-left .widget .widget-list .widget-item#widget-tags button.widget-button {
 	cursor: pointer;
-	border: 2px solid rgb(104, 104, 104);
+	border: 1px solid #18ab8e;
 	background-color: var(--theme-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.1rem 0.5rem 0.1rem 0.5rem;
-	box-shadow: 2px 2px rgb(104, 104, 104);
 	margin-bottom: 0.4rem;
 	margin-right: 0.4rem;
 	display: none;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 content .sidebar .widget .widget-list .widget-item#widget-tags:hover button.widget-button,
@@ -1312,7 +1350,7 @@ content .wrapper-left .widget .widget-list .widget-item#widget-tags:hover button
 
 content .sidebar .widget .widget-list .widget-item#widget-tags:hover,
 content .wrapper-left .widget .widget-list .widget-item#widget-tags:hover {
-	background-color: var(--body-bg);
+	background-color: var(--hover);
 }
 
 content .sidebar .widget .widget-list .widget-item button.widget-button:hover,
@@ -1328,11 +1366,16 @@ content .wrapper-left .widget .widget-list .widget-item#widget-tags button.widge
 content .sidebar .widget .widget-list .widget-item#widget-tags button.widget-button:active,
 content .wrapper-left .widget .widget-list .widget-item#widget-tags button.widget-button:active {
 	outline: none;
-	box-shadow: 1px 1px;
-	margin-top: 0.3rem;
-	margin-left: 0.16rem;
-	margin-bottom: 0.2rem;
-	margin-right: 0.07rem;
+    margin-top: 0.15rem;
+    margin-left: 0.16rem;
+    margin-bottom: 0.2rem;
+    margin-right: 0.07rem;
+    width: 5.4rem;
+}
+
+content .sidebar .widget .widget-list .widget-item#widget-tags,
+content .wrapper-left .widget .widget-list .widget-item#widget-tags{
+	transition: 100ms cubic-bezier(0,0,1,1);
 }
 
 content .sidebar .widget .widget-list .widget-item button.widget-button:active,
@@ -1350,7 +1393,7 @@ content .sidebar .user-card {
 	background-color: var(--background);
 	padding: 0.5rem;
 	align-items: center;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 5%;
@@ -1383,10 +1426,16 @@ content .wrapper-left .profile-actions button.follow-user {
 	height: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	margin-top: 0.5rem;
+	transition: cubic-bezier(0,0,1,1) 100ms;
+}
+
+content .sidebar .profile-actions button.follow-user:hover,
+content .wrapper-left .profile-actions button.follow-user:hover{
+	background-color: rgb(0, 174, 255);
 }
 
 content .sidebar .profile-actions button.follow-user:disabled,
@@ -1411,32 +1460,104 @@ content .wrapper-left .user-image {
 
 content .articles .navigation-menu {
 	display: none;
-	text-align: center;
-	margin-bottom: 0.8rem;
-	width: 100%;
+	justify-content: space-between;
 }
 
+content .articles .navigation-menu a{
+	margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+
 content .articles .navigation-menu a button {
-	border: none;
-	background-color: var(--background);
-	border-radius: 20px;
-	color: var(--color);
-	font-weight: 600;
-	padding: 0.3rem 0.6rem;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: var(--background);
+    border-radius: var(--border-radius);
+    color: var(--color);
+    font-weight: 500;
+    width: 100%;
+    padding: 0.3rem 0rem 0.3rem 0rem;
+	cursor: pointer;
+	transition: 100ms cubic-bezier(0,0,1,1);
+}
+
+content .articles .navigation-menu a button:hover {
+	background-color: var(--hover);
 }
 
 content .articles .navigation-menu a button:focus {
 	outline: none;
 }
 
-@media screen and (max-width: 1260px) {
+@media screen and (max-width: 950px){
 	content .articles .navigation-menu {
-		display: block;
+		background: var(--navbar);
+		margin: -0.7rem -0.4rem 0rem -0.4rem;
+		top: 0;
+		position: fixed;	
+		margin-top: 42px;
+		padding: 0rem 0.5rem;
+		width: calc(100% - 1rem);
+	}
+
+	content .articles{
+		margin-top: 40px;
+	}
+}
+
+@media screen and (max-width: 1260px) {	
+	content .articles .navigation-menu {
+		display: flex;
+	}
+
+	.newapp-navbar {
+		height: 40px;
+	}
+
+	.newapp-navbar .navbar-items {
+		height: 35px;
+	}
+
+	.newapp-navbar .navbar-item {
+		height: 30px;
+	}
+
+	.newapp-navbar .navbar-search {
+		margin-top: 0.2rem;
+	}
+
+	.newapp-navbar input[type=text]{
+		height: 1.01rem;
+	}
+
+	.newapp-dropdown>i[class*="na-"],
+	.navbar-item>a>i[class*="na-"] {
+		font-size: 1.5rem !important;
+	}
+
+	.newapp-navbar .navbar-item#navbar_profile_image {
+		margin-left: 0.8rem;
+	}
+
+	content .articles .navigation-menu {
+		margin-top: 53px;
+	}
+
+	.newapp-navbar .navigation {
+		display: none;
 	}
 
 	content .wrapper-left .widget#navigation {
 		display: none;
 	}
+
+	notifications .category {
+		margin-top: 53px;
+	}
+
+	reload {
+		height: 3.4rem;
+	}
+	
 }
 
 @media screen and (min-width: 768px) {
@@ -1446,7 +1567,7 @@ content .articles .navigation-menu a button:focus {
 }
 
 content .article-card {
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.6rem;
@@ -1473,6 +1594,7 @@ content .article-card .article-info .article-title {
 
 content .article-card .article-info .article-title a {
 	color: var(--color);
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 content .article-card .article-info .article-title a:hover {
@@ -1531,10 +1653,12 @@ content .article-card .article-footbar .article-date {
 content .article-card .article-footbar .article-misc button.article-save {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
-	padding: 0.1rem 0.6rem 0.1rem 0.6rem;
+	padding: 0.2rem 0.6rem;
+	cursor: pointer;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 content .article-card .article-footbar .article-misc button.article-save:focus {
@@ -1557,7 +1681,7 @@ content .sidebar .widget,
 content .wrapper-left .widget {
 	background-color: var(--background);
 	align-items: center;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 5%;
@@ -1583,10 +1707,16 @@ content .sidebar .widget#widget-register .moto {
 content .sidebar .widget#widget-register .register button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.6rem 1.2rem 0.6rem 1.2rem;
+	transition: cubic-bezier(0,0,1,1) 100ms;
+	cursor: pointer;
+}
+
+content .sidebar .widget#widget-register .register button:hover {
+	background-color: rgb(0, 174, 255);
 }
 
 content .sidebar .widget .widget-header,
@@ -1674,7 +1804,7 @@ content .sidebar .widget-posts,
 content .wrapper-left .widget-posts {
 	background-color: transparent;
 	align-items: center;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin-bottom: 5%;
 	padding: 0;
 }
@@ -1686,7 +1816,7 @@ content .wrapper-left .widget-posts .widget-header {
 	font-size: 1rem;
 	display: flex;
 	color: var(--color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin-bottom: 0.2rem;
 }
 
@@ -1753,7 +1883,7 @@ content profile .profile-main .sidebar-main {
 }
 
 content profile .profile-main .sidebar-main .statistics {
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	margin-bottom: 0.6rem;
@@ -1765,7 +1895,7 @@ content profile .profile-main .sidebar-main .statistics .stat-item {
 	padding: 0.5rem;
 	background-color: var(--background-1);
 	margin: 0.4rem auto;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: var(--color);
 }
 
@@ -1778,7 +1908,7 @@ content profile .profile-main .sidebar-info .profile-actions {
 }
 
 content profile .profile-main .sidebar-info .profile-image .user-name {
-	margin-left: 0.5rem;
+	margin-left: 3rem;
 	color: white;
 	margin-top: 3rem;
 }
@@ -1802,26 +1932,47 @@ content profile .profile-main .sidebar-info .profile-actions button.follow-user 
 	width: 70%;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem 0 0.5rem 0;
 	cursor: pointer;
+	transition: cubic-bezier(0,0,1,1) 100ms;
+}
+
+content profile .profile-main .sidebar-info .profile-actions button.follow-user:hover {
+	background-color: rgb(0, 174, 255);
+}
+
+content profile .profile-main .sidebar-info .profile-actions button.follow-user:focus {
+	outline: none;
 }
 
 content profile .profile-main .sidebar-info .profile-actions button.save-settings {
 	width: 70%;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem 0 0.5rem 0;
 }
 
+.modify-button[class*=" na-"]{
+	margin-inline-start:auto;
+	padding: 0.5rem;
+	background-color:var(--secondary-background);
+	border-radius:8px;
+	cursor: pointer;
+}
+
+.modify-button[class*=" na-"]:hover{
+	background-color: var(--hover);
+}
+
 content profile .profile-main .sidebar-info .widgets .profile-presentation {
 	border: var(--border);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	width: 70%;
 	background-color: var(--background);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -1861,7 +2012,7 @@ content profile .profile-main .sidebar-info .widgets {
 
 content profile .profile-main .sidebar-info .widgets .interesed-tags {
 	border: var(--border);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	width: 70%;
 	background-color: var(--background);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -1884,7 +2035,7 @@ content profile .profile-main .sidebar-info .widgets .interesed-tags .tags {
 
 content profile .profile-main .sidebar-info .widgets .social {
 	border: var(--border);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	width: 70%;
 	background-color: var(--background);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -1932,7 +2083,7 @@ content profile .profile-main .sidebar-right .widgets {
 
 content profile .profile-main .sidebar-right .widgets .user-follows {
 	border: var(--border);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	width: 70%;
 	background-color: var(--background);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -1970,7 +2121,7 @@ content profile .profile-main .sidebar-right .widgets .user-follows .header {
 
 content profile .profile-main .sidebar-info .widgets .settings-menu {
 	border: var(--border);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	width: 70%;
 	background-color: var(--background);
 	text-align: center;
@@ -2005,7 +2156,7 @@ content profile .profile-main .sidebar-info .widgets .settings-menu .settings di
 	padding: 0.4rem 0rem 0.4rem 0rem;
 	background: var(--background);
 	font-size: 0.8rem;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: var(--color);
 	cursor: pointer;
 }
@@ -2015,7 +2166,7 @@ content profile .profile-main .sidebar-info .widgets .settings-menu .settings di
 }
 
 content profile .profile-main .sidebar-info .widgets .settings-menu .settings div.item:hover {
-	background-color: var(--body-bg);
+	background-color: var(--hover);
 	;
 }
 
@@ -2027,7 +2178,7 @@ content profile .profile-main .sidebar-main .edit-info,
 content profile .profile-main .sidebar-main .edit-misc {
 	display: flex;
 	border: var(--border);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	width: 90%;
 	background-color: var(--background);
 	text-align: center;
@@ -2197,7 +2348,7 @@ new_post .newpost-form {
 	background: var(--background);
 	border: var(--border);
 	display: block;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	padding: 1rem;
 	color: var(--color);
 }
@@ -2206,7 +2357,7 @@ new_post .newpost-info {
 	background: var(--background);
 	border: var(--border);
 	display: block;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	padding: 2rem;
 	margin-bottom: 1rem;
 	color: var(--color);
@@ -2227,7 +2378,7 @@ new_post .footer button.newpost {
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.4rem 1rem 0.4rem 1rem;
@@ -2242,7 +2393,7 @@ new_post .header label.file-upload {
 	background-color: transparent;
 	padding: 0rem 0.5rem 0rem 0.5rem;
 	height: 1.75rem;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin-left: 0.3rem;
 	cursor: pointer;
 }
@@ -2289,7 +2440,7 @@ editpost .newpost-form {
 	background: var(--background);
 	border: var(--border);
 	display: block;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	padding: 1rem;
 	color: var(--color);
 }
@@ -2298,7 +2449,7 @@ editpost .newpost-info {
 	background: var(--background);
 	border: var(--border);
 	display: block;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	padding: 2rem;
 	margin-bottom: 1rem;
 	color: var(--color);
@@ -2319,7 +2470,7 @@ editpost .footer button.newpost {
 	cursor: pointer;
 	border: 2px solid rgba(255, 255, 255, 1);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	padding: 0.4rem 1rem 0.4rem 1rem;
@@ -2334,7 +2485,7 @@ editpost .header label.file-upload {
 	background-color: transparent;
 	padding: 0rem 0.5rem 0rem 0.5rem;
 	height: 1.75rem;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin-left: 0.3rem;
 	cursor: pointer;
 }
@@ -2378,10 +2529,9 @@ modal:target {
 modal>.modal {
 	width: 300px;
 	position: absolute;
-	top: 50%;
 	left: 50%;
 	top: 30%;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	padding: 1em;
@@ -2438,11 +2588,13 @@ modal .modal .modal-footer span a {
 modal .modal .modal-footer button {
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
-	padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+	border-radius: var(--border-radius);
+	padding: 0.4rem 0.5rem;
 	color: white;
 	font-weight: 600;
-	float: right;
+	width: 100%;
+	margin-top: 0.6rem;
+	transition: cubic-bezier(0,0,1,1) 100ms;
 }
 
 modal .modal .modal-footer button:hover {
@@ -2457,12 +2609,18 @@ modal .modal .modal-footer button:focus {
 	outline: none;
 }
 
+@media screen and (max-width: 800px){
+	modal>.modal {
+		top: 40%;
+	}
+}
+
 alert-box[type=success] {
 	border: 1px solid var(--theme-hover-color);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	background-color: #1cc7a6;
 	color: white;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin: 5px;
 	margin-bottom: 0.5rem;
 	padding: 0.5rem 0rem;
@@ -2474,7 +2632,7 @@ alert-box[type=error] {
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 	background-color: #ff7d89;
 	color: white;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	margin: 5px;
 	margin-bottom: 0.5rem;
 	padding: 0.5rem 0rem;
@@ -2498,7 +2656,7 @@ input:-internal-autofill {
 
 input[type=text] {
 	border: none;
-	background-color: var(--body-bg) !important;
+	background-color: var(--secondary-background) !important;
 	border-radius: 20px;
 	padding: 0.4rem 0rem 0.4rem 0.4rem;
 	color: var(--color);
@@ -2508,7 +2666,7 @@ input[type=text] {
 
 input[type=password] {
 	border: none;
-	background-color: var(--body-bg) !important;
+	background-color: var(--secondary-background) !important;
 	border-radius: 20px;
 	padding: 0.4rem 0rem 0.4rem 0.4rem;
 	color: var(--color) !important;
@@ -2693,7 +2851,7 @@ join .join {
 	top: 50%;
 	left: 50%;
 	top: 40%;
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	padding: 1em;
@@ -2720,12 +2878,18 @@ join .join .buttons button {
 	height: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	background-color: var(--secondary-color);
-	border-radius: 20px;
+	border-radius: var(--border-radius);
 	color: white;
 	font-weight: 600;
 	margin-top: 0.5rem;
 	margin-left: 0.5rem;
 	margin-right: 0.5rem;
+	cursor: pointer;
+	transition: cubic-bezier(0,0,1,1) 100ms;
+}
+
+join .join .buttons button:hover{
+	background-color: rgb(0, 174, 255);
 }
 
 join .join svg g path {
@@ -3003,3 +3167,4 @@ a-content .dashboard .charts .doughtnut-chart {
 	margin-left: 0.5rem;
 	margin-right: 0.5rem;
 }
+

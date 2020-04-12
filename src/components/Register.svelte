@@ -134,7 +134,7 @@ function handleKeydown(event) {
         <span on:click={CloseModal} class="close-modal" style='font-size: 0.7rem;cursor:pointer;'>Close</span>
         <div class="modal-header">
         {#if register_check == ''}
-            <img style="vertical-align: middle;" src="https://newapp.nl/static/logo.svg" width="70"
+            <img style="vertical-align: middle;" onerror="this.style.display='none'" src="https://newapp.nl/static/logo.svg" width="70"
                 alt="">
             <br>
             <span style="color:var(--color)"><span style="color:#18BC9C;">New</span>App - Register</span>

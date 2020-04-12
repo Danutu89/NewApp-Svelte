@@ -23,3 +23,8 @@ export let notifications;
 </script>
 
 <Notifications not={notifications}/>
+
+<svelte:head>
+<title>Notifications - NewApp</title>
+<meta name="robots" content="noindex">
+</svelte:head>

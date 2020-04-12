@@ -127,6 +127,20 @@ onMount(async function(){
   s_coverimg = document.getElementById('coverimg');
   s_avatarimg = document.getElementById('avatarimg');
 })
+
+function showEdit(input){
+  console.log(this);
+  var _input = document.getElementById(input);
+  var _text = document.getElementById(input+'_text');
+  if (_input.style.display == 'none'){
+    _input.style.display = 'block';
+    _text.style.display = 'none';
+  }else{
+    _input.style.display = 'none';
+    _text.style.display = 'block';
+  }
+
+}
 </script>
 
 <profile class="profile-page">
@@ -139,7 +153,7 @@ onMount(async function(){
     <div class="sidebar-info">
       <div class="profile-image">
         <div>
-          <img src="{user.avatar}" alt="">
+          <img src="{user.avatar}" alt="" onerror="this.style.display='none'">
         </div>
 
         <div class="user-name" style="line-height: 1.7rem;">
@@ -163,36 +177,61 @@ onMount(async function(){
     <div class="sidebar-main">
       <div class="edit-info" id="main" bind:this={editInfo}>
         <div class="col-1" style="text-align:left;">
-          Email:
-          <input id="email" name="email" placeholder="Email" type="text" bind:value={s_email} value="{user.email}">
-          Real Name:
-          <input id="realname" name="realname" placeholder="Real Name" type="text" bind:value={s_real_name} value="{user.real_name}">
-          Bio:
-          <input id="bio" name="bio" placeholder="Bio" type="text" bind:value={s_bio} value="{user.bio}">
-          Profession:
-          <input id="profession" name="profession" placeholder="Profession" type="text" bind:value={s_profession} value="{user.profession}">
+          <div style="display: flex;margin-bottom:1rem;">
+              <input id="email" name="email" placeholder="Email" type="text" style="display: none;margin-bottom:0;margin-right:0.5rem;" bind:value={s_email} value="{user.email}">
+              <p style="font-weight: 500;margin: 0.41em 0;" id="email_text">Email: {user.email}</p>
+              <span class="modify-button na-pencil-alt" on:click={()=>showEdit('email')}></span>
+          </div>
+
+          <div style="display: flex;margin-bottom:1rem;">
+              <input id="realname" name="realname" placeholder="Real Name" style="display: none;margin-bottom:0;margin-right:0.5rem;" type="text"  bind:value={s_real_name} value="{user.real_name}">
+              <p style="font-weight: 500;margin: 0.41em 0;" id="realname_text">Real Name: {user.real_name}</p>
+              <span class="modify-button na-pencil-alt" on:click={()=>showEdit('realname')}></span>
+          </div>
+
+          <div style="display: flex;margin-bottom:1rem;">
+              <input id="bio" name="bio" placeholder="Bio" type="text" style="display: none;margin-bottom:0;margin-right:0.5rem;" bind:value={s_bio} value="{user.bio}">
+              <p style="font-weight: 500;margin: 0.41em 0;" id="bio_text">Bio: {user.bio}</p>
+              <span class="modify-button na-pencil-alt" on:click={()=>showEdit('bio')}></span>
+          </div>
+
+          <div style="display: flex;margin-bottom:1rem;">
+              <input id="profession" name="profession" placeholder="Profession" style="display: none;margin-bottom:0;margin-right:0.5rem;" type="text" bind:value={s_profession} value="{user.profession}">
+              <p style="font-weight: 500;margin: 0.41em 0;" id="profession_text">Profession: {user.profession}</p>
+              <span class="modify-button na-pencil-alt" on:click={()=>showEdit('profession')}></span>
+          </div>
+
+          <div style="display: flex;margin-bottom:1rem;">
+              <div class="input-group" style="display: none;margin-bottom:0;margin-right:0.5rem;" id="_instagram">
+                <div class="input-group-icon">https://instagram.com/</div>
+                <div class="input-group-area"><input id="instagram" name="instagram" placeholder="Instagram" type="text" style="margin-bottom:0;height:100%;" bind:value={s_i}></div>
+              </div>
+              <p style="font-weight: 500;margin: 0.5em 0;" id="_instagram_text">Instagram: {user.instagram}</p>
+              <span class="modify-button na-pencil-alt" on:click={()=>showEdit('_instagram')}></span>
+          </div>
+          
           Instagram:
           <div class="input-group">
             <div class="input-group-icon">https://instagram.com/</div>
-            <div class="input-group-area"><input id="instagram" name="instagram" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Instagram" type="text" bind:value={s_i}></div>
+            <div class="input-group-area"><input id="instagram" name="instagram" placeholder="Instagram" type="text" bind:value={s_i}></div>
           </div>
           Facebook:
           <div class="input-group">
             <div class="input-group-icon">https://facebook.com/</div>
-            <div class="input-group-area"><input id="facebook" name="facebook" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Facebook" type="text" bind:value={s_f}></div>
+            <div class="input-group-area"><input id="facebook" name="facebook" placeholder="Facebook" type="text" bind:value={s_f}></div>
           </div>
           Twitter:
           <div class="input-group">
             <div class="input-group-icon">https://twitter.com/</div>
-            <div class="input-group-area"><input id="twitter" name="twitter" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Twitter" type="text" bind:value={s_t}></div>
+            <div class="input-group-area"><input id="twitter" name="twitter" placeholder="Twitter" type="text" bind:value={s_t}></div>
           </div>
           Github:
           <div class="input-group">
             <div class="input-group-icon">https://github.com/</div>
-            <div class="input-group-area"><input id="github" name="github" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Github" type="text" bind:value={s_g}></div>
+            <div class="input-group-area"><input id="github" name="github" placeholder="Github" type="text" bind:value={s_g}></div>
           </div>
           Website:
-          <input id="website" name="website" pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&amp;'\(\)\*\+,;=.]+$" placeholder="Website" type="text" bind:value={s_w}>
+          <input id="website" name="website" placeholder="Website" type="text" bind:value={s_w}>
         </div>
         <div class="col-2"  style="text-align:left;">
           Gender:

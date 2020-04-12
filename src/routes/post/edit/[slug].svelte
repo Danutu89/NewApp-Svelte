@@ -25,3 +25,8 @@ export let article;
 </script>
 
 <EditPost article={article}/>
+
+<svelte:head>
+<title>Edit Profile - NewApp</title>
+<meta name="robots" content="noindex">
+</svelte:head>
