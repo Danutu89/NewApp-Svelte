@@ -75,7 +75,7 @@ onMount(async function(){
     <div class="newpost-form">
         <div class="header">
             <input id="title" bind:this={title_s} bind:value={title} name="title" placeholder="Title" required="true" style="background: transparent !important;
-                font-size: 2rem;" type="text" value="">
+                font-size: 2rem;" type="text">
             <div style="display: flex;">
             <input id="tag" bind:value={tags} bind:this={tags_s} name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text" value="">
             <label for="file-upload" class="file-upload">
