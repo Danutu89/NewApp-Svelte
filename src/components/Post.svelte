@@ -24,6 +24,12 @@ let webview = false;
 
 let dark_theme;
 
+article.replies.forEach(reply => {
+    reply.mentions.forEach(mention => {
+        reply.text = String(reply.text).replace("@"+mention, '<a href="/user/'+mention+'">@'+mention+'</a>');
+    });
+});
+
 var loadCss = function(cssPath){
     var cssLink = document.createElement('link');
     cssLink.rel = 'stylesheet';
@@ -185,7 +191,7 @@ function Edit_Reply(reply){
     editing = true;
     if ( isMobile )
         Comment();
-    editor.value(turndown.turndown(reply.text));
+    editor.value(turndown.turndown(reply.text_e));
     editor.codemirror.focus();
 }
 
@@ -209,6 +215,9 @@ async function C_Edit_Reply(){
         replies.forEach(reply => {
             if(reply.id == editing_id.id){
                 reply.text = marked(editor.value());
+                reply.mentions.forEach(mention => {
+                    reply.text = String(reply.text).replace("@"+mention, '<a href="/user/'+mention+'">@'+mention+'</a>');
+                });
             }
         });
         article.replies = replies;
