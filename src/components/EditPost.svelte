@@ -3,6 +3,7 @@
 import { stores, goto } from '@sapper/app';
 import { onMount } from 'svelte';
 import marked from 'marked';
+import { host } from '../modules/Options.js';
 import TurndownService from 'turndown';
 import axios from 'axios';
 const { session } = stores();
@@ -16,7 +17,7 @@ let text_c = turndown.turndown(article.text);
 
 async function EditPost(){
     let args = '?t=' + $session.token;
-    const res = await axios.post('https://newapp.nl/api/post/edit/'+article.id+ args,{title: title_c,text: marked(editor.value()),id: article.id}).then(function (response) {
+    const res = await axios.post(host+'/api/post/edit/'+article.id+ args,{title: title_c,text: marked(editor.value()),id: article.id}).then(function (response) {
             if(response.status !=200){
                 //alert
                 return;

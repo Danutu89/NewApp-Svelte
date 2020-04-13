@@ -3,6 +3,7 @@ import { onMount, onDestroy } from "svelte";
 import SideBarLeft from '../components/SideBarLeft.svelte';
 import SideBarRight from '../components/SideBarRight.svelte';
 import Posts from '../components/Posts.svelte';
+import { host } from '../modules/Options.js';
 import axios from 'axios';
 import { stores } from '@sapper/app';
 const { session } = stores();
@@ -22,7 +23,7 @@ if ($session.auth){
 }
 
 onMount(async function() {
-	const res = await axios.get('https://newapp.nl/api/home'+args).then(function (response) {
+	const res = await axios.get(host+'/api/home'+args).then(function (response) {
         return response.data;
     });
 	const json = await res;
@@ -44,7 +45,7 @@ onDestroy(function(){
 
 async function LoadMore(){
     page++;
-    await axios.get('https://newapp.nl/api/home/'+ page + args, { progress: false }).then(function (response) {
+    await axios.get(host+'/api/home/'+ page + args, { progress: false }).then(function (response) {
         articles = [...articles , ...response.data['posts']];
         articles = articles;
         if (response.data['hasnext']){
@@ -69,11 +70,10 @@ function onScroll(e) {
     
 };
 
-
 </script>
 
 <svelte:head>
-<title>New App - Where Developers Learn, Share, & Code</title>
+<title>NewApp - Where Developers Learn, Share, & Code</title>
 <meta name="description" content="NewApp the newest community for developers to learn, share​ ​their programming ​knowledge, and build their careers.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://newapp.nl/">

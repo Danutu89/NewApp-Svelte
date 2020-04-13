@@ -1,5 +1,6 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../../modules/Options.js';
     export async function preload(page,session){
         let args = '';
         if (session.token){
@@ -7,11 +8,16 @@
         }else{
             args = '?tag=' + page.params.slug; 
         }
-        const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
+        try {
+            const res = await axios.get(host+'/api/home'+ args).then(function (response) {
                 return response.data;
             });
-        const json = await res;
-        return { tag: json };
+            const json = await res;
+            return { tag: json };
+        } catch (error) {
+            return this.error(404, 'Not Found');
+        }
+        
     }
 </script>
 <script>

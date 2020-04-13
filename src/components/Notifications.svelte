@@ -1,5 +1,4 @@
 <script>
-
 export let not;
 let notifications = not.notify['new'];
 
@@ -40,7 +39,7 @@ function Switch_Not(type){
     {#each notifications as notification}
         <a href="{notification.link}">
             <div class="notification">
-                <img class="avatar" src="{notification.author.avatar}" alt="{notification.author.name}" width="60px" height="60px">
+                <img class="avatar" data="{notification.author.avatar}" alt="{notification.author.name}" width="60px" onerror="this.style.display='none'" height="60px">
                 <div class="body">
                     <span class="text">
                         <span style="color: var(--color);">{notification.title}</span>

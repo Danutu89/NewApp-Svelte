@@ -4,7 +4,7 @@
         if (session.auth == false){
             this.redirect(302, '/');
         }
-        const res = await axios.get('http://localhost:5000/api/admin/dashboard' + '?t=' + session.token).then(function (response) {
+        const res = await axios.get('http://localhost:5000/api/admin/posts' + '?t=' + session.token).then(function (response) {
                 return response.data;
             });
         const response = await res;
@@ -13,7 +13,7 @@
 </script>
 
 <script>
-import Dashboard from '../../components/admin/Dashboard.svelte';
+import Posts from '../../components/admin/Posts.svelte';
 export let json;
 </script>
 
@@ -22,4 +22,4 @@ export let json;
 <meta name="robots" content="noindex">
 </svelte:head>
 
-<Dashboard json={json}/>
+<Posts json={json}/>

@@ -1,15 +1,21 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../../modules/Options.js';
     export async function preload(page,session){
         let args = '';
         if (session.token){
             args = '?t=' + session.token;
         }
-        const res = await axios.get('https://newapp.nl/api/user/'+page.params.slug + args).then(function (response) {
+        try {
+            const res = await axios.get(host+'/api/user/'+page.params.slug + args).then(function (response) {
                 return response.data;
             });
-        const json = await res;
-        return { user: json };
+            const json = await res;
+            return { user: json };
+        } catch (error) {
+            return this.error(404, 'Not Found');
+        }
+        
     }
 </script>
 

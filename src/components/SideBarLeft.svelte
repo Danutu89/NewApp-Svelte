@@ -3,6 +3,7 @@ import axios from 'axios';
 import { wrapper } from '../modules/Variables.js';
 import { onMount, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
+import { host } from '../modules/Options.js';
 import { stores } from '@sapper/app';
 const { session } = stores();
 const wrapper_ = wrapper;
@@ -28,7 +29,7 @@ function Follow_Tag(tag_) {
         OpenJoin();
         return;
     }
-    axios.get('https://newapp.nl/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
+    axios.get(host+'/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
         .then(function (response){
             var x = tag_button[tag_];
             tag_button[tag_] = x;
@@ -99,7 +100,11 @@ onDestroy(function(){
         document.removeEventListener('touchstart', TouchStart, false);
         document.removeEventListener('touchend', TouchEnd, false); 
         window_.removeEventListener('resize', onScreenChange);
-        wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));
+        try {
+            wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));   
+        } catch (error) {
+        
+        }
     }
 })
 
@@ -140,7 +145,7 @@ function handleGesture(event) {
 <div class="user-card">
     <a href="/user/{$session.name}" style="display: flex;">
     <div class="user-image" style="margin-bottom:0;">
-        <img class="profile_image" alt="" src="{$session.avatar}" height="50px" width="50px" title="profile image">
+        <img class="profile_image" alt="" data="{$session.avatar}" onerror="this.style.display='none'" height="50px" width="50px" title="profile image">
     </div>
     <div class="user-info" style="margin-top: -0.2rem;">
         <span>{$session.real_name}</span>
@@ -157,42 +162,9 @@ function handleGesture(event) {
     <div class="widget-list">
         <div class="widget-item" id='posts-show'>
             <div class="text"><a href="/"><span class="section"><i class="na-pen-square"></i> Posts</span></a></div>
-            <div class='multilevel' id='posts'>
-                {#if $session.auth}
-                <div class="widget-item">
-                    <div class="text"><a href="/saved"><span class="section"><span style='color:#18BC9C'>•</span> Saved</span></a></div>
-                </div>
-                <div class="widget-item">
-                    <div class="text"><a href="/"><span class="section"><span style='color:#18BC9C'>•</span> Feed</span></a></div>
-                </div>
-                {/if}
-                <div class="widget-item">
-                        <div class="text"><a href="/recent"><span class="section"><span style='color:#18BC9C'>•</span> Recent</span></a></div>
-                </div>
-                <div class="widget-item">
-                        <div class="text"><a href="/questions"><span class="section"><span style='color:#18BC9C'>•</span> Questions</span></a></div>
-                </div>
-                <div class="widget-item">
-                        <div class="text"><a href="/discuss"><span class="section"><span style='color:#18BC9C'>•</span> Discuss</span></a></div>
-                </div>
-                <div class="widget-item">
-                        <div class="text"><a href="/tutorials"><span class="section"><span style='color:#18BC9C'>•</span> Tutorials</span></a></div>
-                </div>
-            </div>
         </div>
         <div class="widget-item" id='podcasts-show'>
             <div class="text"><a href="/podcasts"><span class="section"><i class="na-headphones"></i> Podcasts</span></a></div>
-            <div class='multilevel' id='podcasts'>
-                <div class="widget-item">
-                    <div class="text"><a href="/podcasts/saved"><span class="section"><span style='color:#18BC9C'>•</span> Saved Podcasts</span></a></div>
-                </div>
-                <div class="widget-item">
-                    <div class="text"><a href="/podcasts"><span class="section"><span style='color:#18BC9C'>•</span> Feed</span></a></div>
-                </div>
-                <div class="widget-item">
-                    <div class="text"><a href="/podcasts/all"><span class="section"><span style='color:#18BC9C'>•</span> All</span></a></div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -213,7 +185,7 @@ function handleGesture(event) {
             <button class="widget-button" bind:this={tag_button[tag]} on:click|preventDefault={() => Follow_Tag(tag)} id="follow-tag-{tag}" style="margin-inline-start: auto;">Unfollow</button>
         </div>
         {/each}
-        <div class="widget-item" style="border-top: none;display: flex;background-color: var(--body-bg);">
+        <div class="widget-item" style="border-top: none;display: flex;background-color: var(--background-1);">
             <div class="text">
                 Other Popular Tags
             </div>
@@ -233,14 +205,14 @@ function handleGesture(event) {
 </div>
 {/if}
 <div class="widget" style="display: block;padding: 1rem;">
-    <a href="https://newapp.nl"><img style="vertical-align: middle;margin-left: -1px;" src="https://newapp.nl/static/logo.svg"
+    <a href="https://newapp.nl"><img style="vertical-align: middle;margin-left: -1px;" onerror="this.style.display='none'" data="/static/logo.svg"
             width="25" height="30" alt=""></a>
     <a href="https://www.facebook.com/newapp.nl"><i class="na-facebook-square" style="font-size: 2rem;
-        color: #18BC9C;
+        color: var(--theme-color);
         vertical-align: middle;
         margin-left: 0.5rem;"></i></a>
     <a href="https://twitter.com/_NewApp_"><i class="na-twitter" style="font-size: 2rem;
-        color: #18BC9C;
+        color: var(--theme-color);
         vertical-align: middle;
         margin-left: 0.5rem;"></i></a>
     <a href="/about" style="display: block;margin-top: 0.5rem;">About</a>

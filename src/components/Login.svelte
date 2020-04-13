@@ -3,6 +3,7 @@ import { onMount } from 'svelte';
 import axios from 'axios';
 import { stores } from '@sapper/app';
 import jwt from 'jsonwebtoken';
+import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 const cookies = Cookie();
 const { session, page } = stores();
@@ -58,7 +59,7 @@ async function Login(){
   }
   
 
-  const res = await axios.get('https://newapp.nl/api/login',{
+  const res = await axios.get(host+'/api/login',{
     auth: {
       username: String(username).toLowerCase(),
       password: password
@@ -126,7 +127,7 @@ function handleKeydown(event) {
     <div class="modal" on:keydown={handleKeydown} id="login-modal-inner">
         <span on:click={CloseModalLogin} class="close-modal" style='font-size: 0.7rem;cursor:pointer;'>Close</span>
         <div class="modal-header">
-            <img style="vertical-align: middle;" src="https://newapp.nl/static/logo.svg" width="70"
+            <img style="vertical-align: middle;" onerror="this.style.display='none'" data="/static/logo.svg" width="70"
                 alt="">
             <br>
             <span style="color:var(--color)"><span style="color:#18BC9C;">New</span>App - Login</span>

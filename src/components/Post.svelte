@@ -4,6 +4,7 @@
 export let article;
 import { onMount, beforeUpdate } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
+import { host } from '../modules/Options.js';
 import axios from 'axios';
 import TurndownService from 'turndown';
 import marked from 'marked';
@@ -51,7 +52,7 @@ function Like_Post() {
         like_button.classList.remove('na-heart1');
         like_button.classList.add('heartscale');
     }
-    axios.get('https://newapp.nl/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+    axios.get(host+'/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
         .then(response => {
             if(response.status != 200){
                 if(like_button.classList.contains("na-heart1")){
@@ -106,7 +107,7 @@ async function Reply(){
     }
     let markdown = marked(editor.value());
     let reply;
-    let json = await axios.post('https://newapp.nl/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
+    let json = await axios.post(host+'/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
         return response;
     })
     let data = await json;
@@ -154,7 +155,7 @@ async function Delete_Reply(id){
         return;
     }
     let args = "?t="+$session.token+"&id="+id;
-    const not = await axios.get("https://newapp.nl/api/reply/delete"+args).then(response =>{
+    const not = await axios.get(host+"/api/reply/delete"+args).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -193,7 +194,7 @@ async function C_Edit_Reply(){
         return;
     }
     let args = "?t="+$session.token+"&id="+editing_id.id;
-    const resp = await axios.post("https://newapp.nl/api/reply/edit",{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
+    const resp = await axios.post(host+"/api/reply/edit",{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -225,7 +226,7 @@ async function CheckNotification(id){
         return;
     }
     let args = "?t="+$session.token+"&not_id="+id;
-    const not = await axios.get("https://newapp.nl/api/notifications/check"+args).then(response =>{
+    const not = await axios.get(host+"/api/notifications/check"+args).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -271,28 +272,7 @@ onMount(async function(){
         let SimpleMDE = require('simplemde');
         editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
     }
-    dark_theme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if($session.auth == true){
-        if($session.theme_mode == 'system'){
-            if (dark_theme){
-                loadCss("https://newappcdn.b-cdn.net/dark_code.css");
-            }else{
-                loadCss("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css");
-            }
-        }else{
-            if($session.theme == 'Dark'){
-                loadCss("https://newappcdn.b-cdn.net/dark_code.css");
-            }else{
-                loadCss("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css");
-            }
-        }
-    }else{
-        if (dark_theme){
-            loadCss("https://newappcdn.b-cdn.net/dark_code.css");
-        }else{
-            loadCss("https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css");
-        }
-    }
+    loadCss("https://newappcdn.b-cdn.net/dark_code.css");
 })
 
 
@@ -303,7 +283,7 @@ onMount(async function(){
     <div class="post">
         {#if article.thumbnail}
         <div class="thumbnail">
-            <img loading="lazy" src="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg" alt="" style='width: 100%;border-top-left-radius: 20px;
+            <img loading="lazy" data="/static/thumbnail_post/post_{article.id}.jpeg" onerror="this.style.display='none'" alt="" style='width: 100%;border-top-left-radius: 20px;
             border-top-right-radius: 20px;'>
         </div>
         {/if}
@@ -312,8 +292,8 @@ onMount(async function(){
                         <h1 style="margin-top: 0;font-weight: 400;font-size: 2rem;">{article.title}</h1>
                     </div>
                     <div class="post-author">
-                        <img style="border-radius:50px;margin-right: 5px;" height="40px" width="40px"
-                            src="{article.author.avatar}" alt="{article.author.name}">
+                        <img style="border-radius:50px;margin-right: 5px;" height="40px" width="40px" onerror="this.style.display='none'"
+                            data="{article.author.avatar}" alt="{article.author.name}">
                         <div class="author-info">
                             <a href="/user/{article.author.name}"><span class="author-name">{article.author.real_name}</span></a>
                             <div class="post-tags">
@@ -393,6 +373,20 @@ onMount(async function(){
     </div>
     {#each article.replies as reply}
     <div class="reply" id="reply_{reply.id}">
+        <div id="reply_img_{reply.author.id}" class="author" style="
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;">
+            <img style="border-radius:20px;margin-right: 5px;" onerror="this.style.display='none'" height="35px" width="35px"
+                data="{reply.author.avatar}" alt="{reply.author.name}">
+            <div id="reply_name_{reply.author.id}" style="margin-top:-0.1rem;">
+
+                <a id="reply_name" style="font-size: 0.8rem;" href="/user/{reply.author.name}">@{reply.author.name}</a>
+                <p style="font-size: 60%;opacity: 0.6;margin-bottom: 0;margin-top: 0;">
+                    { reply.author.status }
+                </p>
+            </div>
+        </div>
 
         {@html reply.text}
 
@@ -409,20 +403,7 @@ onMount(async function(){
                 {/if}
                 </div>
                 {/if}
-                <div id="reply_img_{reply.author.id}" class="author" style="
-                    border-radius: 20px;
-                    padding: 0.5rem;
-                    display: flex;">
-                    <img style="border-radius:20px;margin-right: 5px;" height="35px" width="35px"
-                        src="{reply.author.avatar}" alt="{reply.author.name}">
-                    <div id="reply_name_{reply.author.id}" style="margin-top:-0.1rem;">
-    
-                        <a id="reply_name" href="/user/{reply.author.name}">@{reply.author.name}</a>
-                        <p style="font-size: 60%;opacity: 0.6;margin-bottom: 0;margin-top: 0;">
-                            { reply.author.status }
-                        </p>
-                    </div>
-                </div>
+                
             </div>
             
         </div>

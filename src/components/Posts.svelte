@@ -29,7 +29,7 @@ function SavePost(id){
     <div class="article-card" id="post_{article.id}" >
     <div class="article-main">
                 <div class="article-author-image"><img class="profile_image"
-                loading="lazy" src="{article.author.avatar}" height="50px" width="50px" title="profile image" alt="{article.author.name}">
+                onerror="this.style.display='none'" loading="lazy" data="{article.author.avatar}" height="50px" width="50px" title="profile image" alt="{article.author.name}">
             </div>
             <div class="article-info">
                 <div class="article-title"><a rel="prefetch" href="/post/{article.link}"><h1 style="font-size: 1.5rem;
@@ -58,9 +58,7 @@ function SavePost(id){
 {:else}
 <div class="articles">
     <div class="navigation-menu">
-        <a href="/"><button>Feed</button></a>
-        <a href="/saved"><button>Saved</button></a>
-        <a href="/recent"><button>Recent</button></a>
+        <a href="/"><button>Home</button></a>
         <a href="/questions"><button>Questions</button></a>
         <a href="/discuss"><button>Discuss</button></a>
         <a href="/tutorials"><button>Tutorials</button></a>
@@ -69,14 +67,14 @@ function SavePost(id){
 		<div class="article-card" id="post_{article.id}">
         {#if article.thumbnail}
         <div class="article-thumbnail" style="max-height:300px;overflow: hidden;">
-                        <img loading="lazy" alt=""
-                          src="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg" style="border-top-left-radius: 20px;
+                        <img loading="lazy" alt="" onerror="this.style.display='none'"
+                          data="/static/thumbnail_post/post_{article.id}.jpeg" style="border-top-left-radius: 20px;
                           border-top-right-radius: 20px;object-fit: cover;">
                 </div>
         {/if}
 		<div class="article-main">
-                 <div class="article-author-image"><img class="profile_image"
-                    loading="lazy" src="{article.author.avatar}" height="50px" width="50px" title="profile image" alt="{article.author.name}">
+                 <div class="article-author-image"><img class="profile_image" onerror="this.style.display='none'"
+                    loading="lazy" data="{article.author.avatar}" height="50px" width="50px" title="profile image" alt="{article.author.name}">
                 </div>
                 <div class="article-info">
                     <div class="article-title"><a rel="prefetch" href="/post/{article.link}"><h1 style="font-size: 1.5rem;

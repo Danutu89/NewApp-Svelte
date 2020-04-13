@@ -1,5 +1,6 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../modules/Options.js';
     export async function preload(page,session){
         let args = '';
         if (session.token){
@@ -7,7 +8,7 @@
         }else{
             this.redirect(302, '/');
         }
-        const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
+        const res = await axios.get(host+'/api/home' + args).then(function (response) {
                 return response.data;
             });
         const json = await res;
@@ -50,7 +51,7 @@ onDestroy(function(){
 async function LoadMore(){
     if($session.auth){
         page++;
-        await axios.get('https://newapp.nl/api/home/'+ page +'?t=' + $session.token + '&mode=saved', { progress: false }).then(function (response) {
+        await axios.get(host+'/api/home/'+ page +'?t=' + $session.token + '&mode=saved', { progress: false }).then(function (response) {
             articles = [...articles , ...response.data['posts']];
             articles = articles;
             if (response.data['hasnext']){
@@ -79,6 +80,7 @@ function onScroll(e) {
 
 <svelte:head>
 <title>Saved Posts - NewApp</title>
+<meta name="robots" content="noindex">
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

@@ -1,5 +1,6 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../modules/Options.js';
     export async function preload(page,session){
         let args = '';
         if (session.token){
@@ -7,7 +8,7 @@
         }else{
             this.redirect(302, '/');
         }
-        const res = await axios.get('https://newapp.nl/api/notifications' + args).then(function (response) {
+        const res = await axios.get(host+'/api/notifications' + args).then(function (response) {
                 return response.data;
             });
         const json = await res;
@@ -22,3 +23,8 @@ export let notifications;
 </script>
 
 <Notifications not={notifications}/>
+
+<svelte:head>
+<title>Notifications - NewApp</title>
+<meta name="robots" content="noindex">
+</svelte:head>

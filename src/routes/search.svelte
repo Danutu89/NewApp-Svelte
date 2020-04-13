@@ -1,12 +1,13 @@
 <script context="module">
     import axios from 'axios';
+    import { host } from '../modules/Options.js';
     export async function preload(page, session){
         let search = page.query.q;
         let args = '?search=' + search;
         if (session.auth){
             args+= '&t='+session.token;
         }
-        const res = await axios.get('https://newapp.nl/api/home' + args).then(function (response) {
+        const res = await axios.get(host+'/api/home' + args).then(function (response) {
                 return response.data;
             });
         const json = await res;
@@ -59,7 +60,7 @@ onDestroy(function(){
 
 async function LoadMore(){
     page++;
-    await axios.get('https://newapp.nl/api/home/'+ page +'?search=' + search, { progress: false }).then(function (response) {
+    await axios.get(host+'/api/home/'+ page +'?search=' + search, { progress: false }).then(function (response) {
         articles = [...articles , ...response.data['posts']];
         articles = articles;
         if (response.data['hasnext']){
@@ -88,6 +89,7 @@ function onScroll(e) {
 
 <svelte:head>
 <title>Search - {search.utilities['search']}</title>
+<meta name="robots" content="noindex">
 </svelte:head>
 
 <SideBarLeft user={user} utilities={utilities}/>

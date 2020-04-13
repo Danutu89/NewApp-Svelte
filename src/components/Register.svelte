@@ -1,127 +1,127 @@
 <script>
+import axios from 'axios';
+import { onMount } from "svelte";
+import { host } from '../modules/Options.js';
 
-    import axios from 'axios';
-    import { onMount } from "svelte";
+let username = '', realname = '', email = '', password = '', password_check = '', register, email_c, password_c, realname_c;
+let user_check = false, password_check_c = false, email_check = false;
+let register_check = '';
+let l_modal;
+let r_modal;
 
-    let username = '', realname = '', email = '', password = '', password_check = '', register, email_c, password_c, realname_c;
-    let user_check = false, password_check_c = false, email_check = false;
-    let register_check = '';
-    let l_modal;
-    let r_modal;
-    
-    async function CheckUsername(){
-        const res = await axios.get('https://newapp.nl/api/register/check/username/'+username, { progress: false }).then(function (response) {
-                return response.data;
-            });
-        const json = await res;
-        if (json.check){
-            register.setCustomValidity("Username Taken");
-            register.focus();
-            register.classList.add('error');
-            register.reportValidity();
-            user_check = false;
-        }
-        else{
-            register.setCustomValidity("");
-            register.classList.remove('error');
-            user_check = true;
-        }
-    };
-
-    async function CheckEmail(){
-        const res = await axios.get('https://newapp.nl/api/register/check/email/'+email, { progress: false }).then(function (response) {
-                return response.data;
-            });
-        const json = await res;
-        if (json.check){
-            email_c.setCustomValidity("Email Taken");
-            email_c.focus();
-            email_c.classList.add('error');
-            email_c.reportValidity();
-            email_check = false;
-        }
-        else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false){
-            email_c.setCustomValidity("Please match the format");
-            email_c.focus();
-            email_c.classList.add('error');
-            email_c.reportValidity();
-            email_check = false;
-        }
-        else{
-            email_c.setCustomValidity("");
-            email_c.classList.remove('error');
-            email_check = true;
-        }
-    };
-    async function CheckPassword(){
-        if (password != password_check){
-            password_c.setCustomValidity("Passwords doesn't match");
-            password_c.focus();
-            password_c.classList.add('error');
-            password_c.reportValidity();
-            password_check_c = false;
-        }else{
-            password_c.setCustomValidity("");
-            password_c.classList.remove('error');
-            password_check_c = true;
-        }
-    };
-
-    async function RegisterUser(){
-        if (!user_check){
-            register.classList.add('error');
-            register.reportValidity();
-            return;
-        }
-        if(!realname){
-            realname_c.classList.add('error');
-            realname_c.reportValidity();
-            return;
-        }
-        if (!email_check){
-            email_c.classList.add('error');
-            email_c.reportValidity();
-            return;
-        }
-        if (!password_check_c){
-            password_c.classList.add('error');
-            password_c.reportValidity();
-            return;
-        }
-        const res = await axios.post('https://newapp.nl/api/register' ,{ username: username, email: email, realname: realname, password: password }).then(function (response) {
-                return response.data;
-            });
-        const json = await res;
-        register_check = json.register;
-
+async function CheckUsername(){
+    const res = await axios.get(host+'api/register/check/username/'+username, { progress: false }).then(function (response) {
+            return response.data;
+        });
+    const json = await res;
+    if (json.check){
+        register.setCustomValidity("Username Taken");
+        register.focus();
+        register.classList.add('error');
+        register.reportValidity();
+        user_check = false;
     }
-
-    onMount(async function() {
-        l_modal = document.getElementById("login-modal");
-    });
-
-
-    function CloseModal(){
-        if (r_modal.style["opacity"] < 1){
-            r_modal.style["visibility"] = "visible";
-            r_modal.style["opacity"] = 1;
-            r_modal.style["pointer-events"] = "auto";
-        }else{
-            r_modal.style["visibility"] = "hidden";
-            r_modal.style["opacity"] = 0;
-            r_modal.style["pointer-events"] = "none";
-        }
+    else{
+        register.setCustomValidity("");
+        register.classList.remove('error');
+        user_check = true;
     }
+};
 
-    function OpenLogin(){
+async function CheckEmail(){
+    const res = await axios.get(host+'/api/register/check/email/'+email, { progress: false }).then(function (response) {
+            return response.data;
+        });
+    const json = await res;
+    if (json.check){
+        email_c.setCustomValidity("Email Taken");
+        email_c.focus();
+        email_c.classList.add('error');
+        email_c.reportValidity();
+        email_check = false;
+    }
+    else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false){
+        email_c.setCustomValidity("Please match the format");
+        email_c.focus();
+        email_c.classList.add('error');
+        email_c.reportValidity();
+        email_check = false;
+    }
+    else{
+        email_c.setCustomValidity("");
+        email_c.classList.remove('error');
+        email_check = true;
+    }
+};
+async function CheckPassword(){
+    if (password != password_check){
+        password_c.setCustomValidity("Passwords doesn't match");
+        password_c.focus();
+        password_c.classList.add('error');
+        password_c.reportValidity();
+        password_check_c = false;
+    }else{
+        password_c.setCustomValidity("");
+        password_c.classList.remove('error');
+        password_check_c = true;
+    }
+};
+
+async function RegisterUser(){
+    if (!user_check){
+        register.classList.add('error');
+        register.reportValidity();
+        return;
+    }
+    if(!realname){
+        realname_c.classList.add('error');
+        realname_c.reportValidity();
+        return;
+    }
+    if (!email_check){
+        email_c.classList.add('error');
+        email_c.reportValidity();
+        return;
+    }
+    if (!password_check_c){
+        password_c.classList.add('error');
+        password_c.reportValidity();
+        return;
+    }
+    const res = await axios.post(host+'/api/register' ,{ username: username, email: email, realname: realname, password: password }).then(function (response) {
+            return response.data;
+        });
+    const json = await res;
+    register_check = json.register;
+
+}
+
+onMount(async function() {
+    l_modal = document.getElementById("login-modal");
+});
+
+
+function CloseModal(){
+    if (r_modal.style["opacity"] < 1){
+        r_modal.style["visibility"] = "visible";
+        r_modal.style["opacity"] = 1;
+        r_modal.style["pointer-events"] = "auto";
+    }else{
         r_modal.style["visibility"] = "hidden";
         r_modal.style["opacity"] = 0;
         r_modal.style["pointer-events"] = "none";
-        l_modal.style["visibility"] = "visible";
-        l_modal.style["opacity"] = 1;
-        l_modal.style["pointer-events"] = "auto";
     }
-    
+}
+
+function OpenLogin(){
+    r_modal.style["visibility"] = "hidden";
+    r_modal.style["opacity"] = 0;
+    r_modal.style["pointer-events"] = "none";
+    l_modal.style["visibility"] = "visible";
+    l_modal.style["opacity"] = 1;
+    l_modal.style["pointer-events"] = "auto";
+}
+
 function handleKeydown(event) {
   if (event.keyCode == 13){
     RegisterUser()
@@ -134,7 +134,7 @@ function handleKeydown(event) {
         <span on:click={CloseModal} class="close-modal" style='font-size: 0.7rem;cursor:pointer;'>Close</span>
         <div class="modal-header">
         {#if register_check == ''}
-            <img style="vertical-align: middle;" src="https://newapp.nl/static/logo.svg" width="70"
+            <img style="vertical-align: middle;" onerror="this.style.display='none'" src="https://newapp.nl/static/logo.svg" width="70"
                 alt="">
             <br>
             <span style="color:var(--color)"><span style="color:#18BC9C;">New</span>App - Register</span>

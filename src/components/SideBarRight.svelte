@@ -2,6 +2,7 @@
 import axios from 'axios';
 import OpenJoin from '../modules/OpenJoin.js';
 import OpenRegister from '../modules/OpenRegister.js';
+import { host } from '../modules/Options.js';
 import { stores, goto } from '@sapper/app';
 const { session } = stores();
 
@@ -17,7 +18,7 @@ function Follow_User(id){
         OpenJoin();
         return;
     }
-    axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token, { progress: false }).then((response) => {
+    axios.get(host+'/api/follow-user/' + id + '?t=' + $session.token, { progress: false }).then((response) => {
         if (response.status != 200){
             //alert
             return;
@@ -36,7 +37,7 @@ function Delete_Post(id){
         OpenJoin();
         return;
     }
-    axios.get('https://newapp.nl/api/post/delete/' + id + '?t=' + $session.token).then((response)=>{
+    axios.get(host+'/api/post/delete/' + id + '?t=' + $session.token).then((response)=>{
         if (response.status != 200){
             //alert
             return;
@@ -59,7 +60,7 @@ function Edit_Post(){
 {#if $session.auth == false}
 <div class="widget" id="widget-register">
         <div class="logo">
-                <img style="vertical-align: middle;margin-left: -1px;" src="https://newapp.nl/static/logo.svg" width="80" alt="">
+                <img style="vertical-align: middle;margin-left: -1px;" onerror="this.style.display='none'" data="https://newapp.nl/static/logo.svg" width="80" alt="">
         </div>
         <div class="moto">
             JOIN US
@@ -70,6 +71,7 @@ function Edit_Post(){
     </div>
 {/if}
 {#if page == "index"}
+    
     <div class="widget-posts" id="widget-trending-posts">
         <div class="widget-header">
             <div class="widget-title">Trending Posts 🔥</div>
@@ -78,7 +80,7 @@ function Edit_Post(){
         {#each trending as trend}
             <div class="widget-post">
                 <div class="post-header">
-                    <img style="border-radius: 20px;margin-top: 0.25rem;" src="{trend.author.avatar}" height="40px" width="40px" alt="{trend.author.name}">
+                    <img style="border-radius: 20px;margin-top: 0.25rem;" onerror="this.style.display='none'" data="{trend.author.avatar}" height="40px" width="40px" alt="{trend.author.name}">
                         
                     </div>
                 <div class="post-footer" style="margin-left: 2%;">
@@ -100,7 +102,7 @@ function Edit_Post(){
         {/each}
         </div>
     </div>
-
+    
 {:else if page == "post"}
 <style>
 content .sidebar#sidebar-right{
@@ -143,7 +145,7 @@ content .sidebar#sidebar-right{
         <a rel="prefetch" href="/user/{author.name}"
             style="margin-bottom:0.2rem;display: flex">
         <div class="user-image">
-            <img class="profile_image" src="{author.avatar}" height="50px" width="50px" title="profile image" alt="{author.name}">
+            <img class="profile_image" data="{author.avatar}" onerror="this.style.display='none'" height="50px" width="50px" title="profile image" alt="{author.name}">
         </div>
         
             <div class="user-info">
@@ -180,13 +182,13 @@ content .sidebar#sidebar-right{
             {#if author.profession != "None" && author.profession}
             <div class="widget-item">
                 <div class="text">
-                    <span style="font-size: 0.8rem;"><i class="fal fa-briefcase"></i> Profession: {author.profession}</span>
+                    <span style="font-size: 0.8rem;"><i class="na-briefcase"></i> Profession: {author.profession}</span>
                 </div>
             </div>
             {/if}
             <div class="widget-item">
                 <div class="text">
-                    <span style="font-size: 0.8rem;"><i class="fal fa-home"></i> Location: {author.country}<span
+                    <span style="font-size: 0.8rem;"><i class="na-home"></i> Location: {author.country}<span
                             class="flag-icon flag-icon-{author.country_flag}"></span></span>
                 </div>
             </div>
@@ -205,7 +207,7 @@ content .sidebar#sidebar-right{
             {#each author.posts as article}
             <div class="widget-post">
                 <div class="post-header">
-                    <img style="border-radius: 20px;margin-top: 0.25rem;" src="{article.author.avatar}" height="40px" width="40px" alt="{article.author.name}">
+                    <img style="border-radius: 20px;margin-top: 0.25rem;" onerror="this.style.display='none'" data="{article.author.avatar}" height="40px" width="40px" alt="{article.author.name}">
                     </div>
                 <div class="post-footer" style="margin-left: 2%;">
                     <div class="post-title">

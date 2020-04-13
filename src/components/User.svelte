@@ -2,6 +2,7 @@
 import Posts from './Posts.svelte';
 import { stores } from '@sapper/app';
 import axios from 'axios';
+
 import OpenJoin from '../modules/OpenJoin.js';
 const { session } = stores();
 export let user;
@@ -11,7 +12,7 @@ let follow_button;
 function Follow_User(id){
     if($session.auth){
         if($session.id != id){
-            axios.get('https://newapp.nl/api/follow-user/' + id + '?t=' + $session.token)
+            axios.get(host+'/api/follow-user/' + id + '?t=' + $session.token)
             .then(response => {
                 if (response.data['operation'] == 'unfollowed') {
                     follow_button.innerHTML = 'Follow';
@@ -148,7 +149,7 @@ function Follow_User(id){
         </div>
       </div>
       <div class="sidebar-right">
-          {#if user.follow_check}
+        {#if user.follow_check}
         <div class="widgets">
           <div class="user-follows">
             <div class="header">{user.real_name} Follows</div>
@@ -156,7 +157,7 @@ function Follow_User(id){
             <div class="users">
               {#each user.follows as userf}
               <div class="user-followed" id="user-1">
-                  <div class="user-img"><img loading="lazy" src="{userf.avatar}" alt=""></div>
+                  <div class="user-img"><img loading="lazy" data="{userf.avatar}" onerror="this.style.display='none'" alt=""></div>
                   <a href="/user/{userf.name}">
                   <div class="user-info">
                     <span>{userf.real_name}</span>
