@@ -989,6 +989,11 @@ content .wrapper-right {
 	transition: all 0.5s ease;
 }
 
+content .article .post_content a,
+content .article .reply p a {
+	color: var(--link);
+}
+
 content .articles,
 content .article {
 	text-align: left;
@@ -1532,10 +1537,6 @@ content .articles .navigation-menu a button:focus {
 	.newapp-dropdown>i[class*="na-"],
 	.navbar-item>a>i[class*="na-"] {
 		font-size: 1.5rem !important;
-	}
-
-	.newapp-navbar .navbar-item#navbar_profile_image {
-		margin-left: 0.8rem;
 	}
 
 	content .articles .navigation-menu {
@@ -2595,6 +2596,7 @@ modal .modal .modal-footer button {
 	width: 100%;
 	margin-top: 0.6rem;
 	transition: cubic-bezier(0,0,1,1) 100ms;
+	cursor: pointer;
 }
 
 modal .modal .modal-footer button:hover {

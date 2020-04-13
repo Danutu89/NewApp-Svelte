@@ -60,7 +60,7 @@ function Edit_Post(){
 {#if $session.auth == false}
 <div class="widget" id="widget-register">
         <div class="logo">
-                <img style="vertical-align: middle;margin-left: -1px;" onerror="this.style.display='none'" data="https://newapp.nl/static/logo.svg" width="80" alt="">
+                <img style="vertical-align: middle;margin-left: -1px;" onerror="this.style.display='none'" data="/static/logo.svg" width="80" alt="">
         </div>
         <div class="moto">
             JOIN US
