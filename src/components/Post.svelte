@@ -372,7 +372,7 @@ onMount(async function(){
                     text-align: center;
                     margin-top: 1rem;">
                         <div class="card-body">
-                            <p><i class="fal fa-lock"></i> Post closed by {article.closed_by} on {article.closed_on}</p>
+                            <p><i class="na-lock"></i> Post closed by {article.closed_by} on {article.closed_on}</p>
                         </div>
                     </div>
                     {/if}

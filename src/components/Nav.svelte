@@ -271,7 +271,8 @@ function ToggleTheme(){
                 </a>
                 <a rel="preload" href="/user/settings" style="color: var(--navbar-color);">
                 <div class="dropdown-item" on:click={CloseMenu}>
-                  <i class="na-user-cog"></i> Settings
+                  <i class="na-user-cog"></i>
+                  <span>Setting</span>
                   <i class="na-chevron-right"></i>
                 </div>
                 </a>
