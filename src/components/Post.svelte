@@ -12,10 +12,12 @@ import { stores } from '@sapper/app';
 const { page, session } = stores();
 
 let like_button;
+let reply_likes = [];
 let like_counter;
 let editor, editor_s;
 let isMobile;
 let turndown = TurndownService();
+let reply_id = -1;
 
 let editing=false;
 let editing_id;
@@ -38,19 +40,15 @@ var loadCss = function(cssPath){
     head.appendChild(cssLink);
 };
 
-function Like_Post() {
-    if($session.auth == false){
-        OpenJoin();
-        return;
-    }
-    if(like_button.classList.contains("na-heart")){
+function likePostAnim(){
+    if(like_button.classList.contains("na-heart1")){
         var likes = parseInt(like_counter.innerHTML);
         var total = likes - 1;
         like_counter.innerHTML = total;
         like_button.classList.remove('na-heart');
         like_button.classList.add('na-heart1');
         like_button.classList.remove('heartscale');
-    }else if(like_button.classList.contains("na-heart1")){
+    }else if(like_button.classList.contains("na-heart")){
         var likes = parseInt(like_counter.innerHTML);
         var total = likes + 1;
         like_counter.innerHTML = total;
@@ -58,46 +56,55 @@ function Like_Post() {
         like_button.classList.remove('na-heart1');
         like_button.classList.add('heartscale');
     }
+}
+
+function Like_Post() {
+    if($session.auth == false){
+        OpenJoin();
+        return;
+    }
+    likePostAnim();
     axios.get(host+'/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
         .then(response => {
             if(response.status != 200){
-                if(like_button.classList.contains("na-heart1")){
-                    var likes = parseInt(like_counter.innerHTML);
-                    var total = likes - 1;
-                    like_counter.innerHTML = total;
-                    like_button.classList.remove('na-heart');
-                    like_button.classList.add('na-heart1');
-                    like_button.classList.remove('heartscale');
-                }else if(like_button.classList.contains("na-heart")){
-                    var likes = parseInt(like_counter.innerHTML);
-                    var total = likes + 1;
-                    like_counter.innerHTML = total;
-                    like_button.classList.add('na-heart');
-                    like_button.classList.remove('na-heart1');
-                    like_button.classList.add('heartscale');
-                }
+                likePostAnim();
             }
             if(response.data['operation'] == 'failed'){
-                if(like_button.classList.contains("na-heart1")){
-                    var likes = parseInt(like_counter.innerHTML);
-                    var total = likes - 1;
-                    like_counter.innerHTML = total;
-                    like_button.classList.remove('na-heart');
-                    like_button.classList.add('na-heart1');
-                    like_button.classList.remove('heartscale');
-                }else if(like_button.classList.contains("na-heart")){
-                    var likes = parseInt(like_counter.innerHTML);
-                    var total = likes + 1;
-                    like_counter.innerHTML = total;
-                    like_button.classList.add('na-heart');
-                    like_button.classList.remove('na-heart1');
-                    like_button.classList.add('heartscale');
-                }
+                likePostAnim();
             }
         })
 }
 
-async function Reply(){
+function likeReplyAnim(){
+    if(reply_likes[id].classList.contains("na-heart")){
+        reply_likes[id].classList.remove('na-heart');
+        reply_likes[id].classList.add('na-heart1');
+        reply_likes[id].classList.remove('heartscale');
+    }else if(reply_likes[id].classList.contains("na-heart1")){
+        reply_likes[id].classList.add('na-heart');
+        reply_likes[id].classList.remove('na-heart1');
+        reply_likes[id].classList.add('heartscale');
+    }
+}
+
+function Like_Reply(id) {
+    if($session.auth == false){
+        OpenJoin();
+        return;
+    }
+    likeReplyAnim();
+    axios.get(host+'/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+        .then(response => {
+            if(response.status != 200){
+                likeReplyAnim();
+            }
+            if(response.data['operation'] == 'failed'){
+                likeReplyAnim();
+            }
+        })
+}
+
+async function Reply(type){
     if($session.auth == false){
         OpenJoin();
         return;
@@ -113,9 +120,17 @@ async function Reply(){
     }
     let markdown = marked(editor.value());
     let reply;
-    let json = await axios.post(host+'/api/newreply', { content: markdown, token: $session.token, post_id: article.id }).then((response) =>{
+    let payload;
+    if (type == 'post'){
+        payload = {content: markdown, token: $session.token, post_id: article.id, type: 'post'};
+        
+    }else{
+        payload = { content: markdown, token: $session.token, post_id: article.id, type: 'reply', reply_id: reply_id };
+    }
+    let json = await axios.post(host+'/api/newreply',  payload).then((response) =>{
         return response;
-    })
+    });
+    
     let data = await json;
     if (data.status != 200){
         //alert
@@ -134,7 +149,7 @@ async function Reply(){
     editor.value("");
 }
 
-function Comment(){
+function Comment(_reply_id,reply_author){
     if($session.auth == false){
         OpenJoin();
         return;
@@ -152,6 +167,10 @@ function Comment(){
     }
     if(isMobile === false){
         editor.codemirror.focus()
+    }
+    if (_reply_id != null){
+        reply_id = _reply_id;
+        editor.value("@"+reply_author);
     }
     
 }
@@ -211,11 +230,14 @@ async function C_Edit_Reply(){
             return;
         }
 
+        var data = response.data['reply'];
+
         let replies = article.replies;
         replies.forEach(reply => {
             if(reply.id == editing_id.id){
-                reply.text = marked(editor.value());
-                reply.mentions.forEach(mention => {
+                reply.text_e = data['content'];
+                reply.text = data['content'];
+                data['mentions'].forEach(mention => {
                     reply.text = String(reply.text).replace("@"+mention, '<a href="/user/'+mention+'">@'+mention+'</a>');
                 });
             }
@@ -359,8 +381,15 @@ onMount(async function(){
                     <div class="post-reply" style="margin-top:3%;">
                         <textarea class="editor" id="editor" style="margin-bottom:1%;" minlength="0"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                         <div style="display:flex;">
+                        {#if reply_id != -1}
+                            <button class="reply-button" on:click={()=>{reply_id=-1,editor.value("");}}>Cancel Reply</button>
+                        {/if}
                         {#if editing == false}
-                        <button class="reply-button" on:click={Reply} style="margin-inline-start:auto;">Post Reply</button>
+                            {#if reply_id != -1}
+                            <button class="reply-button" on:click={()=>{Reply('reply')}} style="margin-inline-start:auto;">Post Reply</button>
+                            {:else}
+                            <button class="reply-button" on:click={()=>{Reply('post')}} style="margin-inline-start:auto;">Post Reply</button>
+                            {/if}
                         {:else}
                         <button class="reply-button" on:click={Cancel_Reply}>Cancel Edit</button>
                         <button class="reply-button" on:click={C_Edit_Reply} style="margin-inline-start:auto;">Edit Reply</button>
@@ -372,7 +401,7 @@ onMount(async function(){
                     text-align: center;
                     margin-top: 1rem;">
                         <div class="card-body">
-                            <p><i class="fal fa-lock"></i> Post closed by {article.closed_by} on {article.closed_on}</p>
+                            <p><i class="na-lock"></i> Post closed by {article.closed_by} on {article.closed_on}</p>
                         </div>
                     </div>
                     {/if}
@@ -401,6 +430,15 @@ onMount(async function(){
 
         <br>
         <div class="info" style="display: flex">
+            <div class="user-actions">
+                <span style="cursor: pointer;margin-right:0.5rem;vertical-align: sub;" on:click|preventDefault={() => {Like_Reply(reply.id)}} bind:this={reply_likes[reply.id]}><i id="heart"
+                        class="na-heart"></i>
+                    <span>Like</span></span>
+                <span style="cursor: pointer;vertical-align: sub;" on:click|preventDefault={() => {Comment(reply.id,reply.author.name)}}><i id="reply"
+                        class="na-comment"></i>
+                    <span>Reply</span>
+                </span>
+            </div>
             <div  style="margin-inline-start: auto;display:flex;">
                 {#if $session.auth}
                 <div class="reply-actions">
@@ -412,7 +450,6 @@ onMount(async function(){
                 {/if}
                 </div>
                 {/if}
-                
             </div>
             
         </div>

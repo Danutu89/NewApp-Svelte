@@ -177,7 +177,7 @@ pre code {
 	margin: 0;
 	padding: 1.5rem;
 	display: block;
-	margin: 0rem -0.5rem;
+	margin: 0rem -0.8rem;
 }
 
 .reply p img {
@@ -194,7 +194,7 @@ pre code {
 	margin: 0;
 	padding: 1.5rem;
 	display: block;
-	margin: 0rem -0.5rem;
+	margin: 0rem -0.8rem;
 }
 
 pre.ql-syntax {
@@ -1025,7 +1025,7 @@ content .article .reply {
 	background-color: var(--background);
 	border-radius: var(--border-radius);
 	border: var(--border);
-	padding: 0.5rem;
+	padding: 0.8rem;
 	margin-bottom: 0.2rem;
 	color: var(--color);
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
@@ -1054,10 +1054,6 @@ content .article .post .user-actions .share_post .list .item:hover {
 	background-color: var(--hover);
 }
 
-content .article .reply .info .reply-actions {
-	margin-right: 0.5rem;
-}
-
 content .article .reply .info div .author {
 	color: var(--color);
 	background-color: var(--background-1);
@@ -1075,11 +1071,11 @@ content .article .reply .info .reply-actions button {
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
-	margin-block-start: 0.6rem;
 	cursor: pointer;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	width: 4rem;
 	transition: cubic-bezier(0,0,1,1) 100ms;
+	height: 100%;
 }
 
 content .article .reply .info .reply-actions .edit {
@@ -1215,7 +1211,8 @@ tag {
 }
 
 @media screen and (max-width: 1210px) {
-	content .content-post .user-actions {
+	content .content-post .user-actions,
+	content .reply .user-actions {
 		background: var(--background-1);
 		padding: 0.5rem;
 		border-radius: var(--border-radius);
@@ -1223,18 +1220,21 @@ tag {
 		display: flex;
 	}
 
-	content .content-post .user-actions span i {
+	content .content-post .user-actions span i,
+	content .reply .user-actions span i{
 		font-size: 1.2rem;
 		display: block;
 	}
 
-	content .content-post .user-actions span span {
+	content .content-post .user-actions span span,
+	content .reply .user-actions span span {
 		display: block;
 		width: auto;
 		margin-left: 0.3rem;
 	}
 
-	content .content-post .user-actions span {
+	content .content-post .user-actions span,
+	content .reply .user-actions span {
 		font-size: 0.8rem;
 		cursor: pointer;
 		width: max-content;
@@ -2712,11 +2712,13 @@ content .article .post .user-actions-info {
 	color: grey;
 }
 
-content .article .post .user-actions span i {
+content .article .post .user-actions span i,
+content .reply .user-actions span i {
 	display: inline-block
 }
 
-content .article .post .user-actions span i.heartscale {
+content .article .post .user-actions span i.heartscale,
+content .reply .user-actions span i.heartscale {
 	-webkit-animation: heart-beat .5s alternate forwards;
 	animation: heart-beat .5s alternate forwards;
 	stroke-width: 0px;
