@@ -27,8 +27,8 @@ function SavePost(id){
 {#if user}
 {#each articles as article}
     <div class="article-card" id="post_{article.id}" >
-    <div class="article-main">
-                <div class="article-author-image"><img class="profile_image"
+        <div class="article-main">
+            <div class="article-author-image"><img class="profile_image"
                 onerror="this.style.display='none'" loading="lazy" data="{article.author.avatar}" height="50px" width="50px" title="profile image" alt="{article.author.name}">
             </div>
             <div class="article-info">
@@ -52,9 +52,31 @@ function SavePost(id){
                     </span>
                     <button class="article-save" id="save-{article.id}" bind:this={save_button[article.id]} on:click={()=>SavePost(article.id)}>{#if $session.auth}{#if article.saved}Saved{:else}Save{/if}{:else}Save{/if}</button>
             </div>
+        </div>
+    </div>
+{:else}
+    <div class="article-card">
+        <div class="article-main">
+            <div class="article-author-image"></div>
+            <div class="article-info">
+                <div class="article-title"><h1 style="font-size: 1.5rem;
+                    font-weight: 400;
+                    margin: 0;">{article.title}</h1></div>
+                <div class="article-author"></div>
+                <div class="article-tags">
+                    
+                </div>
             </div>
-        </div> 
-	{/each}
+            </div>
+            <div class="article-footbar">
+            <div class="article-date"></div>
+            <div class="article-misc">
+                    <span class="article-readtime" style="font-size: 0.8rem;color: grey;margin-right: 0.4rem;">
+                    </span>
+            </div>
+        </div>
+    </div>
+{/each}
 {:else}
 <div class="articles">
     <div class="navigation-menu">

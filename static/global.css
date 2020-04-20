@@ -1539,10 +1539,6 @@ content .articles .navigation-menu a button:focus {
 		font-size: 1.5rem !important;
 	}
 
-	content .articles .navigation-menu {
-		margin-top: 53px;
-	}
-
 	.newapp-navbar .navigation {
 		display: none;
 	}
