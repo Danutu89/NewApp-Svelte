@@ -5,7 +5,7 @@ import { onMount } from 'svelte';
 import marked from 'marked';
 import { host } from '../modules/Options.js';
 import TurndownService from 'turndown';
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 const { session } = stores();
 
 export let article;
@@ -16,8 +16,7 @@ let turndown = TurndownService();
 let text_c = turndown.turndown(article.text);
 
 async function EditPost(){
-    let args = '?t=' + $session.token;
-    const res = await axios.post(host+'/api/post/edit/'+article.id+ args,{title: title_c,text: marked(editor.value()),id: article.id}).then(function (response) {
+    const res = await instance.post('/api/post/edit/'+article.id,{title: title_c,text: marked(editor.value()),id: article.id}).then(function (response) {
             if(response.status !=200){
                 //alert
                 return;
@@ -44,7 +43,7 @@ onMount(async function(){
     <div class="newpost-form">
         <div class="header">
             <input id="title" bind:this={title_s} bind:value={title_c} name="title" placeholder="Title" required="true" style="background: transparent !important;
-                font-size: 2rem;" type="text" value="">
+                font-size: 2rem;" type="text">
         </div>
         <br>
         <div class="body">

@@ -1,12 +1,12 @@
 <script>
 import { onMount } from 'svelte';
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 import { stores } from '@sapper/app';
-import jwt from 'jsonwebtoken';
 import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 const cookies = Cookie();
 const { session, page } = stores();
+var jwt_decode = require('jwt-decode');
 
 let l_modal;
 let r_modal;
@@ -59,7 +59,7 @@ async function Login(){
   }
   
 
-  const res = await axios.get(host+'/api/login',{
+  const res = await instance.get('/api/login',{
     auth: {
       username: String(username).toLowerCase(),
       password: password
@@ -102,7 +102,7 @@ async function Login(){
   }
 
   try {
-    decoded = jwt.verify(check, "mRo48tU4ebP6jIshqaoNf2HAnesrCGHm");
+    decoded = jwt_decode(check);
   } catch (error) {
     console.log(error);
     decoded = false;

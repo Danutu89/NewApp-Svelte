@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 import { wrapper } from '../modules/Variables.js';
 import { onMount, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
@@ -10,6 +10,7 @@ const wrapper_ = wrapper;
 
 export let user;
 export let utilities;
+//export let loaded;
 let tag_button = [];
 let isMobile;
 
@@ -29,7 +30,7 @@ function Follow_Tag(tag_) {
         OpenJoin();
         return;
     }
-    axios.get(host+'/api/follow-tag/' + tag_ + '?t=' + $session.token, { progress: false })
+    instance.get('/api/follow-tag/' + tag_, { progress: false })
         .then(function (response){
             var x = tag_button[tag_];
             tag_button[tag_] = x;

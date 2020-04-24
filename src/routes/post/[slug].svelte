@@ -1,15 +1,10 @@
 <script context="module">
-    import axios from 'axios';
-    import { host } from '../../modules/Options.js';
+    import { instance } from '../../modules/Requests.js';
     export async function preload(page, session){
-        let args = '';
-        if (session.token){
-            args = '?t=' + session.token;
-        }
         let temp = (page.params.slug).toString().split("-");
         let id = temp[temp.length-1];
         try {
-            const res = await axios.get(host+'/api/post/'+id+ args).then(function (response) {
+            const res = await instance.get('/api/post/'+id).then(function (response) {
                 return response.data;
             });
             const json = await res;

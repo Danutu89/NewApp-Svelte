@@ -1,3 +1,3 @@
-import io from 'socket.io-client';
+const socketio = require('socket.io-client')
 
-export const socketio = io.connect("https://newapp.nl/",{transports: ['websocket','polling']});
+export const socket = socketio.connect("https://newapp.nl/",{transports: ['websocket','polling']});

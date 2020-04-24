@@ -6,11 +6,10 @@ import { stores, goto } from '@sapper/app';
 import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
-import axios from 'axios';
-import jwt from 'jsonwebtoken';
-import {socketio} from '../modules/SocketIO.js';
+import {instance} from '../modules/Requests.js';
 const cookies = Cookie();
 const { session, page } = stores();
+var jwt_decode = require('jwt-decode');
 
 let l_modal, r_modal, j_modal,l_modal_in, r_modal_in, j_modal_in, user = null, user_center = null, user_image = null, overflow = null, search = "";
 var menu_open = false;
@@ -30,9 +29,9 @@ $: if(admin){
 
 function LogOut(){
   if($session.auth == true){
-      socketio.emit('logout', {
+      /*socketio.emit('logout', {
 				data: $session.token
-			});	
+			});*/	
       cookies.remove("token");
       location.reload();
   }
@@ -101,7 +100,7 @@ function onClickDocument(e){
 }
 
 async function fetchNotifications(){
-    var not = await axios.get(host+'/api/notifications?t='+$session.token+'&ex=false', { pregress: false }).then((response)=>{
+    var not = await instance.get('/api/notifications?ex=false', { pregress: false }).then((response)=>{
       return response.data;
     });                      
     notifications = await not;  
@@ -174,7 +173,15 @@ function CloseMenu(){
 }
 
 function ToggleTheme(){
+  var decoded;
   var token_d = $session;
+  try{
+    //instance.get('/api/settheme')
+    session.set(token_d);
+    cookies.set("token", decoded, {maxAge:60 * 60 * 24 * 30, path: '/'});
+  }catch{
+    //alert
+  }
   if(toggle.classList.contains("active") === true){
     token_d.theme = 'Light';
     toggle.classList.remove("active");
@@ -182,10 +189,7 @@ function ToggleTheme(){
     token_d.theme = 'Dark';
     toggle.classList.add("active");
   }
-  session.set(token_d);
-  
 }
-
 </script>
 
 <nav class="newapp-navbar" id="navbar">

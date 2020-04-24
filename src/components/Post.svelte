@@ -5,7 +5,7 @@ export let article;
 import { onMount, beforeUpdate } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { host } from '../modules/Options.js';
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 import TurndownService from 'turndown';
 import marked from 'marked';
 import { stores } from '@sapper/app';
@@ -64,7 +64,7 @@ function Like_Post() {
         return;
     }
     likePostAnim();
-    axios.get(host+'/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+    instance.get('/api/like-post/' + article.id, {progress: false})
         .then(response => {
             if(response.status != 200){
                 likePostAnim();
@@ -93,7 +93,7 @@ function Like_Reply(id) {
         return;
     }
     likeReplyAnim();
-    axios.get(host+'/api/like-post/' + article.id +'?t=' + $session.token, {progress: false})
+    instance.get('/api/like-post/' + article.id, {progress: false})
         .then(response => {
             if(response.status != 200){
                 likeReplyAnim();
@@ -127,7 +127,7 @@ async function Reply(type){
     }else{
         payload = { content: markdown, token: $session.token, post_id: article.id, type: 'reply', reply_id: reply_id };
     }
-    let json = await axios.post(host+'/api/newreply',  payload).then((response) =>{
+    let json = await instance.post('/api/newreply',  payload).then((response) =>{
         return response;
     });
     
@@ -179,8 +179,7 @@ async function Delete_Reply(id){
     if($session.auth == false){
         return;
     }
-    let args = "?t="+$session.token+"&id="+id;
-    const not = await axios.get(host+"/api/reply/delete"+args).then(response =>{
+    const not = await instance.get("/api/reply/delete?id="+id).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -218,8 +217,7 @@ async function C_Edit_Reply(){
     if($session.auth == false && $session.id != editing_id.author.id || $session.permissions.edit_reply_permission == false){
         return;
     }
-    let args = "?t="+$session.token+"&id="+editing_id.id;
-    const resp = await axios.post(host+"/api/reply/edit",{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
+    const resp = await instance.post("/api/reply/edit?id="+editing_id.id,{content: marked(editor.value()), r_id: editing_id.id, token: $session.token}).then(response =>{
         if(response.status != 200){
             //alert
             return;
@@ -252,36 +250,7 @@ async function C_Edit_Reply(){
     
 }
 
-async function CheckNotification(id){
-    if($session.auth == false){
-        return;
-    }
-    let args = "?t="+$session.token+"&not_id="+id;
-    const not = await axios.get(host+"/api/notifications/check"+args).then(response =>{
-        if(response.status != 200){
-            //alert
-            return;
-        }
-
-        if(response.data['operation'] != "success"){
-            //alert
-            return;
-        }
-
-        return;
-    })
-}
-
-beforeUpdate(async function(){
-    if($page.query.notification_id){
-        CheckNotification($page.query.notification_id);
-    }
-})
-
 onMount(async function(){
-    if($page.query.notification_id){
-        CheckNotification($page.query.notification_id);
-    }
     var ua = navigator.userAgent;
     if (ua.includes('wv') && $session.auth == false) {
         OpenJoin();

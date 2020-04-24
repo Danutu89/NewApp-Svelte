@@ -2,7 +2,7 @@ import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
-import jwt from 'jsonwebtoken';
+var jwt_decode = require('jwt-decode');
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
@@ -14,7 +14,7 @@ polka() // You can also use Express
 		async (req, res, next) => {
 			const cookies = require('cookie-universal')(req, res);
 			if(cookies.get('token')){
-				var decoded = jwt.verify(cookies.get('token'), "mRo48tU4ebP6jIshqaoNf2HAnesrCGHm");
+				var decoded = jwt_decode(cookies.get('token'));
 				req.name = decoded.name;
 				req.avatar = decoded.avatar;
 				req.id = decoded.id;

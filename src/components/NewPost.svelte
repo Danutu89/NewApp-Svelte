@@ -1,7 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import marked from 'marked';
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 import { host } from '../modules/Options.js';
 import { stores, goto } from '@sapper/app';
 const { session } = stores();
@@ -45,7 +45,7 @@ async function NewPost(){
     let pyaload = {content: markdown, title: title, tags: tags, token: $session.token, image: image}
     formdata.append('data', JSON.stringify(pyaload));
 
-    let json = await axios.post(host+'/api/newpost', formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) =>{
+    let json = await instance.post(host+'/api/newpost', formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) =>{
         return response.data;
     })
     let data = await json;
@@ -77,7 +77,7 @@ onMount(async function(){
             <input id="title" bind:this={title_s} bind:value={title} name="title" placeholder="Title" required="true" style="background: transparent !important;
                 font-size: 2rem;" type="text">
             <div style="display: flex;">
-            <input id="tag" bind:value={tags} bind:this={tags_s} name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text" value="">
+            <input id="tag" bind:value={tags} bind:this={tags_s} name="tag" placeholder="Separate tags with commas" required="true" style="border: var(--border);background-color:transparent;" type="text">
             <label for="file-upload" class="file-upload">
                 <i class="na-image" style="vertical-align: sub;"></i>
             </label>

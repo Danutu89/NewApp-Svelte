@@ -1,15 +1,8 @@
 <script context="module">
-    import axios from 'axios';
-    import { host } from '../../modules/Options.js';
+    import { instance } from '../../modules/Requests.js';
     export async function preload(page,session){
-        let args = '';
-        if (session.token){
-            args = '?t=' + session.token + '&tag=' + page.params.slug;
-        }else{
-            args = '?tag=' + page.params.slug; 
-        }
         try {
-            const res = await axios.get(host+'/api/home'+ args).then(function (response) {
+            const res = await instance.get('/api/home?tag=' + page.params.slug).then(function (response) {
                 return response.data;
             });
             const json = await res;
@@ -69,7 +62,7 @@ beforeUpdate(()=>{
 
 async function LoadMore(){
     page++;
-    await axios.get('https://newapp.nl/api/home/'+ page +'?tag=' + page.params.slug, { progress: false }).then(function (response) {
+    await axios.get('/api/home/'+ page +'?tag=' + page.params.slug, { progress: false }).then(function (response) {
         articles = [...articles , ...response.data['posts']];
         articles = articles;
         if (response.data['hasnext']){

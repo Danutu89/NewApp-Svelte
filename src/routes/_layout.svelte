@@ -3,14 +3,22 @@ import {onMount, beforeUpdate} from 'svelte'
 import Nav from '../components/Nav.svelte';
 import { loadProgressBar } from 'axios-progress-bar';
 import { stores } from '@sapper/app';
-const { session } = stores();
+const { page, session } = stores();
 import Analytics from '../modules/Analytics.js';
-import {socketio} from '../modules/SocketIO';
 import SideBarAdmin from '../components/SideBarAdmin.svelte';
 export let segment;
+import {host} from '../modules/Options.js';
+import {instance} from '../modules/Requests.js';
+
 
 let admin = false;
 let analytics = new Analytics;
+
+if ($session.auth){
+	instance.defaults.headers.common['Token'] = $session.token;
+}else{
+	instance.defaults.headers.common['Token'] = '';
+}
 
 var path = segment;
 try {
@@ -26,24 +34,45 @@ try {
 function lazyLoad(){
 	var img = document.querySelectorAll("img");
 	img.forEach(image => {
-		image.setAttribute('src', image.getAttribute("data"));
+		var data = image.getAttribute("data");
+		var data_m = String(data).replace("https://newapp.nl", host);
+		image.setAttribute('src', data_m);
 	});
 }
 
+async function CheckNotification(id){
+    if($session.auth == false){
+        return;
+    }
+    const not = await instance.get(+"/api/notifications/check?not_id="+id).then(response =>{
+        if(response.status != 200){
+            //alert
+            return;
+        }
+
+        if(response.data['operation'] != "success"){
+            //alert
+            return;
+        }
+
+        return;
+    })
+}
+
+beforeUpdate(async function(){
+    if($page.query.notification_id){
+        CheckNotification($page.query.notification_id);
+    }
+})
+
 onMount(async function() {
-	loadProgressBar();
+	if($page.query.notification_id){
+        CheckNotification($page.query.notification_id);
+    }
+	loadProgressBar('', instance);
 	if($session.auth){
-		document.querySelector("html").setAttribute("theme", $session.theme);
-		socketio.on('connect', function () {
-			socketio.emit('access', {
-				data: $session.token
-			});												
-		});
-		socketio.on('logout', function () {
-			socketio.emit('exit', {
-				data: $session.token
-			});												
-		});					
+		
+		document.querySelector("html").setAttribute("theme", $session.theme);			
 		if (window.Notification && Notification.permission !== "granted") {
 			Notification.requestPermission(function (status) {
 			if (Notification.permission !== status) {
@@ -61,6 +90,12 @@ onMount(async function() {
 				navigator.serviceWorker.controller.postMessage($session.token);
 			}
 		}
+	}else{
+		if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+			document.querySelector("html").setAttribute("theme", "Dark");
+		}else{
+			document.querySelector("html").setAttribute("theme", "Light");
+		}
 	}
 	lazyLoad();
 	document.addEventListener('DOMSubtreeModified', lazyLoad);
@@ -75,6 +110,7 @@ onMount(async function() {
 		url = location.href;
 		});
 	}, true);
+	
 });
 
 beforeUpdate(async function(){
@@ -84,7 +120,15 @@ beforeUpdate(async function(){
 	}else{
 		admin = false;
 	}
-	document.querySelector("html").setAttribute("theme", $session.theme);
+	if($session.auth)
+		document.querySelector("html").setAttribute("theme", $session.theme);
+	else{
+		if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+			document.querySelector("html").setAttribute("theme", "Dark");
+		}else{
+			document.querySelector("html").setAttribute("theme", "Light");
+		}
+	}
 });
 </script>
 

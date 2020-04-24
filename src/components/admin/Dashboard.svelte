@@ -1,5 +1,5 @@
 <script>
-import Chart from 'chart.js';
+/*import Chart from 'chart.js';
 import { onMount } from 'svelte';
 
 export let json;
@@ -119,8 +119,9 @@ onMount(async function () {
         }
     });
 })
-
+*/
 </script>
+<!--
 <div class="dashboard">
     <div>
         <div class="main-data">
@@ -216,3 +217,4 @@ onMount(async function () {
         </div>
     </div>
 </div>
+-->

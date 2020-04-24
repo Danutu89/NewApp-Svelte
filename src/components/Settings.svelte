@@ -1,12 +1,12 @@
 <script>
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 import { onMount } from 'svelte';
 import { stores, goto } from '@sapper/app';
-import jwt from 'jsonwebtoken';
 import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 const cookies = Cookie();
 const {session} = stores();
+var jwt_decode = require('jwt-decode');
 
 export let user;
 
@@ -85,7 +85,7 @@ async function SaveSettings(){
   }
   formdata.append('data', JSON.stringify(payload));
 
-  const resp = await axios.post(host+'/api/user/settings?t='+token, formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response)=>{
+  const resp = await instance.post('/api/user/settings', formdata, {headers: {'Content-Type': 'multipart/form-data'}}).then((response)=>{
     return response;
   })
 
@@ -95,7 +95,7 @@ async function SaveSettings(){
   }
 
   try {
-    decoded = jwt.verify(resp.data['token'], "mRo48tU4ebP6jIshqaoNf2HAnesrCGHm");
+    decoded = jwt_decode(resp.data['token']);
   } catch (error) {
     decoded = false;
   }
@@ -178,25 +178,25 @@ function showEdit(input){
       <div class="edit-info" id="main" bind:this={editInfo}>
         <div class="col-1" style="text-align:left;">
           <div style="display: flex;margin-bottom:1rem;">
-              <input id="email" name="email" placeholder="Email" type="text" style="display: none;margin-bottom:0;margin-right:0.5rem;" bind:value={s_email} value="{user.email}">
+              <input id="email" name="email" placeholder="Email" type="text" style="display: none;margin-bottom:0;margin-right:0.5rem;" bind:value={s_email}>
               <p style="font-weight: 500;margin: 0.41em 0;" id="email_text">Email: {user.email}</p>
               <span class="modify-button na-pencil-alt" on:click={()=>showEdit('email')}></span>
           </div>
 
           <div style="display: flex;margin-bottom:1rem;">
-              <input id="realname" name="realname" placeholder="Real Name" style="display: none;margin-bottom:0;margin-right:0.5rem;" type="text"  bind:value={s_real_name} value="{user.real_name}">
+              <input id="realname" name="realname" placeholder="Real Name" style="display: none;margin-bottom:0;margin-right:0.5rem;" type="text"  bind:value={s_real_name}>
               <p style="font-weight: 500;margin: 0.41em 0;" id="realname_text">Real Name: {user.real_name}</p>
               <span class="modify-button na-pencil-alt" on:click={()=>showEdit('realname')}></span>
           </div>
 
           <div style="display: flex;margin-bottom:1rem;">
-              <input id="bio" name="bio" placeholder="Bio" type="text" style="display: none;margin-bottom:0;margin-right:0.5rem;" bind:value={s_bio} value="{user.bio}">
+              <input id="bio" name="bio" placeholder="Bio" type="text" style="display: none;margin-bottom:0;margin-right:0.5rem;" bind:value={s_bio}>
               <p style="font-weight: 500;margin: 0.41em 0;" id="bio_text">Bio: {user.bio}</p>
               <span class="modify-button na-pencil-alt" on:click={()=>showEdit('bio')}></span>
           </div>
 
           <div style="display: flex;margin-bottom:1rem;">
-              <input id="profession" name="profession" placeholder="Profession" style="display: none;margin-bottom:0;margin-right:0.5rem;" type="text" bind:value={s_profession} value="{user.profession}">
+              <input id="profession" name="profession" placeholder="Profession" style="display: none;margin-bottom:0;margin-right:0.5rem;" type="text" bind:value={s_profession}>
               <p style="font-weight: 500;margin: 0.41em 0;" id="profession_text">Profession: {user.profession}</p>
               <span class="modify-button na-pencil-alt" on:click={()=>showEdit('profession')}></span>
           </div>
@@ -240,16 +240,17 @@ function showEdit(input){
           <br>
           Avatar:
           <br>
-          <input type="file" name="avatarimg" id="avatarimg" value="">
+          <input type="file" name="avatarimg" id="avatarimg">
           <br>
           Cover:
           <br>
-          <input type="file" name="coverimg" id="coverimg" value="">
+          <input type="file" name="coverimg" id="coverimg">
         </div>
       </div>
       <div class="edit-misc" id="misc" bind:this={editMisc}>
           <div class="col-1" style="text-align:left;">
-          <input id="theme_mode" name="theme_mode" type="checkbox" bind:value={s_theme_mode} value="y"> Get theme from the system
+          
+          <input id="theme_mode" name="theme_mode" type="checkbox" bind:value={s_theme_mode} > Get theme from the system
           <br>
           Theme:
           <br>

@@ -1,14 +1,10 @@
 <script context="module">
-    import axios from 'axios';
-    import { host } from '../../modules/Options.js';
+    import { instance } from '../../modules/Requests.js';
     export async function preload(page,session){
-        let args = '';
-        if (session.token){
-            args = '?t=' + session.token;
-        }else{
+        if (session.token===false){
             this.redirect(302, '/');
         }
-        const res = await axios.get(host+'/api/user/settings' + args).then(function (response) {
+        const res = await instance.get('/api/user/settings').then(function (response) {
                 return response.data;
             });
         const json = await res;

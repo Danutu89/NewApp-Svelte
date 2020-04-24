@@ -7,6 +7,7 @@ import { stores, goto } from '@sapper/app';
 const { session } = stores();
 
 export let trending;
+export let loaded;
 export let page;
 export let author;
 export let user;
@@ -77,7 +78,8 @@ function Edit_Post(){
             <div class="widget-title">Trending Posts 🔥</div>
         </div>
         <div class="widget-list">
-        {#each trending as trend}
+        {#if loaded}
+            {#each trending as trend}
             <div class="widget-post">
                 <div class="post-header">
                     <img style="border-radius: 20px;margin-top: 0.25rem;" onerror="this.style.display='none'" data="{trend.author.avatar}" height="40px" width="40px" alt="{trend.author.name}">
@@ -99,7 +101,23 @@ function Edit_Post(){
                     </div>
                 </div>
             </div>
-        {/each}
+            {/each}
+        {:else}
+            {#each Array(6) as x}
+                <div class="widget-post">
+                <div class="post-header">
+                    <div class="loading" style="height: 40px;width: 40px;border-radius: 40px;"></div>
+                        
+                    </div>
+                <div class="post-footer" style="margin-left: 2%;">
+                    <div class="post-title loading" style="width: 12rem;height: 1.1rem;margin-bottom: 0.5rem;">
+                    </div>
+                    <div class="post-tags loading" style="width: 4rem;height: 0.8rem;">
+                    </div>
+                </div>
+            </div>
+            {/each}
+        {/if}
         </div>
     </div>
     

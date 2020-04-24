@@ -1,13 +1,8 @@
 <script context="module">
-    import axios from 'axios';
-    import { host } from '../../modules/Options.js';
+    import { instance } from '../../modules/Requests.js';
     export async function preload(page,session){
-        let args = '';
-        if (session.token){
-            args = '?t=' + session.token;
-        }
         try {
-            const res = await axios.get(host+'/api/user/'+page.params.slug + args).then(function (response) {
+            const res = await instance.get('/api/user/'+page.params.slug).then(function (response) {
                 return response.data;
             });
             const json = await res;

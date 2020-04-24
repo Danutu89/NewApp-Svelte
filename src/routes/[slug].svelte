@@ -1,18 +1,24 @@
 <script context="module">
-    import axios from 'axios';
-    import { host } from '../modules/Options.js';
+    import { instance } from '../modules/Requests.js';
+    import { writable } from 'svelte/store';
+    const p = writable(false);
     export async function preload(page,session){
-        let args = '';
-        if (session.token){
-            args = '?t=' + session.token + '&mode=questions';
+        p.set(false);
+        if (/questions|discuss|tutorials|recent|saved/.test(page.params.slug)){
+            var mode = page.params.slug;
+            if(mode === 'saved' && session.auth === false){
+                this.redirect(302,'/');
+            }
         }else{
-            args = '?mode=questions';
+            this.error(404);
         }
-        const res = await axios.get(host+'/api/home' + args).then(function (response) {
-                return response.data;
-            });
+        const res = await instance.get('/api/home?mode='+mode).then(function (response) {
+            p.set(true);
+            return response.data;
+        });
         const json = await res;
-        return { saved: json };
+        json['mode'] = mode;
+        return { json: json };
     }
 </script>
 <script>
@@ -21,22 +27,24 @@ import SideBarRight from '../components/SideBarRight.svelte';
 import Posts from '../components/Posts.svelte';
 import { onMount, beforeUpdate, onDestroy  } from "svelte";
 import { stores } from '@sapper/app';
-const { session } = stores();
+const { page, session } = stores();
 
-export let saved;
-let page = 1;
+export let json;
+let page_ = 1;
 let isLoadMore = true, CanLoad = false;
 let articles;
 let trending;
 let utilities;
 let user;
 let document_;
-trending = saved['trending'];
-articles = saved['posts'];
-if($session.auth){
-    user = saved['user'];
-}
-utilities = saved['utilities'];
+
+    trending = json['trending'];
+    articles = json['posts'];
+    if($session.auth){
+        user = json['user'];
+    }
+    utilities = json['utilities'];
+
 
 onMount(async function(){
     document_ = document;
@@ -49,14 +57,8 @@ onDestroy(function(){
 })
 
 async function LoadMore(){
-    let args = '';
-    if (session.token){
-        args = '?t=' + session.token + '&mode=questions';
-    }else{
-        args = '?mode=questions';
-    }
-    page++;
-    await axios.get(host+'/api/home/'+ page +args, { progress: false }).then(function (response) {
+    page_++;
+    await instance.get('/api/home/'+ page_ + '?mode='+json['mode'], { progress: false }).then(function (response) {
         articles = [...articles , ...response.data['posts']];
         articles = articles;
         if (response.data['hasnext']){
@@ -67,6 +69,15 @@ async function LoadMore(){
         }
     });
 }
+
+beforeUpdate(()=>{
+    trending = json['trending'];
+    articles = json['posts'];
+    if($session.auth){
+        user = json['user'];
+    }
+    utilities = json['utilities'];
+})
 
 function onScroll(e) {
     const offset = document.documentElement.scrollHeight-document.documentElement.clientHeight-document.documentElement.scrollTop;
@@ -86,8 +97,8 @@ function onScroll(e) {
 <title>NewApp - Where Developers Learn, Share, & Code</title>
 </svelte:head>
 
-<SideBarLeft user={user} utilities={utilities}/>
+<SideBarLeft user={user} utilities={utilities} loaded={$p}/>
 
-<Posts onscroll={onScroll} articles={articles}></Posts>
+<Posts onscroll={onScroll} articles={articles} loaded={$p}></Posts>
 
-<SideBarRight trending={trending} page={"index"}/>
+<SideBarRight trending={trending} page={"index"} loaded={$p}/>

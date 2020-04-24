@@ -1,4 +1,4 @@
-import axios from "axios";
+import {instance} from '../modules/Requests.js';
 import { host } from '../modules/Options.js';
 
 export default class Analytics{
@@ -25,6 +25,6 @@ export default class Analytics{
 
     sendView(){
         let path = location.pathname;
-        axios.post(host+'/api/analytics/view', {path: path,external: this.external});
+        instance.post(host+'/api/analytics/view', {path: path,external: this.external});
     }
 }
