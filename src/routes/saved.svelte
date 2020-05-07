@@ -3,7 +3,10 @@
     import { isSSR } from '../modules/Preloads.js';
     export async function preload(page,session){
         let isSSRPage;
-        const res = instance.get('/api/home?search=' + page.query.q);
+        if(session.auth === false){
+            this.redirect(302,'/');
+        }
+        const res = instance.get('/api/home?mode=saved');
         isSSR.subscribe(value => {
             isSSRPage = value;
         })();
@@ -19,7 +22,6 @@
         return {data: json};
     }
 </script>
-
 <script>
 import Home from '../components/Pages/Home.svelte'
 import { onMount, onDestroy  } from "svelte";
@@ -28,8 +30,9 @@ const { page, session } = stores();
 
 export let data;
 </script>
+
 <svelte:head>
-<title>Search - {$page.query.q}</title>
+<title>NewApp - Saved</title>
 <meta name="description" content="NewApp the newest community for developers to learn, share​ ​their programming ​knowledge, and build their careers.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://newapp.nl/">
@@ -41,4 +44,4 @@ export let data;
 <meta name="twitter:image:src" content="https://newapp.nl/static/logo.jpg">
 </svelte:head>
 
-<Home data={data} mode={'search'}/>
+<Home data={data} mode={'saved'}/>

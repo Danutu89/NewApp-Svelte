@@ -26,6 +26,13 @@
 	<meta name="application-name" content="NewApp">
   	<meta name="apple-mobile-web-app-title" content="NewApp">
 	<noscript>You need to allow javascript</noscript>
+	<script>
+		window.onunload = function(){ window.scrollTo(0,0); }
+
+		if ('scrollRestoration' in history) {
+		  history.scrollRestoration = 'manual';
+		}
+	</script>
 	%sapper.styles%
 	%sapper.head%
 </head>

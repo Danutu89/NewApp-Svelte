@@ -2,7 +2,7 @@
 <script>
 
 export let article;
-import { onMount, beforeUpdate } from 'svelte';
+import { onMount, beforeUpdate, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { host } from '../modules/Options.js';
 import {instance} from '../modules/Requests.js';
@@ -18,19 +18,33 @@ let editor, editor_s;
 let isMobile;
 let turndown = TurndownService();
 let reply_id = -1;
+let options_list, share_btn, optionsBtn;
+
+let document_;
 
 let editing=false;
 let editing_id;
 
 let webview = false;
 
+let overflow;
+
 let dark_theme;
+
+let touchstartX = 0;
+let touchstartY = 0;
+let touchendX = 0;
+let touchendY = 0;
+let touchstartEl = null;
+
+let saveButton, copyButton;
 
 article.replies.forEach(reply => {
     reply.mentions.forEach(mention => {
         reply.text = String(reply.text).replace("@"+mention, '<a href="/user/'+mention+'">@'+mention+'</a>');
     });
 });
+
 
 var loadCss = function(cssPath){
     var cssLink = document.createElement('link');
@@ -45,16 +59,16 @@ function likePostAnim(){
         var likes = parseInt(like_counter.innerHTML);
         var total = likes - 1;
         like_counter.innerHTML = total;
-        like_button.classList.remove('na-heart');
-        like_button.classList.add('na-heart1');
-        like_button.classList.remove('heartscale');
+        like_button.classList.remove('na-heart1');
+        like_button.classList.add('na-heart');
+        like_button.classList.add('heartscale');
     }else if(like_button.classList.contains("na-heart")){
         var likes = parseInt(like_counter.innerHTML);
         var total = likes + 1;
         like_counter.innerHTML = total;
-        like_button.classList.add('na-heart');
-        like_button.classList.remove('na-heart1');
-        like_button.classList.add('heartscale');
+        like_button.classList.remove('na-heart');
+        like_button.classList.add('na-heart1');
+        like_button.classList.remove('heartscale');
     }
 }
 
@@ -81,8 +95,8 @@ function likeReplyAnim(){
         reply_likes[id].classList.add('na-heart1');
         reply_likes[id].classList.remove('heartscale');
     }else if(reply_likes[id].classList.contains("na-heart1")){
-        reply_likes[id].classList.add('na-heart');
         reply_likes[id].classList.remove('na-heart1');
+        reply_likes[id].classList.add('na-heart');
         reply_likes[id].classList.add('heartscale');
     }
 }
@@ -168,7 +182,7 @@ function Comment(_reply_id,reply_author){
     if(isMobile === false){
         editor.codemirror.focus()
     }
-    if (_reply_id != null){
+    if (_reply_id != -1){
         reply_id = _reply_id;
         editor.value("@"+reply_author);
     }
@@ -250,7 +264,94 @@ async function C_Edit_Reply(){
     
 }
 
+function onClickDocument(e){
+    if(!copyButton.contains(e.target)){
+        copyButton.innerHTML = copyButton.childNodes[0].outerHTML+' Copy Link';
+        copyButton.childNodes[0].classList.remove("scale-anim");
+    }
+    if(share_btn.contains(e.target)){
+        if(options_list.classList.contains("toggled")){
+            if(options_list.classList.contains("share")){
+                options_list.classList.remove("toggled");
+                options_list.classList.remove("share");
+            }else{
+                options_list.classList.add("share");
+            }
+            
+        }else{
+            options_list.classList.add("toggled");
+            options_list.classList.add("share");
+        }
+    }
+    else if(optionsBtn.contains(e.target)){
+        if(options_list.classList.contains("toggled")){
+            options_list.classList.remove("toggled");
+        }else{
+            options_list.classList.add("toggled");
+        }
+    }else if(!share_btn.contains(e.target) && !options_list.contains(e.target) && !optionsBtn.contains(e.target)){
+        options_list.classList.remove("toggled");
+        options_list.classList.remove("share");
+    }
+}
+
+function TouchStart(event){
+    touchstartX = event.changedTouches[0].screenX;
+    touchstartY = event.changedTouches[0].screenY;
+    touchstartEl = event.targetTouches[0].target;
+}
+
+function TouchEnd(event){
+    touchendX = event.changedTouches[0].screenX;
+    touchendY = event.changedTouches[0].screenY;
+    handleGesture(event);
+}
+
+function handleGesture(event){
+    var h = window.innerHeight;
+    if (touchstartY - 20 > touchendY && touchstartX - touchendX < 20 && touchendX - touchstartX < 20 && touchstartY != touchendY){
+        if(touchstartY - h > 20){
+            options_list.classList.add("toggled");
+        }
+    }
+    if (touchstartY + 20 < touchendY && touchstartX - touchendX < 20 && touchendX - touchstartX < 20 && touchstartY != touchendY){
+        if(options_list.contains(touchstartEl)){
+            options_list.classList.remove("toggled");
+        }
+    }
+
+}
+
+function savePost(){
+    if ($session.auth == false){
+        OpenJoin();
+        return;
+    }
+    instance.get('/api/save-post/' + article.id, { progress: false }).then(response=>{
+        if(response.data['operation'] == 'saved'){
+            saveButton.innerHTML = saveButton.childNodes[0].outerHTML+' Saved';
+            saveButton.childNodes[0].classList.add("scale-anim");
+        }else if(response.data['operation'] == 'deleted'){
+            saveButton.innerHTML = saveButton.childNodes[0].outerHTML+' Save';
+            saveButton.childNodes[0].classList.remove("scale-anim");
+        }
+        document.activeElement = null;
+    })
+
+
+}
+
+async function copyLink(){
+    if(!navigator.clipboard)
+        return;
+    await navigator.clipboard.writeText(location.href);
+    copyButton.innerHTML = copyButton.childNodes[0].outerHTML+' Copied';
+    copyButton.childNodes[0].classList.add("scale-anim");
+    document.activeElement = null;
+}
+
 onMount(async function(){
+    document_ = document;
     var ua = navigator.userAgent;
     if (ua.includes('wv') && $session.auth == false) {
         OpenJoin();
@@ -273,8 +374,20 @@ onMount(async function(){
         editor = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
     }
     loadCss("https://newappcdn.b-cdn.net/dark_code.css");
+    document.addEventListener('click', onClickDocument, {
+        capture: true
+    });
+    overflow = document.querySelector("overflow");
+    document.addEventListener('touchstart', TouchStart, false);
+    document.addEventListener('touchend', TouchEnd, false); 
 })
 
+onDestroy(()=>{
+    if(document_){
+        document_.removeEventListener('touchstart', TouchStart, false);
+        document_.removeEventListener('touchend', TouchEnd, false);
+    }
+});
 
 </script>
 
@@ -283,8 +396,8 @@ onMount(async function(){
     <div class="post">
         {#if article.thumbnail}
         <div class="thumbnail">
-            <img loading="lazy" data="/static/thumbnail_post/post_{article.id}.jpeg" onerror="this.style.display='none'" alt="" style='width: 100%;border-top-left-radius: 20px;
-            border-top-right-radius: 20px;'>
+            <img loading="lazy" data="/static/thumbnail_post/post_{article.id}.jpeg" onerror="this.style.display='none'" alt="" style='width: 100%;border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);'>
         </div>
         {/if}
         <div class="content-post" style="padding:0.8rem;">
@@ -327,27 +440,40 @@ onMount(async function(){
                             <span>Like</span></span>
                         {/if}
                         {#if article.closed == false}
-                        <span style="cursor: pointer;margin-right:0.5rem;" on:click|preventDefault={Comment}><i id="comment"
+                        <span style="cursor: pointer;margin-right:0.5rem;" on:click|preventDefault={()=>{Comment(-1)}}><i id="comment"
                                 class="na-comment"></i>
                             <span>Comment</span>
                         </span>
                         {/if}
-                        <span id="share" style="cursor: pointer;"><i class="na-share"></i> <span>Share</span></span>
-                        <div id="share-options" class="share_post">
-                            <div class="list">
-                                Share
-                                <hr>
-                                <div class="item"><i class="na-facebook-square"></i> Facebook</div>
-                                <div class="item"><i class="na-twitter"></i> Twitter</div>
-                                <div class="item"><i class="na-globe"></i> Hacker News</div>
+                        <span style="cursor: pointer;" bind:this={share_btn}><i class="na-share"></i> <span>Share</span></span>
+                        <div class="post-options" bind:this={options_list}>
+                            <div class="lists">
+                                <div class="list">
+                                    <div class="title">Options</div>
+                                    <hr>
+                                    <div class="item" on:click|preventDefault={()=>{options_list.classList.add("share")}}><i class="na-share"></i> Share</div>
+                                    <div class="item" on:click|preventDefault={savePost} bind:this={saveButton}><i class="na-inbox-in"></i> Save</div>
+                                    <div class="item" on:click|preventDefault={copyLink} bind:this={copyButton}><i class="na-edit"></i> Copy Link</div>
+                                </div>
+                                <div class="list" style="margin-left:1rem">
+                                    <div class="title"><i class="na-chevron-left" style="margin-right: 1rem;" on:click|preventDefault={()=>{options_list.classList.remove("share")}}></i>Share</div>
+                                    <hr>
+                                    <div class="item"><i class="na-facebook-square"></i> Facebook</div>
+                                    <div class="item"><i class="na-twitter"></i> Twitter</div>
+                                    <div class="item"><i class="na-globe"></i> Hacker News</div>
+                                </div>
                             </div>
                         </div>
+                        <span style="cursor: pointer;margin-right:0.5rem;" class="mobile-post-options" bind:this={optionsBtn}>
+                            <i class="na-cog"></i>
+                            <span>Options</span>
+                        </span>
                     </div>
                     <div class="user-actions-info">
                         <span><span id="hearts" bind:this={like_counter}>{article.likes}</span> Likes</span>
                     </div>
                     {#if article.closed == false}
-                    <div class="post-reply" style="margin-top:3%;">
+                    <div class="post-reply" style="margin-top:3%;display:none;">
                         <textarea class="editor" id="editor" style="margin-bottom:1%;" minlength="0"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                         <div style="display:flex;">
                         {#if reply_id != -1}

@@ -1,54 +1,42 @@
 <script context="module">
     import { instance } from '../../modules/Requests.js';
-    export async function preload(page, session){
+    import { isSSR } from '../../modules/Preloads.js';
+    export async function preload(page,session){
         let temp = (page.params.slug).toString().split("-");
         let id = temp[temp.length-1];
-        try {
-            const res = await instance.get('/api/post/'+id).then(function (response) {
-                return response.data;
-            });
-            const json = await res;
-            json['link'] = page.params.slug;
-            return { article: json };
-        } catch (error) {
+        let isSSRPage;
+        const res = instance.get('/api/post/'+id);
+        isSSR.subscribe(value => {
+            isSSRPage = value;
+        })();
+
+        if(!isSSRPage) {
+            return { data: res };
+        }
+
+        const resp = await res.then(function (response) {
+            return response;
+        });
+
+        if (resp.status == 404){
             return this.error(404, 'Not Found');
         }
+
+        const json = await resp.data;
         
         
+        return {data: json};
     }
 </script>
 
 <script>
-import Post from '../../components/Post.svelte';
-import SideBarRight from '../../components/SideBarRight.svelte';
-export let article;
+import Post from '../../components/Pages/Post.svelte';
+export let data;
 
 </script>
 
-<svelte:head>
-<title>{article.title} - NewApp</title>
-<meta name="description" content="{article.description}...">
-<meta property="og:type" content="website">
-<meta property="og:url" content="/post/{article.link}">
-<meta property="og:site_name" content="{article.title}">
-<meta name="twitter:title" content="{article.title}">
-{#if article.thumbnail}
-<meta property="og:image" itemprop="image primaryImageOfPage" content="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg">
-<meta name="twitter:image:src" content="https://newapp.nl/static/thumbnail_post/post_{article.id}.jpeg">
-{:else}
-<meta property="og:image" itemprop="image primaryImageOfPage" content="{article.author.avatar}">
-<meta name="twitter:image:src" content="{article.author.avatar}">
-{/if}
-<meta property="og:description" content="{article.description}...">
-<meta name="twitter:description" content="{article.description}...">
-<meta name="keywords" content="{article.keywords}newapp">
 
-<script async src="https://newappcdn.b-cdn.net/prettify.js"></script>
-</svelte:head>
-{#if article}
-<Post {article}/>
+<Post data={data}/>
 
-<SideBarRight author={article.author} user={article.user} article={article} page={"post"}/>
-{/if}
 
 

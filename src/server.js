@@ -1,4 +1,5 @@
 import sirv from 'sirv';
+import {instance} from './modules/Requests.js';
 import polka from 'polka';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
@@ -15,6 +16,7 @@ polka() // You can also use Express
 			const cookies = require('cookie-universal')(req, res);
 			if(cookies.get('token')){
 				var decoded = jwt_decode(cookies.get('token'));
+				instance.defaults.headers.common['Token']= cookies.get('token');
 				req.name = decoded.name;
 				req.avatar = decoded.avatar;
 				req.id = decoded.id;
@@ -25,6 +27,7 @@ polka() // You can also use Express
 				req.theme_mode = decoded.theme_mode;
 				req.auth = true;
 			}else{
+				instance.defaults.headers.common['Token']= '';
 				req.name = '';
 				req.avatar = '';
 				req.id = null,

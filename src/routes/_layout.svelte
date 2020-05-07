@@ -14,11 +14,7 @@ import {instance} from '../modules/Requests.js';
 let admin = false;
 let analytics = new Analytics;
 
-if ($session.auth){
-	instance.defaults.headers.common['Token'] = $session.token;
-}else{
-	instance.defaults.headers.common['Token'] = '';
-}
+
 
 var path = segment;
 try {
@@ -60,6 +56,11 @@ async function CheckNotification(id){
 }
 
 beforeUpdate(async function(){
+	if ($session.auth){
+		instance.defaults.headers.common['Token'] = $session.token;
+	}else{
+		instance.defaults.headers.common['Token'] = '';
+	}
     if($page.query.notification_id){
         CheckNotification($page.query.notification_id);
     }

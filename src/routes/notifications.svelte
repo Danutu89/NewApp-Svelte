@@ -1,14 +1,11 @@
 <script context="module">
-    import axios from 'axios';
+    import { instance } from '../modules/Requests.js';
     import { host } from '../modules/Options.js';
     export async function preload(page,session){
-        let args = '';
-        if (session.token){
-            args = '?t=' + session.token + '&ex=true';
-        }else{
+        if (session.auth == false){
             this.redirect(302, '/');
         }
-        const res = await axios.get(host+'/api/notifications' + args).then(function (response) {
+        const res = await instance.get('/api/notifications?ex=true').then(function (response) {
                 return response.data;
             });
         const json = await res;

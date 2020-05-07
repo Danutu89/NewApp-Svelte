@@ -1,13 +1,11 @@
 <script>
-import axios from 'axios';
+import {instance} from '../modules/Requests.js';
 import OpenJoin from '../modules/OpenJoin.js';
 import OpenRegister from '../modules/OpenRegister.js';
-import { host } from '../modules/Options.js';
 import { stores, goto } from '@sapper/app';
 const { session } = stores();
 
 export let trending;
-export let loaded;
 export let page;
 export let author;
 export let user;
@@ -19,7 +17,7 @@ function Follow_User(id){
         OpenJoin();
         return;
     }
-    axios.get(host+'/api/follow-user/' + id + '?t=' + $session.token, { progress: false }).then((response) => {
+    instance.get('/api/follow-user/' + id, { progress: false }).then((response) => {
         if (response.status != 200){
             //alert
             return;
@@ -38,7 +36,7 @@ function Delete_Post(id){
         OpenJoin();
         return;
     }
-    axios.get(host+'/api/post/delete/' + id + '?t=' + $session.token).then((response)=>{
+    instance.get('/api/post/delete/' + id).then((response)=>{
         if (response.status != 200){
             //alert
             return;
@@ -78,7 +76,7 @@ function Edit_Post(){
             <div class="widget-title">Trending Posts 🔥</div>
         </div>
         <div class="widget-list">
-        {#if loaded}
+        {#if trending}
             {#each trending as trend}
             <div class="widget-post">
                 <div class="post-header">

@@ -1032,8 +1032,12 @@ content .article .reply {
 	box-shadow: 5px 5px 11px 0px rgba(0, 0, 0, 0.2);
 }
 
-content .article .post .user-actions .share_post {
-	background-color: var(--background-1);
+content .article .post .user-actions .mobile-post-options {
+	display: none;
+}
+
+content .article .post .user-actions .post-options {
+	background-color: var(--secondary-background);
 	width: auto;
 	border-radius: var(--border-radius);
 	position: absolute;
@@ -1045,13 +1049,17 @@ content .article .post .user-actions .share_post {
 	padding: 0.4rem;
 }
 
-content .article .post .user-actions .share_post .list .item {
+content .article .post .user-actions .post-options.toggled {
+	display: block;
+}
+
+content .article .post .user-actions .post-options .list .item {
 	cursor: pointer;
 	padding: 0.5rem;
 	border-radius: var(--border-radius);
 }
 
-content .article .post .user-actions .share_post .list .item:hover {
+content .article .post .user-actions .post-options .list .item:hover {
 	background-color: var(--hover);
 }
 
@@ -1197,6 +1205,76 @@ tag {
 	.navbar-items {
 		justify-content: space-between;
 	}
+
+	.newapp-dropdown-content {
+		margin-top: 0.5rem !important;
+	}
+
+	content .article .post .user-actions .mobile-post-options{
+		display: flex;
+	}
+
+	content .article .post .user-actions .post-options {
+		background-color: var(--secondary-background);
+		width: auto;
+		position: fixed;
+		z-index: 3;
+		display: block;
+		padding: 0.4rem;
+		left: 0.8rem;
+		right: 0.8rem;
+		bottom: 0;
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+		border-top-left-radius: var(--border-radius);
+		border-top-right-radius: var(--border-radius);
+		-webkit-transform: translateY(190px);
+		transform: translateY(190px);
+		transition: transform 200ms linear;
+		overflow: hidden;
+		height: 190px;
+	}
+
+	content .article .post .user-actions .post-options .list {
+		
+		width: 50%;
+	}
+
+	content .article .post .user-actions .post-options .lists{
+		display: flex;
+		width: calc(100% * 2);
+		overflow: hidden;
+		-webkit-transform: translateX(0);
+		transform: translateX(0);
+		transition: transform 200ms linear;
+	}
+
+	content .article .post .user-actions .post-options.toggled {
+		-webkit-transform: translateY(0px);
+		transform: translateY(0px);
+		transition: transform 200ms linear;
+	}
+
+	content .article .post .user-actions .post-options.share .lists{
+		-webkit-transform: translateX(calc(((100% + 0.8rem)/2)*-1));
+		transform: translateX(calc(((100% + 0.8rem)/2)*-1));
+		transition: transform 200ms linear;
+
+	}
+
+	content .article .post .user-actions .post-options .list .title{
+		font-size: 1.3rem;
+		padding: 0.3rem;
+	}
+
+	content .article .post .user-actions .post-options .list .item {
+		font-size: 1.2rem;
+		padding: 0.6rem;
+	}
+
+	content .article .post .user-actions .post-options .list .item i{
+		display: inline-block;
+	}
 }
 
 @media screen and (min-width: 1120px) {
@@ -1272,25 +1350,66 @@ tag {
 	}
 }
 
-@keyframes placeHolderShimmer {
+@-webkit-keyframes placeHolderShimmer {
 	0% {
-		background-position: -468px 0
+		background-position: -268px 0
 	}
 
 	100% {
-		background-position: 468px 0
+		background-position: 268px 0
 	}
 }
 
-.loading {
-	animation-duration: 7.25s;
-	animation-fill-mode: forwards;
-	animation-iteration-count: infinite;
-	animation-name: placeHolderShimmer;
-	animation-timing-function: linear;
+@keyframes placeHolderShimmer {
+	0% {
+		background-position: -268px 0
+	}
+
+	100% {
+		background-position: 268px 0
+	}
+}
+
+
+.loading1 {
 	background: var(--secondary-background);
 	background: linear-gradient(to right, var(--secondary-background) 8%, var(--hover) 18%, var(--secondary-background) 33%);
 	border-radius: 4px;
+	animation: placeHolderShimmer 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading {
+	overflow: hidden;
+	border-radius: 5px;
+	-webkit-animation-duration: 1.5s;
+	animation-duration: 1.5s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-name: placeHolderShimmer;
+	animation-name: placeHolderShimmer;
+	-webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	background: linear-gradient(to right, rgba(255,255,255,0.1) 10%, rgba(0,0,0,0.05) 25%, rgba(255,255,255,0.1) 40%);
+	box-shadow: inset 0 0 0 200px rgba(0,0,0,0.025);
+	background-size: 550px 104px;
+	position: relative
+}
+/*.loading1::after {
+	display: block;
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform: translateX(-100%);
+	background: linear-gradient(90deg, transparent, var(--hover), transparent);
+	animation: loading 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}*/
+@keyframes loading {
+	100% {
+		transform: translateX(100%);
+   }
 }
 
 content .sidebar .widget .widget-list .widget-item form {
@@ -1500,7 +1619,7 @@ content .articles .navigation-menu a button:focus {
 		margin: -0.7rem -0.4rem 0rem -0.4rem;
 		top: 0;
 		position: fixed;	
-		margin-top: 42px;
+		margin-top: 52px;
 		padding: 0rem 0.5rem;
 		width: calc(100% - 1rem);
 	}
@@ -1538,10 +1657,6 @@ content .articles .navigation-menu a button:focus {
 	.newapp-dropdown>i[class*="na-"],
 	.navbar-item>a>i[class*="na-"] {
 		font-size: 1.5rem !important;
-	}
-
-	content .articles .navigation-menu {
-		margin-top: 53px;
 	}
 
 	.newapp-navbar .navigation {
@@ -2724,6 +2839,12 @@ content .reply .user-actions span i {
 
 content .article .post .user-actions span i.heartscale,
 content .reply .user-actions span i.heartscale {
+	-webkit-animation: heart-beat .5s alternate forwards;
+	animation: heart-beat .5s alternate forwards;
+	stroke-width: 0px;
+}
+
+.scale-anim {
 	-webkit-animation: heart-beat .5s alternate forwards;
 	animation: heart-beat .5s alternate forwards;
 	stroke-width: 0px;

@@ -33,6 +33,7 @@ function LogOut(){
 				data: $session.token
 			});*/	
       cookies.remove("token");
+      instance.defaults.headers.common['Token']= '';
       location.reload();
   }
 }
@@ -124,14 +125,16 @@ onMount(async function(){
   document.addEventListener('click', onClickDocument, {
     capture: true
   });
+  if ($session.auth)
+    fetchNotifications();
 
   var n_id = null;
-  if($session.auth){
+  /*if($session.auth){
     n_id = fetchNotificationsInterval();
   }else{
     if(n_id)
       window.clearInterval(n_id);
-  }
+  }*/
   if($session.theme == 'Dark'){
     toggle.classList.add('active');
   }

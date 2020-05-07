@@ -10,7 +10,6 @@ const wrapper_ = wrapper;
 
 export let user;
 export let utilities;
-//export let loaded;
 let tag_button = [];
 let isMobile;
 
@@ -98,8 +97,8 @@ onMount(async function(){
 
 onDestroy(function(){
     if(document_ && window_){
-        document.removeEventListener('touchstart', TouchStart, false);
-        document.removeEventListener('touchend', TouchEnd, false); 
+        document_.removeEventListener('touchstart', TouchStart, false);
+        document_.removeEventListener('touchend', TouchEnd, false); 
         window_.removeEventListener('resize', onScreenChange);
         try {
             wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));   
@@ -145,13 +144,12 @@ function handleGesture(event) {
 {#if $session.auth}
 <div class="user-card">
     <a href="/user/{$session.name}" style="display: flex;">
-    <div class="user-image" style="margin-bottom:0;">
+    <div class="user-image">
         <img class="profile_image" alt="" data="{$session.avatar}" onerror="this.style.display='none'" height="50px" width="50px" title="profile image">
     </div>
     <div class="user-info" style="margin-top: -0.2rem;">
-        <span>{$session.real_name}</span>
-        <br>
-        <span class="user-tag">@{$session.name}</span>
+        <div style="font-size:1.1rem;">{$session.real_name}</div>
+        <div class="user-tag" style="font-size: 0.7rem;">@{$session.name}</div>
     </div>
     </a>
 </div>
