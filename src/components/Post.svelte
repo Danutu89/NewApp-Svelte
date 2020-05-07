@@ -182,7 +182,7 @@ function Comment(_reply_id,reply_author){
     if(isMobile === false){
         editor.codemirror.focus()
     }
-    if (_reply_id != -1){
+    if (_reply_id != -1 && typeof(_reply_id) != "undefined"){
         reply_id = _reply_id;
         editor.value("@"+reply_author);
     }
@@ -285,7 +285,10 @@ function onClickDocument(e){
     }
     else if(optionsBtn.contains(e.target)){
         if(options_list.classList.contains("toggled")){
-            options_list.classList.remove("toggled");
+            if(options_list.classList.contains("share")){
+                options_list.classList.remove("share");
+            }else
+                options_list.classList.remove("toggled");
         }else{
             options_list.classList.add("toggled");
         }
@@ -349,6 +352,7 @@ async function copyLink(){
     copyButton.childNodes[0].classList.add("scale-anim");
     document.activeElement = null;
 }
+
 
 onMount(async function(){
     document_ = document;
@@ -476,11 +480,9 @@ onDestroy(()=>{
                     <div class="post-reply" style="margin-top:3%;display:none;">
                         <textarea class="editor" id="editor" style="margin-bottom:1%;" minlength="0"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                         <div style="display:flex;">
-                        {#if reply_id != -1}
-                            <button class="reply-button" on:click={()=>{reply_id=-1,editor.value("");}}>Cancel Reply</button>
-                        {/if}
                         {#if editing == false}
                             {#if reply_id != -1}
+                            <button class="reply-button" on:click={()=>{reply_id=-1,editor.value("");}}>Cancel Reply</button>
                             <button class="reply-button" on:click={()=>{Reply('reply')}} style="margin-inline-start:auto;">Post Reply</button>
                             {:else}
                             <button class="reply-button" on:click={()=>{Reply('post')}} style="margin-inline-start:auto;">Post Reply</button>

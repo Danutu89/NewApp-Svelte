@@ -6,10 +6,11 @@ import { stores } from '@sapper/app';
 const { page, session } = stores();
 import Analytics from '../modules/Analytics.js';
 import SideBarAdmin from '../components/SideBarAdmin.svelte';
+import Alert from '../components/Alert.svelte';
 export let segment;
 import {host} from '../modules/Options.js';
 import {instance} from '../modules/Requests.js';
-
+import { alert } from '../modules/Alert.js';
 
 let admin = false;
 let analytics = new Analytics;
@@ -18,7 +19,7 @@ let analytics = new Analytics;
 
 var path = segment;
 try {
-	if(path.includes('admin')){
+	if(path.includes('/admin/')){
 		admin = true;
 	}else{
 		admin = false;
@@ -155,6 +156,9 @@ beforeUpdate(async function(){
 	<SideBarAdmin/>
 	<slot></slot>
 </a-content>
+{/if}
 
+{#if $alert.active == true}
+<Alert/>
 {/if}
 
