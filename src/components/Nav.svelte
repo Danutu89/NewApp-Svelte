@@ -7,6 +7,8 @@ import { host } from '../modules/Options.js';
 import Cookie from 'cookie-universal';
 import Join from '../components/Join.svelte';
 import {instance} from '../modules/Requests.js';
+import { activateAlert } from '../modules/Alert.js';
+import {lPage} from '../modules/Preloads.js';
 const cookies = Cookie();
 const { session, page } = stores();
 var jwt_decode = require('jwt-decode');
@@ -39,6 +41,9 @@ function LogOut(){
 }
 
 function onClickDocument(e){
+  if(!user || !user_center || !user_image || !overflow || !notification_list || !notifications || !notifications_c || !notifications_center_c)
+    return;
+
   if($session.auth){
     if(!user_image.contains(e.target) && !user_center.contains(e.target)){
       if(notifications_c.contains(e.target)){
@@ -193,27 +198,49 @@ function ToggleTheme(){
     toggle.classList.add("active");
   }
 }
+
+function scrollToTop(){
+
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 8);
+  }
+}
+
+function goHome(){
+  if(window.scrollY == 0){
+    //reload posts;
+    if($page.path == '/' || $page.path == '/discuss' || $page.path == '/tutorials' || $page.path == '/questions' || $page.path == '/saved' || $page.path == '/search')
+      lPage.set({data: $lPage.data, refresh: true});
+    else
+      goto('/');
+  }else{
+    scrollToTop();
+  }
+}
 </script>
 
 <nav class="newapp-navbar" id="navbar">
-	<div class="{navbar_class}">
-      <div class="navbar-item">
-        <a href="/" class="navbar-logo"><img style="vertical-align: middle;" loading="lazy" data="/static/logo.svg"
-            width={l_image} alt="">
-      </div>
-      <div class="navbar-item navbar-search">
-        <input bind:value={search} type="text" name="q" placeholder="Search" id="search" on:keydown={handleKeydown}>
-      </div>
-      <div class="navbar-item navbar-center">
-      <div class="navigation">
-        <div class="nav-item" on:click={()=>{goto('/')}}><span>Home</span></div>
-        <div class="nav-item" on:click={()=>{goto('/discuss')}}><span>Discuss</span></div>
-        <div class="nav-item" on:click={()=>{goto('/questions')}}><span>Questions</span></div>
-        <div class="nav-item" on:click={()=>{goto('/tutorials')}}><span>Tutorials</span></div>
-      </div>
-      </div>
-	   <div style="margin-inline-start: auto;display:flex;">
-     {#if $session.auth == true}
+  <div class="{navbar_class}">
+    <div class="navbar-item">
+      <div href="/" class="navbar-logo" on:click={goHome}><img style="vertical-align: middle;" loading="lazy"
+        data="/static/logo.svg" width={l_image} alt="">
+    </div>
+  </div>
+  <div class="navbar-item navbar-search">
+    <input bind:value={search} type="text" name="q" placeholder="Search" id="search" on:keydown={handleKeydown}>
+  </div>
+  <div class="navbar-item navbar-center">
+    <div class="navigation">
+      <div class="nav-item" on:click={()=>{goto('/')}}><span>Home</span></div>
+      <div class="nav-item" on:click={()=>{goto('/discuss')}}><span>Discuss</span></div>
+      <div class="nav-item" on:click={()=>{goto('/questions')}}><span>Questions</span></div>
+      <div class="nav-item" on:click={()=>{goto('/tutorials')}}><span>Tutorials</span></div>
+    </div>
+  </div>
+  <div style="margin-inline-start: auto;display:flex;">
+    {#if $session.auth == true}
      <div bind:this={notifications_c} class="navbar-item">
        <div class="newapp-dropdown" id="notification-center" style="cursor: pointer;">
          <i class="na-bell"></i>
@@ -229,7 +256,7 @@ function ToggleTheme(){
             {#each notifications.notify as notification}
               <a href="{notification.link}" on:click={fetchNotifications}>
                 <div class="dropdown-item" style="display:flex;">
-                  <img data="{notification.author.avatar}" height="40px" width="40px" style="border-radius: 30px;margin-top: 0.2rem;" alt="">
+                  <img data="{notification.author.avatar}" height="40px" width="40px" style="border-radius: 30px;margin-top: 0.2rem;min-width: 40px;min-height: 40px;" alt="">
                   <div style="display: block;margin-left: 0.4rem;line-height: 1.2;">
                     <span style="color: var(--navbar-color);font-size:1rem;line-height: 1;"><span style="font-weight: 500;">{notification.title }</span></span>
                     {#if notification.category != 'follow' || notification.category != 'unfollow' }
@@ -322,7 +349,6 @@ function ToggleTheme(){
       </div>
      {/if}
 		</div>
-	</div>
 </nav>
 
 {#if $session.auth == false && admin == false}

@@ -265,6 +265,9 @@ async function C_Edit_Reply(){
 }
 
 function onClickDocument(e){
+    if(!copyButton || !share_btn || !options_list || !optionsBtn)
+        return;
+
     if(!copyButton.contains(e.target)){
         copyButton.innerHTML = copyButton.childNodes[0].outerHTML+' Copy Link';
         copyButton.childNodes[0].classList.remove("scale-anim");
@@ -313,7 +316,7 @@ function TouchEnd(event){
 function handleGesture(event){
     var h = window.innerHeight;
     if (touchstartY - 20 > touchendY && touchstartX - touchendX < 20 && touchendX - touchstartX < 20 && touchstartY != touchendY){
-        if(touchstartY - h > 20){
+        if(touchstartY - h > -20){
             options_list.classList.add("toggled");
         }
     }

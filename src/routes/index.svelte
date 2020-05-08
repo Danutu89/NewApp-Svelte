@@ -1,9 +1,11 @@
 <script context="module">
     import { instance } from '../modules/Requests.js';
-    import { isSSR } from '../modules/Preloads.js';
+    import { isSSR, lPage } from '../modules/Preloads.js';
+    lPage.set({data: '/api/home', refresh: false});
     export async function preload(page,session){
         let isSSRPage;
         const res = instance.get('/api/home');
+        lPage.set({data: '/api/home', refresh: false});
         isSSR.subscribe(value => {
             isSSRPage = value;
         })();
@@ -11,7 +13,6 @@
         if(!isSSRPage) {
             return { data: res };
         }
-
         const json = await res.then(function (response) {
             return response.data;
         });
@@ -41,5 +42,9 @@ export let data;
 <meta name="twitter:image:src" content="https://newapp.nl/static/logo.jpg">
 </svelte:head>
 
+{#if $lPage.refresh}
+<Home mode={''}/>
+{:else}
 <Home data={data} mode={''}/>
+{/if}
 

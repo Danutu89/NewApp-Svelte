@@ -15,7 +15,10 @@ import { alert } from '../modules/Alert.js';
 let admin = false;
 let analytics = new Analytics;
 
+let tStart;
+let tCurrent;
 
+let reload;
 
 var path = segment;
 try {
@@ -56,21 +59,49 @@ async function CheckNotification(id){
     })
 }
 
+function swipeStart(e){
+	tStart =  {x: e.targetTouches[0].screenX, y: e.targetTouches[0].screenY};
+}
+
+function swipe(e){
+	tCurrent = {x: e.targetTouches[0].screenX, y: e.targetTouches[0].screenY};
+	var changeY = Math.abs(tStart.y - tCurrent.y);
+	var rotation = changeY < 100 ? changeY * 30/10 : 30;
+	if(document.body.scrollTop == 0){
+		reload.style.height = 'calc(3rem + '+changeY+'px)';
+		reload.style.transform = 'translateY('+changeY+'px)';
+		reload.children[0].style.transform = 'rotate('+rotation+'deg)';
+		if(changeY > 100){
+			reload.children[0].style["-webkit-animation"] = "load8 1.1s infinite linear";
+			reload.children[0].style["animation"] = "load8 1.1s infinite linear";
+		}
+	}
+}
+
+function swipeEnd(){
+	reload.style.height = '';
+	reload.style.transform = '';
+	reload.children[0].style.transform = '';
+}
+
 beforeUpdate(async function(){
 	if ($session.auth){
 		instance.defaults.headers.common['Token'] = $session.token;
 	}else{
 		instance.defaults.headers.common['Token'] = '';
 	}
-    if($page.query.notification_id){
-        CheckNotification($page.query.notification_id);
-    }
+    // if($page.query.notification_id){
+    //     CheckNotification($page.query.notification_id);
+    // }
 })
 
 onMount(async function() {
-	if($page.query.notification_id){
-        CheckNotification($page.query.notification_id);
-    }
+	// if($page.query.notification_id){
+    //     CheckNotification($page.query.notification_id);
+	// }
+	document.addEventListener("touchstart", swipeStart);
+	document.addEventListener("touchmove", swipe);
+	document.addEventListener("touchend", swipeEnd);
 	loadProgressBar('', instance);
 	if($session.auth){
 		
@@ -101,17 +132,17 @@ onMount(async function() {
 	}
 	lazyLoad();
 	document.addEventListener('DOMSubtreeModified', lazyLoad);
-	analytics.init(true);
+	//analytics.init(true);
 	let url = location.href;
-	document.body.addEventListener('click', ()=>{
-		requestAnimationFrame(()=>{
-		if(url!==location.href){
-			analytics.validate();
-			analytics.init(false);
-		};
-		url = location.href;
-		});
-	}, true);
+	// document.body.addEventListener('click', ()=>{
+	// 	requestAnimationFrame(()=>{
+	// 	if(url!==location.href){
+	// 		analytics.validate();
+	// 		analytics.init(false);
+	// 	};
+	// 	url = location.href;
+	// 	});
+	// }, true);
 	
 });
 
@@ -137,9 +168,9 @@ beforeUpdate(async function(){
 <Nav admin={admin}/>
 
 {#if admin == false}
-<reload style="display:block"></reload>
+<reload bind:this={reload} style="display:block"><div class="loader"></div></reload>
 {:else}
-<reload style="height: 2.7rem;display:block"></reload>
+<reload bind:this={reload} style="height: 2.7rem;display:block"><div class="loader"></div></reload>
 {/if}
 
 <overflow></overflow>
