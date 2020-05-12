@@ -15,6 +15,7 @@ export let data, mode;
 let async = undefined, posts = undefined;
 
 onMount(async ()=>{
+    let loadEvent = new CustomEvent('reloaded');
     if($isSSR && $lPage.refresh == false) {
         isSSR.set(false);
     } else if(data instanceof Promise || $lPage.refresh == true) {
@@ -33,6 +34,9 @@ onMount(async ()=>{
                 response = await data;
             if(response.status == 200) {
                 const responseJson = await response;
+                if($lPage.refresh == true)
+                    document.dispatchEvent(loadEvent);
+                lPage.set({data: $lPage.data, refresh: false});
                 return responseJson.data;
             } else {
                 throw new Error("Something went wrong");

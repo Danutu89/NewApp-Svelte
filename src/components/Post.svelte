@@ -6,6 +6,7 @@ import { onMount, beforeUpdate, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { host } from '../modules/Options.js';
 import {instance} from '../modules/Requests.js';
+import { swipeDirection } from '../modules/Swipe.js';
 import TurndownService from 'turndown';
 import marked from 'marked';
 import { stores } from '@sapper/app';
@@ -310,19 +311,24 @@ function TouchStart(event){
 function TouchEnd(event){
     touchendX = event.changedTouches[0].screenX;
     touchendY = event.changedTouches[0].screenY;
-    handleGesture(event);
+    if($swipeDirection == "none")
+        handleGesture(event);
 }
 
 function handleGesture(event){
     var h = window.innerHeight;
     if (touchstartY - 20 > touchendY && touchstartX - touchendX < 20 && touchendX - touchstartX < 20 && touchstartY != touchendY){
+        swipeDirection.set("up");
         if(touchstartY - h > -20){
             options_list.classList.add("toggled");
+            swipeDirection.set("none");
         }
     }
     if (touchstartY + 20 < touchendY && touchstartX - touchendX < 20 && touchendX - touchstartX < 20 && touchstartY != touchendY){
+        swipeDirection.set("down")
         if(options_list.contains(touchstartEl)){
             options_list.classList.remove("toggled");
+            swipeDirection.set("none");
         }
     }
 

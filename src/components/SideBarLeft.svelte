@@ -5,6 +5,7 @@ import { onMount, onDestroy } from 'svelte';
 import OpenJoin from '../modules/OpenJoin.js';
 import { host } from '../modules/Options.js';
 import { stores } from '@sapper/app';
+import { swipeDirection } from '../modules/Swipe.js';
 const { session } = stores();
 const wrapper_ = wrapper;
 
@@ -61,7 +62,8 @@ function TouchStart(event){
 function TouchEnd(event){
     touchendX = event.changedTouches[0].screenX;
     touchendY = event.changedTouches[0].screenY;
-    handleGesture(event);
+    if ($swipeDirection == "none")
+        handleGesture(event);
 }
 
 function onScreenChange(){
@@ -89,16 +91,16 @@ onMount(async function(){
     top = document.getElementById("sidebar-left").offsetTop;
     height = document.getElementById("sidebar-left").offsetHeight;
     winHeight = window.innerHeight;
-    document.addEventListener('touchstart', TouchStart, false);
+    //document.addEventListener('touchstart', TouchStart, false);
 
-    document.addEventListener('touchend', TouchEnd, false); 
+    //document.addEventListener('touchend', TouchEnd, false); 
     document_ = document;
 })
 
 onDestroy(function(){
     if(document_ && window_){
-        document_.removeEventListener('touchstart', TouchStart, false);
-        document_.removeEventListener('touchend', TouchEnd, false); 
+        //document_.removeEventListener('touchstart', TouchStart, false);
+        //document_.removeEventListener('touchend', TouchEnd, false); 
         window_.removeEventListener('resize', onScreenChange);
         try {
             wrapper_.setTrue(document_.getElementById("sidebar-left"),document_.querySelector("overflow"),document_.querySelector(".newapp-navbar"));   
@@ -111,14 +113,18 @@ onDestroy(function(){
 function handleGesture(event) {
     //Right Swipe
     if (touchendX - 10 < touchstartX && touchendY - touchstartY < 20 && touchstartY - touchendY < 20 && touchendX != touchstartX) {
+        swipeDirection.set("right");
         if (!wrapper_.opened){
             wrapper_.setTrue(document.getElementById("sidebar-left"),document.querySelector("overflow"),document.querySelector(".newapp-navbar"));
+            swipeDirection.set("none");
         }
     }
     //Left Swipe
     if (touchendX - 10 > touchstartX && touchstartY - touchendY < 20 && touchendY - touchstartY < 20 && touchendX != touchstartX) {
+        swipeDirection.set("left");
         if (wrapper_.opened){
             wrapper_.setFalse(document.getElementById("sidebar-left"),document.querySelector("overflow"),document.querySelector(".newapp-navbar"));
+            swipeDirection.set("none");
         }
     }
 
