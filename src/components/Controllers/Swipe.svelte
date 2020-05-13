@@ -48,48 +48,39 @@ function swipeMove(e){
 
     change = {x: (touchStart.x - touchCurrent.x)*-1, y: (touchStart.y - touchCurrent.y)*-1};
 
-    if(typeof(touchLive[touchLive.length - touchDistance]) != "object"){
-        touchLive.push(touchCurrent);
-        swipeDir = "none";
-        //touchStart = touchCurrent;
-        return;
-    }
-    if (Math.abs(touchCurrent.x - touchLive[touchLive.length - touchDistance].x) > swipeThreshold && Math.abs(touchCurrent.y - touchLive[touchLive.length - touchDistance].y) < swipeThreshold){
-        if(touchCurrent.x - touchLive[touchLive.length - touchDistance].x < 0){
-            if(swipeDir != "left"){
-                touchLive = [];
-            }
-            swipeDir = "left";
-            touchLive.push(touchCurrent);
-        }else{
-            if(swipeDir != "righ"){
-                touchLive = [];
-            }
-            swipeDir = "right";
-            touchLive.push(touchCurrent);
-        }
-    }else if(Math.abs(touchCurrent.y - touchLive[touchLive.length - touchDistance].y) > swipeThreshold && Math.abs(touchCurrent.x - touchLive[touchLive.length - touchDistance].x) < swipeThreshold){
-        if(touchCurrent.y - touchLive[touchLive.length - touchDistance].y < 0){
-            if(swipeDir != "up"){
-                touchLive = [];
-            }
-            swipeDir = "up";
-            touchLive.push(touchCurrent);
-        }else{
-            if(swipeDir != "down"){
-                touchLive = [];
-            }
-            swipeDir = "down";
-            touchLive.push(touchCurrent);
-        }
-    }else{
-        swipeDir = "none";
-        touchLive = [];
-        touchLive.push(touchCurrent);
+    if(touchLive.length < 5){
+        //swipeDir = "none";
+        touchLive.push({x: touchCurrent.x, y: touchCurrent.y, swipeDir: swipeDir});
         return;
     }
 
-    console.log(swipeDir);
+    var touchIndex = touchLive.length - touchDistance;
+
+    if (Math.abs(touchCurrent.x - touchLive[touchIndex].x) > swipeThreshold && Math.abs(touchCurrent.y - touchLive[touchIndex].y) < swipeThreshold){
+        if(touchCurrent.x - touchLive[touchIndex].x < 0){
+            swipeDir = "left";
+        }else{
+            swipeDir = "right";
+        }
+    }else if(Math.abs(touchCurrent.y - touchLive[touchIndex].y) > swipeThreshold && Math.abs(touchCurrent.x - touchLive[touchIndex].x) < swipeThreshold){
+        if(touchCurrent.y - touchLive[touchIndex].y < 0){
+            swipeDir = "up";
+        }else{
+            swipeDir = "down";
+        }
+    }else{
+        swipeDir = "none";
+        return;
+    }
+
+    if(touchLive[touchLive.length - 1].swipeDir != swipeDir || touchLive[touchLive.length - 1].swipeDir == "none"){
+        touchLive = [];
+        touchStart = touchCurrent;
+    }else{
+        touchLive.push({x: touchCurrent.x, y: touchCurrent.y, swipeDir: swipeDir});
+    }
+
+    console.log(swipeDir)
 
     if(swipeDir == "right" && touchPosStart.x < window.innerWidth/4 || swipeDir == "left" && elementOpened == "wrapper"){
         if(typeof(sidebar) != "undefined"&& (elementSwiped == "wrapper" || elementSwiped == "none") && (elementOpened == "wrapper" || elementOpened == "none")){
@@ -154,7 +145,6 @@ async function swipeEnd(e){
             reload.style.transform = 'translateY(60px)';
             reload.children[0].style["-webkit-animation"] = "load8 1.1s infinite linear";
             reload.children[0].style["animation"] = "load8 1.1s infinite linear";
-            //loading = true;
             elementOpened = "reload";
             await setTimeout(()=>{
                 lPage.set({data: $lPage.data, refresh: true});
@@ -198,6 +188,16 @@ function dragReload(e){
     var reloadHeightD = parseFloat((getComputedStyle(reload).minHeight).replace(/[^\d.]/g, ''));
     var rotation = change.y+10 < 360 ? (change.y+10) * 30/10 : 30;
     var height = reloadHeight + change.y + 30;
+    var spinnerHeight, containerHeight;
+
+    if(swipeDir == "down"){
+        containerHeight = reloadHeight + change.y + 30;
+        spinnerHeight = change.y + 30;
+    }else{
+        containerHeight = reloadHeightD + change.y;
+        spinnerHeight = 100 + change.y;
+    }
+
 	if(document.body.scrollTop == 0 && window.scrollY == 0){
 		document.body.style.overflow = 'hidden';
 	
@@ -205,10 +205,10 @@ function dragReload(e){
         elementOpened = "reload";
 
 		if(change.y < 70 ){
-            reload.style.transform = 'translateY('+(change.y+30)+'px)';
+            reload.style.transform = 'translateY('+spinnerHeight+'px)';
 		}
 		if(change.y < 100 || change.y < -30){
-            reload.style["min-height"] = height+'px';
+            reload.style["min-height"] = containerHeight+'px';
 		}
 		if(change.y < 360){
 			reload.children[0].style.transform = 'rotate('+rotation+'deg)';
