@@ -459,6 +459,7 @@ onDestroy(()=>{
                         </span>
                         {/if}
                         <span style="cursor: pointer;" bind:this={share_btn}><i class="na-share"></i> <span>Share</span></span>
+                        //TODO: Fix user post options
                         <div class="post-options" bind:this={options_list}>
                             <div class="lists">
                                 <div class="list">

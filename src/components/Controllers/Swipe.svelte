@@ -5,12 +5,13 @@ import { lPage } from '../../modules/Preloads.js';
 let swipeDir = "none";
 let elementSwiped = "none";
 let touchStart, touchCurrent, touchEnd;
+let touchStartFixed;
 let touchLive = [];
 let touchPosStart;
 let swipeThreshold = 4;
 let touchThreshold = 10;
 let touchDistance = 5;
-let change;
+let change, changeFixed;
 let elementOpened = "none";
 
 let overflow;
@@ -30,6 +31,7 @@ function swipeStart(e){
         touchStart = {x: e.targetTouches[0].screenX, y: e.targetTouches[0].screenY};
         touchPosStart = {x: e.targetTouches[0].clientX, y: e.targetTouches[0].clientY};
     }
+    touchStartFixed = touchStart;
     if(typeof(sidebar) != "undefined"){
         sidebar.style.transition = "none";
     }
@@ -47,6 +49,7 @@ function swipeMove(e){
         touchCurrent = {x: e.targetTouches[0].screenX, y: e.targetTouches[0].screenY};
 
     change = {x: (touchStart.x - touchCurrent.x)*-1, y: (touchStart.y - touchCurrent.y)*-1};
+    changeFixed = {x: (touchStartFixed.x - touchCurrent.x)*-1, y: (touchStartFixed.y - touchCurrent.y)*-1};
 
     if(touchLive.length < 5){
         //swipeDir = "none";
@@ -169,19 +172,23 @@ async function swipeEnd(e){
 }
 
 function dragWrapper(e){
-    var multiplier = 0.9;
+    var multiplier = 1;
     var dragAmount;
-    if(swipeDir == "right")
-        dragAmount = (-290 + change.x*multiplier);
-    else
-        dragAmount = (change.x*multiplier);
+    //TODO: Fix wrapper animation
+
+    if(swipeDir == "right"){
+        dragAmount = -290 + (changeFixed.x*multiplier);
+    }else{
+        dragAmount = -20 + (changeFixed.x*multiplier);
+    }
 
     if(dragAmount > -290 && dragAmount < -20){
         sidebar.style.transform = "translateX("+dragAmount+"px)";
     }
-    if(dragAmount < -20 && dragAmount > -290){
-        sidebar.style.transform = "translateX("+dragAmount+"px)";
-    }
+
+    
+
+    console.log(changeFixed.x);
 }
 
 function dragReload(e){
@@ -189,6 +196,7 @@ function dragReload(e){
     var rotation = change.y+10 < 360 ? (change.y+10) * 30/10 : 30;
     var height = reloadHeight + change.y + 30;
     var spinnerHeight, containerHeight;
+    //TODO: Fix reload animation
 
     if(swipeDir == "down"){
         containerHeight = reloadHeight + change.y + 30;
