@@ -18,9 +18,19 @@ let overflow;
 
 //wrapper req
 let sidebar, navbar, sidebarOpened = false;
+let wrapperDragAmount;
 
 //reaload req
 let reload, reloadHeight;
+
+function getTranslate3d (el) {
+    var values = el.split(/\w+\(|\);?/);
+    if (!values[1] || !values[1].length) {
+        return [];
+    }
+    return values[1].split(/,\s?/g);
+}
+
 
 function swipeStart(e){
     if(typeof(e.targetTouches[0]) == "undefined"){
@@ -32,13 +42,16 @@ function swipeStart(e){
         touchPosStart = {x: e.targetTouches[0].clientX, y: e.targetTouches[0].clientY};
     }
     touchStartFixed = touchStart;
-    if(typeof(sidebar) != "undefined"){
+
+    if(sidebar != null){
         sidebar.style.transition = "none";
     }
-    if(typeof(reload) != "undefined"){
+    if(reload != null){
         reload.style.transition = "none";
     }
-    document.body.style.overflow = 'hidden';
+
+    wrapperDragAmount = elementOpened == "wrapper" ? -20 : -290;
+
     touchLive.push(touchStart);
 }
 
@@ -83,23 +96,20 @@ function swipeMove(e){
         touchLive.push({x: touchCurrent.x, y: touchCurrent.y, swipeDir: swipeDir});
     }
 
-    console.log(swipeDir)
-
     if(swipeDir == "right" && touchPosStart.x < window.innerWidth/4 || swipeDir == "left" && elementOpened == "wrapper"){
-        if(typeof(sidebar) != "undefined"&& (elementSwiped == "wrapper" || elementSwiped == "none") && (elementOpened == "wrapper" || elementOpened == "none")){
+        if(sidebar != null && (elementSwiped == "wrapper" || elementSwiped == "none") && (elementOpened == "wrapper" || elementOpened == "none")){
             elementSwiped = "wrapper";
             elementOpened = "wrapper";
             dragWrapper(e);
         }
     }else if(swipeDir == "left"){
         
-    }else if(touchPosStart.y < window.innerHeight/5 && document.body.scrollTop == 0 && window.scrollY == 0 && swipeDir == "down" || swipeDir == "up"){
-        if(typeof(reload) != "undefined" && (elementOpened == "none" || elementOpened == "reload") && (elementSwiped == "none" || elementSwiped == "reload")){
+    }else if(touchPosStart.y < window.innerHeight/5 && document.body.scrollTop == 0 && window.scrollY == 0 && (swipeDir == "down" || swipeDir == "up")){
+        if(reload != null && (elementOpened == "none" || elementOpened == "reload") && (elementSwiped == "none" || elementSwiped == "reload")){
+            document.body.style.overflow = 'hidden';
             elementSwiped = "reload";
             dragReload(e);
         }
-    }else if(swipeDir == "up" && touchPosStart.y > (window.innerHeight - window.innerHeight/5)){
-        elementSwiped = "bottom bar";
     }else{
         elementSwiped = "none";
     }
@@ -118,34 +128,33 @@ async function swipeEnd(e){
     if(isTouch)
         swipeDir = "touch";
 
-    if(typeof(sidebar) != "undefined" && !isTouch && elementSwiped == "wrapper" || elementOpened == "wrapper"){
+    if(sidebar != null && !isTouch && elementSwiped == "wrapper" || elementOpened == "wrapper"){
         sidebar.style.transition = "";
         var tranX = sidebar.style.transform;
-        tranX = tranX.replace(/[^\d.]/g, '');
-        tranX = Math.abs(parseInt(tranX));
+        tranX = getTranslate3d(tranX);
+        tranX = parseFloat(tranX[0]);
         if(tranX != 20 && tranX != 290){
-            if( Math.abs(tranX - 20) > Math.abs(tranX - 290)){
-                sidebar.style.transform = "translateX(-290px)";
+            if( Math.abs(Math.abs(tranX) - 20) > Math.abs(Math.abs(tranX) - 290)){
+                sidebar.style.transform = "translate3d(-290px, 0px, 0px)";
                 elementOpened = "none";
                 overflow.classList.remove("show");
             }else{
-                sidebar.style.transform = "translateX(-20px)";
+                sidebar.style.transform = "translate3d(-20px, 0px, 0px)";
                 elementOpened = "wrapper";
                 overflow.classList.add("show");
             }
         }
-        //console.log(Math.abs(tranX - 20),Math.abs(tranX - 290))
     }
 
     if(elementOpened != "wrapper")
         document.body.style.overflow = 'visible';
 
-    if(typeof(reload) != "undefined" && !isTouch && elementSwiped == "reload" || elementOpened == "reload"){
+    if(reload != null && !isTouch && (elementSwiped == "reload" || elementOpened == "reload")){
         reload.style.transition = "";
 
         if(change.y > 100){
             reload.style["min-height"] = 'calc('+reloadHeight+'px + 60px)';
-            reload.style.transform = 'translateY(60px)';
+            reload.style.transform = 'translate3d(0px, 60px, 0px)';
             reload.children[0].style["-webkit-animation"] = "load8 1.1s infinite linear";
             reload.children[0].style["animation"] = "load8 1.1s infinite linear";
             elementOpened = "reload";
@@ -162,6 +171,7 @@ async function swipeEnd(e){
             elementOpened = "none";
         }
     }
+
     //console.log(change)
     //console.log(swipeDir, elementSwiped);
     //console.log(isTouch);
@@ -172,37 +182,29 @@ async function swipeEnd(e){
 }
 
 function dragWrapper(e){
-    var multiplier = 1;
+    var multiplier = 1.4;
     var dragAmount;
-    //TODO: Fix wrapper animation
 
-    if(swipeDir == "right"){
-        dragAmount = -290 + (changeFixed.x*multiplier);
-    }else{
-        dragAmount = -20 + (changeFixed.x*multiplier);
-    }
+    dragAmount = wrapperDragAmount + (change.x*multiplier);
 
     if(dragAmount > -290 && dragAmount < -20){
-        sidebar.style.transform = "translateX("+dragAmount+"px)";
+        sidebar.style.transform = "translate3d("+dragAmount+"px, 0px, 0px)";
     }
 
-    
-
-    console.log(changeFixed.x);
 }
 
 function dragReload(e){
     var reloadHeightD = parseFloat((getComputedStyle(reload).minHeight).replace(/[^\d.]/g, ''));
     var rotation = change.y+10 < 360 ? (change.y+10) * 30/10 : 30;
     var height = reloadHeight + change.y + 30;
-    var spinnerHeight, containerHeight;
-    //TODO: Fix reload animation
+    var spinnerHeight, containerHeight = 0;
+    var multiplier = 0.1;
 
     if(swipeDir == "down"){
         containerHeight = reloadHeight + change.y + 30;
         spinnerHeight = change.y + 30;
     }else{
-        containerHeight = reloadHeightD + change.y;
+        containerHeight = reloadHeightD + change.y*multiplier;
         spinnerHeight = 100 + change.y;
     }
 
@@ -213,7 +215,7 @@ function dragReload(e){
         elementOpened = "reload";
 
 		if(change.y < 70 ){
-            reload.style.transform = 'translateY('+spinnerHeight+'px)';
+            reload.style.transform = 'translate3d(0px, '+spinnerHeight+'px, 0px)';
 		}
 		if(change.y < 100 || change.y < -30){
             reload.style["min-height"] = containerHeight+'px';
@@ -223,7 +225,7 @@ function dragReload(e){
         }
         
     }
-    //console.log(change);
+    console.log(change);
     
 }
 
@@ -248,6 +250,7 @@ beforeUpdate(()=>{
 
     //reload req
     reload = document.querySelector("reload");
+
 })
 
 onMount(()=>{
@@ -266,6 +269,7 @@ onMount(()=>{
     //reload req
     reload = document.querySelector("reload");
     reloadHeight = parseFloat((getComputedStyle(reload).minHeight).replace(/[^\d.]/g, ''));
+
 
 });
 </script>

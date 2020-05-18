@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 export const alert = writable({
-    active: true,
+    active: false,
     img: null,
     title: null,
     text: null,
@@ -14,5 +14,5 @@ export function activateAlert(img, title, text, link){
         title: title,
         text: text,
         link: link
-    })
+    });
 }

@@ -19,7 +19,7 @@ let editor, editor_s;
 let isMobile;
 let turndown = TurndownService();
 let reply_id = -1;
-let options_list, share_btn, optionsBtn;
+let options_list, share_btn, optionsBtn, share_list;
 
 let document_;
 
@@ -273,32 +273,45 @@ function onClickDocument(e){
         copyButton.innerHTML = copyButton.childNodes[0].outerHTML+' Copy Link';
         copyButton.childNodes[0].classList.remove("scale-anim");
     }
-    if(share_btn.contains(e.target)){
-        if(options_list.classList.contains("toggled")){
-            if(options_list.classList.contains("share")){
-                options_list.classList.remove("toggled");
-                options_list.classList.remove("share");
+    if(isMobile){
+        if(share_btn.contains(e.target)){
+            if(options_list.classList.contains("toggled")){
+                if(options_list.classList.contains("share")){
+                    options_list.classList.remove("toggled");
+                    options_list.classList.remove("share");
+                }else{
+                    options_list.classList.add("share");
+                }
+                
             }else{
+                options_list.classList.add("toggled");
                 options_list.classList.add("share");
             }
-            
-        }else{
-            options_list.classList.add("toggled");
-            options_list.classList.add("share");
         }
-    }
-    else if(optionsBtn.contains(e.target)){
-        if(options_list.classList.contains("toggled")){
-            if(options_list.classList.contains("share")){
-                options_list.classList.remove("share");
-            }else
-                options_list.classList.remove("toggled");
-        }else{
-            options_list.classList.add("toggled");
+        else if(optionsBtn.contains(e.target)){
+            if(options_list.classList.contains("toggled")){
+                if(options_list.classList.contains("share")){
+                    options_list.classList.remove("share");
+                }else
+                    options_list.classList.remove("toggled");
+            }else{
+                options_list.classList.add("toggled");
+            }
+        }else if(!share_btn.contains(e.target) && !options_list.contains(e.target)){
+            options_list.classList.remove("toggled");
+            options_list.classList.remove("share");
         }
-    }else if(!share_btn.contains(e.target) && !options_list.contains(e.target) && !optionsBtn.contains(e.target)){
-        options_list.classList.remove("toggled");
-        options_list.classList.remove("share");
+    }else{
+        if(share_btn.contains(e.target)){
+            if(share_list.classList.contains("toggled")){
+                share_list.classList.remove("toggled");
+                
+            }else{
+                share_list.classList.add("toggled");
+            }
+        }else if(!share_list.contains(e.target) && !share_list.contains(e.target)){
+            share_list.classList.remove("toggled");
+        }
     }
 }
 
@@ -373,7 +386,7 @@ onMount(async function(){
         webview = false;
     }
 
-    isMobile = window.matchMedia("only screen and (max-width: 1260px)").matches;
+    isMobile = window.matchMedia("only screen and (max-width: 940px)").matches;
     if(article.closed == false){
         let reply = document.querySelector(".post-reply");
         if (isMobile === true){
@@ -459,7 +472,16 @@ onDestroy(()=>{
                         </span>
                         {/if}
                         <span style="cursor: pointer;" bind:this={share_btn}><i class="na-share"></i> <span>Share</span></span>
-                        //TODO: Fix user post options
+                        <!--TODO Fix user post options-->
+                        <div class="post-share" style="left:10.5rem;" bind:this={share_list}>
+                            <div class="list">
+                                <div class="title">Share</div>
+                                <hr>
+                                <div class="item"><i class="na-facebook-square"></i> Facebook</div>
+                                <div class="item"><i class="na-twitter"></i> Twitter</div>
+                                <div class="item"><i class="na-globe"></i> Hacker News</div>
+                            </div>
+                        </div>
                         <div class="post-options" bind:this={options_list}>
                             <div class="lists">
                                 <div class="list">

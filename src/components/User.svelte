@@ -145,7 +145,7 @@ function Follow_User(id){
           </div>
         </div>
         <div class="user-posts">
-            <Posts articles={user.posts} user=true/>
+            <Posts data={user.posts} user={user.id} mode={"user"}/>
         </div>
       </div>
       <div class="sidebar-right">

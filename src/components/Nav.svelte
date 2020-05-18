@@ -119,7 +119,7 @@ function fetchNotificationsInterval(){
 }
 
 onMount(async function(){
-  isMobile = window.matchMedia("only screen and (max-width: 950px)").matches;
+  isMobile = window.matchMedia("only screen and (max-width: 940px)").matches;
   l_modal = document.getElementById("login-modal");
   r_modal = document.getElementById("register-modal");
   j_modal = document.getElementById("join-modal");
@@ -143,7 +143,7 @@ onMount(async function(){
   if($session.theme == 'Dark'){
     toggle.classList.add('active');
   }
-  if(window.matchMedia("(max-width: 1260px)").matches){
+  if(isMobile){
     p_image = "35px";
     l_image = "30";
   }else{

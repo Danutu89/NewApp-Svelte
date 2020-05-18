@@ -993,8 +993,8 @@ content .wrapper-left {
 	-moz-transition: all 0.2s ease;
 	-o-transition: all 0.2s ease;
 	transition: all 0.2s ease; */
-	-webkit-transform: translateX(-290px);
-	transform: translateX(-290px);
+	-webkit-transform: translate3d(-290px, 0px, 0px);
+	transform: translate3d(-290px, 0px, 0px);
 	transition: transform 300ms linear;
 }
 
@@ -1084,7 +1084,8 @@ content .article .post .user-actions .mobile-post-options {
 	display: none;
 }
 
-content .article .post .user-actions .post-options {
+content .article .post .user-actions .post-options,
+content .article .post .user-actions .post-share {
 	background-color: var(--secondary-background);
 	width: auto;
 	border-radius: var(--border-radius);
@@ -1097,17 +1098,22 @@ content .article .post .user-actions .post-options {
 	padding: 0.4rem;
 }
 
-content .article .post .user-actions .post-options.toggled {
+
+
+content .article .post .user-actions .post-options.toggled,
+content .article .post .user-actions .post-share.toggled {
 	display: block;
 }
 
-content .article .post .user-actions .post-options .list .item {
+content .article .post .user-actions .post-options .list .item,
+content .article .post .user-actions .post-share .list .item {
 	cursor: pointer;
 	padding: 0.5rem;
 	border-radius: var(--border-radius);
 }
 
-content .article .post .user-actions .post-options .list .item:hover {
+content .article .post .user-actions .post-options .list .item:hover,
+content .article .post .user-actions .post-share .list .item:hover {
 	background-color: var(--hover);
 }
 
@@ -1203,6 +1209,11 @@ tag {
 	content .article {
 		max-width: calc(100% - 290px);
 	}
+
+	.user-posts .articles,
+	.user-posts .articles .artcile {
+		max-width: none;
+	}
 }
 
 @media screen and (min-width: 1000px) {
@@ -1213,6 +1224,11 @@ tag {
 		max-width: calc(100% - 320px);
 		float: left;
 	}
+
+	.user-posts .articles,
+	.user-posts .articles .artcile {
+		max-width: none;
+	}
 }
 
 @media screen and (min-width: 950px) {
@@ -1222,6 +1238,11 @@ tag {
 		width: 100%;
 		max-width: calc(100% - 350px);
 		float: left;
+	}
+
+	.user-posts .articles,
+	.user-posts .articles .artcile {
+		max-width: none;
 	}
 }
 
@@ -1677,7 +1698,7 @@ content .articles .navigation-menu a button:focus {
 	}
 }
 
-@media screen and (max-width: 1260px) {	
+@media screen and (max-width: 940px) {	
 	content .articles .navigation-menu {
 		display: flex;
 	}

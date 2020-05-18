@@ -7,7 +7,7 @@ const { session } = stores();
 import {host} from '../modules/Options.js';
 import {onMount, onDestroy} from 'svelte';
 
-export let data, mode;
+export let data, mode, user;
 let save_button = [];
 let document_;
 let page_ = 1;
@@ -41,7 +41,13 @@ onDestroy(function(){
 
 function LoadMore(){
     page_++;
-    loadPosts = instance.get('/api/home/'+ page_ + '?mode='+mode, { progress: false }).then(function (response) {
+    var args;
+    if(user){
+        args =  '?mode='+mode + "&user=" + user;
+    }else{
+        args =  '?mode='+mode;
+    }
+    loadPosts = instance.get('/api/home/'+ page_ + args, { progress: false }).then(function (response) {
         data = [...data , ...response.data['posts']];
         data = data;
         if (response.data['hasnext']){

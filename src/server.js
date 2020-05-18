@@ -10,7 +10,7 @@ const dev = NODE_ENV === 'development';
 
 polka() // You can also use Express
 	.use(
-		compression({ threshold: 0 }),
+		compression({ threshold: 0 }), 
 		sirv('static', { dev }),
 		async (req, res, next) => {
 			const cookies = require('cookie-universal')(req, res);
@@ -30,7 +30,7 @@ polka() // You can also use Express
 				instance.defaults.headers.common['Token']= '';
 				req.name = '';
 				req.avatar = '';
-				req.id = null,
+				req.id = null;
 				req.token = '';
 				req.real_name = '';
 				req.permissions = {};

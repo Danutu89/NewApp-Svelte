@@ -19,14 +19,14 @@ onMount(()=>{
         }, 200)
     }, 4000);
 });
-
+//TODO: Improve alert design
 </script>
 
-//TODO: Improve alert design
+
 
 <alert class="active" bind:this={el}>
     <div class="img" on:click={()=>{goto($alert.link)}}>
-        <img src="{$alert.img}" alt="logo" height="35px">
+        <img data="{$alert.img}" alt="logo" height="35px">
     </div>
     <div class="body" on:click={()=>{goto($alert.link)}}>
         <div class="title">{$alert.title}</div>

@@ -6,6 +6,7 @@ import marked from 'marked';
 import { host } from '../modules/Options.js';
 import TurndownService from 'turndown';
 import {instance} from '../modules/Requests.js';
+import {activateAlert} from "../modules/Alert.js";
 const { session } = stores();
 
 export let article;
@@ -25,6 +26,7 @@ async function EditPost(){
                 //alert
                 return;
             }
+            activateAlert( "/static/logo.svg", "Post", "Post edited successfully.", '/post/'+response.data['link']);
             goto('/post/'+response.data['link']);
         });
     const json = await res;
