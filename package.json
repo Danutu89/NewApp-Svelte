@@ -17,7 +17,7 @@
     "compression": "^1.7.1",
     "cookie-universal": "^2.1.0",
     "cypress": "^3.8.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "marked": "github:Danutu89/marked#master",
     "polka": "^0.5.0",
     "simplemde": "^1.11.2",
